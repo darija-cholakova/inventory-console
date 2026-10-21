@@ -16,8 +16,12 @@ import { MatInput } from '@angular/material/input';
 import { MatOption, MatSelect } from '@angular/material/select';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs';
 
-import { Category } from '../../models/product.model';
-import { ProductQuery, SortChange, SortOption } from '../../models/product-query.model';
+import {
+  Category,
+  ProductQuery,
+  SortChange,
+  SortOption,
+} from '../../../../shared/models/interfaces';
 
 /** Sort choices for small screens, where the table headers are not shown. */
 const SORT_OPTIONS: SortOption[] = [

@@ -13,17 +13,13 @@ import { StateMessage } from '../../../../shared/ui/state-message/state-message'
 import { LocalChanges } from '../../../products/data-access/local-changes';
 import { ProductDeletion } from '../../../products/data-access/product-deletion';
 import { ProductsApi } from '../../../../core/api/products-api';
-import {
-  DEFAULT_QUERY,
-  ProductQuery,
-  SortChange,
-} from '../../../products/models/product-query.model';
-import { Product } from '../../../products/models/product.model';
 import { ProductCards } from '../../../products/ui/product-cards/product-cards';
 import { ProductEditDialog } from '../../../products/ui/product-edit-dialog/product-edit-dialog';
 import { ProductsSkeleton } from '../../../products/ui/products-skeleton/products-skeleton';
 import { ProductsTable } from '../../../products/ui/products-table/products-table';
 import { Bookmarks } from '../../data-access/bookmarks';
+import { DEFAULT_QUERY } from '../../../products/utils/product-query.constants';
+import { Product, ProductQuery, SortChange } from '../../../../shared/models/interfaces';
 
 const TABLE_QUERY = '(min-width: 1024px)';
 

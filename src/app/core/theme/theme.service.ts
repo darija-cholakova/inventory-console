@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Injectable, computed, effect, inject, signal } from '@angular/core';
 
-import { ThemeMode } from './theme.model';
+import { ThemeMode } from '../../shared/models/types';
 
 const STORAGE_KEY = 'inventory-console.theme';
 

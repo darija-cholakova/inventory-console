@@ -28,7 +28,7 @@ import { AuthService } from '../../auth/auth.service';
 import { ThemeService } from '../../theme/theme.service';
 import { AccountMenu } from '../account-menu/account-menu';
 import { Bookmarks } from '../../../features/bookmarks/data-access/bookmarks';
-import { NavItem } from './nav-item.model';
+import { NavItem } from '../../../shared/models/interfaces';
 
 /** M3 "expanded" window class starts at 840px: from there the nav is always visible. */
 const EXPANDED_QUERY = '(min-width: 840px)';

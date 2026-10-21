@@ -2,14 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import {
-  AuthTokens,
-  AuthUser,
-  LoginRequest,
-  LoginResponse,
-  RefreshRequest,
-} from '../auth/models/auth.model';
 import { API_BASE_URL } from './api.config';
+import { AuthTokens, AuthUser, LoginRequest, RefreshRequest } from '../../shared/models/interfaces';
+import { LoginResponse } from '../../shared/models/types';
 
 /** HTTP access to DummyJSON /auth. No state; the session lives in AuthService. */
 @Injectable({ providedIn: 'root' })

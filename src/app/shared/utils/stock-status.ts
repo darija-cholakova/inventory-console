@@ -1,5 +1,4 @@
-/** Stock level shown to the user. Lives in shared/ so any feature can reuse the chip. */
-export type StockStatus = 'in-stock' | 'low-stock' | 'out-of-stock';
+import { StockStatus } from '../models/types';
 
 /** 10 or fewer items counts as low stock. */
 export const LOW_STOCK_THRESHOLD = 10;

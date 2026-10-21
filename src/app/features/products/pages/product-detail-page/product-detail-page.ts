@@ -26,10 +26,10 @@ import { LocalChanges } from '../../data-access/local-changes';
 import { ProductDeletion } from '../../data-access/product-deletion';
 import { ProductsApi } from '../../../../core/api/products-api';
 import { ProductsListUrl } from '../../data-access/products-list-url';
-import { ProductDetail } from '../../models/product-detail.model';
 import { ProductEditDialog } from '../../ui/product-edit-dialog/product-edit-dialog';
 import { ProductGallery } from '../../ui/product-gallery/product-gallery';
 import { RatingStars } from '../../ui/rating-stars/rating-stars';
+import { ProductDetail } from '../../../../shared/models/interfaces';
 
 @Component({
   selector: 'app-product-detail-page',

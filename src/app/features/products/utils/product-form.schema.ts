@@ -1,6 +1,6 @@
 import { max, min, required, schema, validate } from '@angular/forms/signals';
 
-import { ProductFormModel } from './product-form.model';
+import { ProductFormModel } from '../../../shared/models/interfaces';
 
 /** Text that is not just spaces. */
 const blank = (value: string) => value.trim() === '';

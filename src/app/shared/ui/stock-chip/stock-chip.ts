@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 
-import { StockStatus, getStockStatus } from './stock-status.model';
+import { StockStatus } from '../../models/types';
+import { getStockStatus } from '../../utils/stock-status';
 
 const STATUS_VIEW: Record<StockStatus, { label: string; icon: string }> = {
   'in-stock': { label: 'In stock', icon: 'check' },

@@ -8,7 +8,7 @@ import {
   MatSnackBarRef,
 } from '@angular/material/snack-bar';
 
-import { UndoSnackbarData } from './undo-snackbar.model';
+import { UndoSnackbarData } from '../../models/interfaces';
 
 /**
  * Snackbar with an Undo action. MatSnackBar's own `duration` cannot pause, so the timer

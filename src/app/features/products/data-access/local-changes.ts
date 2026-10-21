@@ -1,10 +1,9 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { Observable, catchError, tap, throwError } from 'rxjs';
 
-import { ProductChanges, StoredChanges } from '../models/product-changes.model';
-import { ProductDetail } from '../models/product-detail.model';
-import { Product } from '../models/product.model';
 import { ProductsApi } from '../../../core/api/products-api';
+import { Product, ProductDetail, StoredChanges } from '../../../shared/models/interfaces';
+import { ProductChanges } from '../../../shared/models/types';
 
 const STORAGE_KEY = 'inventory-console.local-changes';
 

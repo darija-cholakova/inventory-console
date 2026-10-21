@@ -8,7 +8,7 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 
-import { ConfirmDialogData } from './confirm-dialog.model';
+import { ConfirmDialogData } from '../../models/interfaces';
 
 /** Two-choice dialog. The safe action has the initial focus (cdkFocusInitial). */
 @Component({

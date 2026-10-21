@@ -5,12 +5,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { firstValueFrom } from 'rxjs';
 
 import { ConfirmDialog } from '../../../shared/ui/confirm-dialog/confirm-dialog';
-import { ConfirmDialogData } from '../../../shared/ui/confirm-dialog/confirm-dialog.model';
 
 import { UndoSnackbar } from '../../../shared/ui/undo-snackbar/undo-snackbar';
-import { UndoSnackbarData } from '../../../shared/ui/undo-snackbar/undo-snackbar.model';
-import { Product } from '../models/product.model';
 import { LocalChanges } from './local-changes';
+import { ConfirmDialogData, Product, UndoSnackbarData } from '../../../shared/models/interfaces';
 
 /** Undo window; long enough to reach the button with a keyboard or screen reader. */
 const UNDO_MS = 8000;

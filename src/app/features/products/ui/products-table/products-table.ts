@@ -10,8 +10,8 @@ import { RouterLink } from '@angular/router';
 import { BookmarkButton } from '../../../bookmarks/ui/bookmark-button/bookmark-button';
 import { ProductImage } from '../../../../shared/ui/product-image/product-image';
 import { StockChip } from '../../../../shared/ui/stock-chip/stock-chip';
-import { Product } from '../../models/product.model';
-import { ProductQuery, SortChange, SortField } from '../../models/product-query.model';
+import { Product, ProductQuery, SortChange } from '../../../../shared/models/interfaces';
+import { SortField } from '../../../../shared/models/types';
 
 /** Desktop list: sorting happens on the server, so MatSort only reports header clicks. */
 @Component({

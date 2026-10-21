@@ -3,15 +3,15 @@ import { Injectable, inject } from '@angular/core';
 import { Observable, map } from 'rxjs';
 
 import { API_BASE_URL } from './api.config';
-import { ProductChanges } from '../../features/products/models/product-changes.model';
-import { ProductDetail } from '../../features/products/models/product-detail.model';
 import {
   Category,
   Product,
+  ProductDetail,
   ProductListResponse,
+  ProductQuery,
   ProductsPage,
-} from '../../features/products/models/product.model';
-import { ProductQuery } from '../../features/products/models/product-query.model';
+} from '../../shared/models/interfaces';
+import { ProductChanges } from '../../shared/models/types';
 
 /** Only the fields the list shows, to keep responses small. */
 const LIST_FIELDS = 'title,brand,category,price,stock,rating,thumbnail';

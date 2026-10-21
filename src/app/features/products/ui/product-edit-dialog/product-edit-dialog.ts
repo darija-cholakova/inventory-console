@@ -13,7 +13,8 @@ import { StateMessage } from '../../../../shared/ui/state-message/state-message'
 import { LocalChanges } from '../../data-access/local-changes';
 import { ProductsApi } from '../../../../core/api/products-api';
 import { ProductForm } from '../product-form/product-form';
-import { ProductEditDialogData, ProductEditDialogResult } from './product-edit-dialog.model';
+import { ProductEditDialogData } from '../../../../shared/models/interfaces';
+import { ProductEditDialogResult } from '../../../../shared/models/types';
 
 /**
  * Edit form in a dialog, opened from the list and the detail page.

@@ -4,13 +4,8 @@ import { Router } from '@angular/router';
 import { Observable, catchError, finalize, map, shareReplay, tap, throwError } from 'rxjs';
 
 import { AuthApi } from '../api/auth-api';
-import {
-  AuthSession,
-  AuthTokens,
-  AuthUser,
-  LoginErrorKind,
-  LoginRequest,
-} from './models/auth.model';
+import { AuthSession, AuthTokens, AuthUser, LoginRequest } from '../../shared/models/interfaces';
+import { LoginErrorKind } from '../../shared/models/types';
 
 const STORAGE_KEY = 'inventory-console.session';
 /**

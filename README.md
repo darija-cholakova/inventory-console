@@ -3,6 +3,7 @@ F3: Products list: 13:47(start) - almost done: 14:09
 f4: Product details : 14:12 (start) -> 14:26"
 f5: Product manipulation: 14: 28(start) -> 15:09
 f6: Bookmarked: 15:11(start) -> 15;21
+Refactor: 15:26 -> 15:29
 
 # Inventory Console
 
@@ -43,13 +44,17 @@ src/app/
     layout/      shell, account menu
     routing/     title strategy, unsaved-changes guard
     theme/
-  shared/      reusable UI (state message, stock chip, product image, confirm dialog, dialog shell, undo snackbar) and styles
-  features/    one folder per feature (products, bookmarks), each with pages/, ui/, data-access/, models/
+  shared/
+    models/      interfaces.ts (all interfaces) and types.ts (all type aliases)
+    ui/          reusable components: state message, stock chip, product image, confirm dialog, dialog shell, undo snackbar
+    utils/       small pure helpers (stock status)
+    styles/
+  features/    one folder per feature (products, bookmarks), each with pages/, ui/, data-access/ and, where needed, utils/
 ```
 
 - Every route is lazy loaded; the shell is a layout route that wraps all signed-in pages.
 - **API layer:** every HTTP call goes through a small, stateless client in `core/api/` (`AuthApi`, `ProductsApi`). Services and stores above it own the state (session, local edits, page), so the endpoints can be found, mocked or replaced in one place.
-- **Types:** `interface` for object shapes (API responses, state, form model), `type` for unions and derived types (`LoadStatus`, `SortField`, `ProductChanges = Partial<Pick<…>>`, `LoginResponse = AuthUser & AuthTokens`). They live in `*.model.ts` files, never inside components or services.
+- **Types:** all of them live in two files, `shared/models/interfaces.ts` (object shapes: API responses, state, form model, dialog data) and `shared/models/types.ts` (unions and derived types: `LoadStatus`, `SortField`, `ProductChanges = Partial<Pick<…>>`, `LoginResponse = AuthUser & AuthTokens`), grouped by area with section comments. Components and services only import them; no type is declared inside a component or service. Functions and constants that used to sit next to types moved to `utils/` (form mapper, validation schema, default query, stock status).
 
 ## Technical decisions
 

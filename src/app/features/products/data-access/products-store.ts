@@ -3,10 +3,10 @@ import { patchState, signalStore, withComputed, withMethods, withState } from '@
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { EMPTY, catchError, pipe, switchMap, tap } from 'rxjs';
 
-import { DEFAULT_QUERY, ProductQuery } from '../models/product-query.model';
-import { ProductsState } from '../models/products-state.model';
 import { LocalChanges } from './local-changes';
 import { ProductsApi } from '../../../core/api/products-api';
+import { DEFAULT_QUERY } from '../utils/product-query.constants';
+import { ProductQuery, ProductsState } from '../../../shared/models/interfaces';
 
 const initialState: ProductsState = {
   query: DEFAULT_QUERY,

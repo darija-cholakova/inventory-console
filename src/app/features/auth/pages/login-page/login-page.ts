@@ -18,8 +18,8 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../../../../core/auth/auth.service';
-import { LoginErrorKind } from '../../../../core/auth/models/auth.model';
 import { safeReturnUrl } from '../../../../core/auth/return-url';
+import { LoginErrorKind } from '../../../../shared/models/types';
 
 const ERROR_MESSAGES: Record<LoginErrorKind, string> = {
   'invalid-credentials': 'Incorrect username or password. Check both and try again.',

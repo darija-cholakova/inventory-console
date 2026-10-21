@@ -27,15 +27,14 @@ import { firstValueFrom } from 'rxjs';
 
 import { ProductImage } from '../../../../shared/ui/product-image/product-image';
 import { LocalChanges } from '../../data-access/local-changes';
-import { ProductDetail } from '../../models/product-detail.model';
+import { toFormModel, toProductChanges } from '../../utils/product-form.mapper';
+import { productFormSchema } from '../../utils/product-form.schema';
 import {
+  Category,
+  ProductDetail,
   ProductFormModel,
   SummaryField,
-  toFormModel,
-  toProductChanges,
-} from '../../models/product-form.model';
-import { productFormSchema } from '../../models/product-form.schema';
-import { Category } from '../../models/product.model';
+} from '../../../../shared/models/interfaces';
 
 const EMPTY_FORM: ProductFormModel = {
   title: '',

@@ -8,7 +8,7 @@ import { RouterLink } from '@angular/router';
 import { BookmarkButton } from '../../../bookmarks/ui/bookmark-button/bookmark-button';
 import { ProductImage } from '../../../../shared/ui/product-image/product-image';
 import { StockChip } from '../../../../shared/ui/stock-chip/stock-chip';
-import { Product } from '../../models/product.model';
+import { Product } from '../../../../shared/models/interfaces';
 
 /**
  * Small-screen list: same data as the table, laid out as cards.

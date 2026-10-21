@@ -1,12 +1,8 @@
 import { Params } from '@angular/router';
 
-import {
-  DEFAULT_QUERY,
-  PAGE_SIZE_OPTIONS,
-  ProductQuery,
-  SortField,
-  SortOrder,
-} from '../models/product-query.model';
+import { DEFAULT_QUERY, PAGE_SIZE_OPTIONS } from '../utils/product-query.constants';
+import { ProductQuery } from '../../../shared/models/interfaces';
+import { SortField, SortOrder } from '../../../shared/models/types';
 
 const SORT_FIELDS: readonly SortField[] = ['title', 'price', 'stock', 'rating'];
 
