@@ -7,7 +7,7 @@ Refactor: 15:26 -> 15:29
 Unit test+e2e: 20:52 -> 21:07 (one component for now)
 restore 15-minute access token lifetime ~ <1m
 readable rating in table and label-in-name for account button & a11y labels in table and account menu, validate stored local changes: 21:13 -> 21:24
-User Profile> 21:30 -> 21:43
+User Profile> 21:30 -> 21:46
 
 # Inventory Console
 
