@@ -1,0 +1,33 @@
+.avatar {
+  display: inline-grid;
+  place-items: center;
+  inline-size: 40px;
+  block-size: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--mat-sys-corner-full);
+  background: var(--mat-sys-tertiary-container);
+  color: var(--mat-sys-on-tertiary-container);
+  font: var(--mat-sys-label-large);
+  cursor: pointer;
+}
+
+// The menu panel renders in an overlay, outside this component's view encapsulation.
+::ng-deep .account-menu {
+  .user {
+    display: flex;
+    flex-direction: column;
+    gap: var(--app-space-2);
+    padding: var(--app-space-8) var(--app-space-16) var(--app-space-12);
+  }
+
+  .user-name {
+    font: var(--mat-sys-title-small);
+    color: var(--mat-sys-on-surface);
+  }
+
+  .user-email {
+    font: var(--mat-sys-body-small);
+    color: var(--mat-sys-on-surface-variant);
+  }
+}

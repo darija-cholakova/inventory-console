@@ -19,6 +19,7 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { map } from 'rxjs';
 
 import { ThemeService } from '../../theme/theme.service';
+import { AccountMenu } from '../account-menu/account-menu';
 import { NavItem } from './nav-item.model';
 
 /** M3 "expanded" window class starts at 840px: from there the nav is always visible. */
@@ -41,6 +42,7 @@ const EXPANDED_QUERY = '(min-width: 840px)';
     MatListItem,
     MatListItemIcon,
     MatListItemTitle,
+    AccountMenu,
   ],
   templateUrl: './shell.html',
   styleUrl: './shell.scss',

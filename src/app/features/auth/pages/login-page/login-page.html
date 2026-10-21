@@ -1,0 +1,86 @@
+<main class="page">
+  <section class="card" aria-labelledby="login-title">
+    <div class="brand">
+      <span class="brand-logo" aria-hidden="true"><mat-icon>inventory_2</mat-icon></span>
+      <span class="brand-name">Inventory Console</span>
+    </div>
+
+    <header class="heading">
+      <h1 id="login-title" class="title">Sign in</h1>
+      <p class="subtitle">Manage products, stock and pricing.</p>
+    </header>
+
+    @if (errorMessage(); as message) {
+      <div class="banner banner--error" role="alert">
+        <mat-icon aria-hidden="true">error</mat-icon>
+        <span>{{ message }}</span>
+      </div>
+    } @else if (sessionExpired()) {
+      <div class="banner banner--info" role="status">
+        <mat-icon aria-hidden="true">schedule</mat-icon>
+        <span>Your session expired. Sign in again to continue.</span>
+      </div>
+    }
+
+    <form
+      class="form"
+      [formGroup]="form"
+      (ngSubmit)="submit()"
+      [attr.aria-busy]="submitting()"
+      novalidate
+    >
+      <mat-form-field appearance="outline">
+        <mat-label>Username</mat-label>
+        <input
+          #usernameInput
+          matInput
+          formControlName="username"
+          autocomplete="username"
+          autocapitalize="none"
+          spellcheck="false"
+          required
+        />
+        @if (form.controls.username.hasError('required')) {
+          <mat-error>Username is required.</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input
+          #passwordInput
+          matInput
+          formControlName="password"
+          [type]="passwordVisible() ? 'text' : 'password'"
+          autocomplete="current-password"
+          required
+        />
+        <button
+          matIconButton
+          matSuffix
+          type="button"
+          [attr.aria-label]="passwordVisible() ? 'Hide password' : 'Show password'"
+          [attr.aria-pressed]="passwordVisible()"
+          [disabled]="submitting()"
+          (click)="togglePasswordVisibility()"
+        >
+          <mat-icon>{{ passwordVisible() ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        @if (form.controls.password.hasError('required')) {
+          <mat-error>Password is required.</mat-error>
+        }
+      </mat-form-field>
+
+      <p class="demo-note">Demo account: <strong>emilys</strong> / <strong>emilyspass</strong></p>
+
+      <button matButton="filled" type="submit" class="submit" [disabled]="submitting()">
+        @if (submitting()) {
+          <mat-progress-spinner mode="indeterminate" diameter="18" aria-hidden="true" />
+          Signing in…
+        } @else {
+          Sign in
+        }
+      </button>
+    </form>
+  </section>
+</main>

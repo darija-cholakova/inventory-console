@@ -1,0 +1,110 @@
+// Mobile first: full-width card on phones, centered fixed-width card from 600px.
+:host {
+  display: block;
+  min-height: 100dvh;
+  background: var(--mat-sys-surface-container);
+}
+
+.page {
+  display: grid;
+  place-items: start center;
+  min-height: 100dvh;
+  padding: var(--app-space-16);
+  box-sizing: border-box;
+
+  @media (min-width: 600px) {
+    place-items: center;
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--app-space-24);
+  inline-size: 100%;
+  max-inline-size: 420px;
+  padding: var(--app-space-24);
+  box-sizing: border-box;
+  border-radius: var(--mat-sys-corner-large);
+  background: var(--mat-sys-surface-container-lowest);
+  border: 1px solid var(--mat-sys-outline-variant);
+
+  @media (min-width: 600px) {
+    padding: var(--app-space-32);
+  }
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--app-space-12);
+}
+
+.brand-logo {
+  display: inline-grid;
+  place-items: center;
+  inline-size: 40px;
+  block-size: 40px;
+  border-radius: var(--mat-sys-corner-medium);
+  background: var(--mat-sys-primary-container);
+  color: var(--mat-sys-on-primary-container);
+}
+
+.brand-name {
+  font: var(--mat-sys-title-medium);
+}
+
+.title {
+  font: var(--mat-sys-headline-medium);
+}
+
+.subtitle {
+  margin-block-start: var(--app-space-4);
+  font: var(--mat-sys-body-medium);
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.banner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--app-space-8);
+  padding: var(--app-space-12);
+  border-radius: var(--mat-sys-corner-small);
+  font: var(--mat-sys-body-medium);
+
+  &--error {
+    background: var(--mat-sys-error-container);
+    color: var(--mat-sys-on-error-container);
+  }
+
+  &--info {
+    background: var(--mat-sys-secondary-container);
+    color: var(--mat-sys-on-secondary-container);
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--app-space-4);
+}
+
+.demo-note {
+  margin-block-end: var(--app-space-16);
+  padding: var(--app-space-8) var(--app-space-12);
+  border-radius: var(--mat-sys-corner-small);
+  background: var(--mat-sys-surface-container-high);
+  font: var(--mat-sys-body-small);
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.submit {
+  inline-size: 100%;
+
+  mat-progress-spinner {
+    display: inline-block;
+    margin-inline-end: var(--app-space-8);
+    vertical-align: middle;
+    --mat-progress-spinner-active-indicator-color: currentColor;
+  }
+}

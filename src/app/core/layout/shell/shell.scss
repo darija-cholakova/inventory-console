@@ -64,6 +64,7 @@
 // One switch is visible at a time: drawer on small screens, toolbar from 600px up.
 .theme-switch--toolbar {
   display: none;
+  margin-inline-end: var(--app-space-16);
 
   @media (min-width: 600px) {
     display: inline-flex;

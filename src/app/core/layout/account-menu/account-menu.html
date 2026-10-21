@@ -1,0 +1,22 @@
+@if (user(); as user) {
+  <button
+    type="button"
+    class="avatar"
+    [matMenuTriggerFor]="menu"
+    [attr.aria-label]="'Account menu for ' + fullName()"
+  >
+    <span aria-hidden="true">{{ initials() }}</span>
+  </button>
+
+  <mat-menu #menu="matMenu" xPosition="before" class="account-menu">
+    <div class="user" role="presentation">
+      <span class="user-name">{{ fullName() }}</span>
+      <span class="user-email">{{ user.email }}</span>
+    </div>
+    <mat-divider />
+    <button mat-menu-item type="button" (click)="signOut()">
+      <mat-icon>logout</mat-icon>
+      <span>Sign out</span>
+    </button>
+  </mat-menu>
+}
