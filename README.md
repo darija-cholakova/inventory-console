@@ -1,6 +1,7 @@
-// for me> Sign in: 13:24(start) - almost done: 13:45 (needs few style tweaks)
-F2: Products list: 13:47(start) - almost done: 14:09
-f3: Product details : 14:12 (start) -> 14:26"
+// for me> f2: Sign in: 13:24(start) - almost done: 13:45 (needs few style tweaks)
+F3: Products list: 13:47(start) - almost done: 14:09
+f4: Product details : 14:12 (start) -> 14:26"
+f5: Product manipulation: 14: 28(start)
 
 # Inventory Console
 
@@ -79,7 +80,7 @@ Start = prompt sent to Claude, end = feature committed and pushed (times from gi
 | Feature 1 – Setup and shell | 13:04   | 13:22    | 18 min   |
 | Feature 2 – Authentication  | 13:24   | 13:45    | 21 min   |
 | Feature 3 – Products list   | 13:47   | 14:09    | 22 min   |
-| Feature 4 – Product detail  | 14:12   |          |          |
+| Feature 4 – Product detail  | 14:12   | 14:26    | 14 min   |
 
 ## Time spent
 
