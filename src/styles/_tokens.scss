@@ -27,8 +27,8 @@
   --app-dialog-form-width: 800px;
   --app-dialog-content-max-height: 80vh;
 
-  // Sign-in card: tall enough for the form plus a two-line message banner
-  --app-login-card-min-height: 560px;
+  // Sign-in card: fixed distance from the top of the page (from 600px)
+  --app-login-top-offset: 96px;
 
   // Status colors (success / warning are not part of M3), harmonized with Signal Blue
   --app-success-container: light-dark(#92f7bc, #005231);

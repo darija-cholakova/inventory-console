@@ -1,4 +1,6 @@
-// Mobile first: full-width card on phones, centered fixed-width card from 600px.
+// Mobile first: full-width card on phones, fixed-width card from 600px.
+// The card's top edge stays at a fixed offset; a message (error, session expired) pushes the
+// content below it down and the card grows downwards, so nothing above it moves.
 :host {
   display: block;
   min-height: 100dvh;
@@ -7,19 +9,20 @@
 
 .page {
   display: grid;
-  place-items: center;
+  justify-items: center;
+  align-items: start;
   min-height: 100dvh;
   padding: var(--app-space-16);
   box-sizing: border-box;
+
+  @media (min-width: 600px) {
+    padding-block-start: var(--app-login-top-offset);
+  }
 }
 
 .card {
   display: flex;
   flex-direction: column;
-  // Content stays vertically centered; the fixed minimum height already fits the error banner,
-  // so a message only shifts the content a little instead of resizing the card.
-  justify-content: center;
-  min-block-size: var(--app-login-card-min-height);
   gap: var(--app-space-24);
   inline-size: 100%;
   max-inline-size: 420px;
