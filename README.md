@@ -2,6 +2,7 @@
 F3: Products list: 13:47(start) - almost done: 14:09
 f4: Product details : 14:12 (start) -> 14:26"
 f5: Product manipulation: 14: 28(start) -> 15:09
+f6: Bookmarked: 15:11(start)
 
 # Inventory Console
 
