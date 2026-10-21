@@ -1,0 +1,493 @@
+[
+  {
+    "tags": ["demo"],
+    "weight": 1,
+    "dimensions": {
+      "width": 10,
+      "height": 10,
+      "depth": 10
+    },
+    "warrantyInformation": "1 year warranty",
+    "shippingInformation": "Ships in 2 days",
+    "availabilityStatus": "In Stock",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "Great",
+        "date": "2025-01-01T00:00:00.000Z",
+        "reviewerName": "Ana",
+        "reviewerEmail": "ana@example.com"
+      }
+    ],
+    "returnPolicy": "30 days return policy",
+    "minimumOrderQuantity": 1,
+    "meta": {
+      "createdAt": "2025-01-01T00:00:00.000Z",
+      "updatedAt": "2025-01-01T00:00:00.000Z",
+      "barcode": "0",
+      "qrCode": ""
+    },
+    "images": [],
+    "thumbnail": "",
+    "id": 1,
+    "title": "Essence Mascara Lash Princess",
+    "category": "beauty",
+    "price": 9.99,
+    "stock": 99,
+    "rating": 4.5,
+    "description": "Essence Mascara Lash Princess description.",
+    "discountPercentage": 5,
+    "sku": "SKU-001",
+    "brand": "Essence"
+  },
+  {
+    "tags": ["demo"],
+    "weight": 1,
+    "dimensions": {
+      "width": 10,
+      "height": 10,
+      "depth": 10
+    },
+    "warrantyInformation": "1 year warranty",
+    "shippingInformation": "Ships in 2 days",
+    "availabilityStatus": "In Stock",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "Great",
+        "date": "2025-01-01T00:00:00.000Z",
+        "reviewerName": "Ana",
+        "reviewerEmail": "ana@example.com"
+      }
+    ],
+    "returnPolicy": "30 days return policy",
+    "minimumOrderQuantity": 1,
+    "meta": {
+      "createdAt": "2025-01-01T00:00:00.000Z",
+      "updatedAt": "2025-01-01T00:00:00.000Z",
+      "barcode": "0",
+      "qrCode": ""
+    },
+    "images": [],
+    "thumbnail": "",
+    "id": 2,
+    "title": "Eyeshadow Palette with Mirror",
+    "category": "beauty",
+    "price": 19.99,
+    "stock": 34,
+    "rating": 4.5,
+    "description": "Eyeshadow Palette with Mirror description.",
+    "discountPercentage": 5,
+    "sku": "SKU-002",
+    "brand": "Glamour Beauty"
+  },
+  {
+    "tags": ["demo"],
+    "weight": 1,
+    "dimensions": {
+      "width": 10,
+      "height": 10,
+      "depth": 10
+    },
+    "warrantyInformation": "1 year warranty",
+    "shippingInformation": "Ships in 2 days",
+    "availabilityStatus": "In Stock",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "Great",
+        "date": "2025-01-01T00:00:00.000Z",
+        "reviewerName": "Ana",
+        "reviewerEmail": "ana@example.com"
+      }
+    ],
+    "returnPolicy": "30 days return policy",
+    "minimumOrderQuantity": 1,
+    "meta": {
+      "createdAt": "2025-01-01T00:00:00.000Z",
+      "updatedAt": "2025-01-01T00:00:00.000Z",
+      "barcode": "0",
+      "qrCode": ""
+    },
+    "images": [],
+    "thumbnail": "",
+    "id": 3,
+    "title": "Powder Canister",
+    "category": "beauty",
+    "price": 14.99,
+    "stock": 89,
+    "rating": 4.5,
+    "description": "Powder Canister description.",
+    "discountPercentage": 5,
+    "sku": "SKU-003",
+    "brand": "Velvet Touch"
+  },
+  {
+    "tags": ["demo"],
+    "weight": 1,
+    "dimensions": {
+      "width": 10,
+      "height": 10,
+      "depth": 10
+    },
+    "warrantyInformation": "1 year warranty",
+    "shippingInformation": "Ships in 2 days",
+    "availabilityStatus": "In Stock",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "Great",
+        "date": "2025-01-01T00:00:00.000Z",
+        "reviewerName": "Ana",
+        "reviewerEmail": "ana@example.com"
+      }
+    ],
+    "returnPolicy": "30 days return policy",
+    "minimumOrderQuantity": 1,
+    "meta": {
+      "createdAt": "2025-01-01T00:00:00.000Z",
+      "updatedAt": "2025-01-01T00:00:00.000Z",
+      "barcode": "0",
+      "qrCode": ""
+    },
+    "images": [],
+    "thumbnail": "",
+    "id": 4,
+    "title": "Red Lipstick",
+    "category": "beauty",
+    "price": 12.99,
+    "stock": 91,
+    "rating": 4.5,
+    "description": "Red Lipstick description.",
+    "discountPercentage": 5,
+    "sku": "SKU-004",
+    "brand": "Chic Cosmetics"
+  },
+  {
+    "tags": ["demo"],
+    "weight": 1,
+    "dimensions": {
+      "width": 10,
+      "height": 10,
+      "depth": 10
+    },
+    "warrantyInformation": "1 year warranty",
+    "shippingInformation": "Ships in 2 days",
+    "availabilityStatus": "In Stock",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "Great",
+        "date": "2025-01-01T00:00:00.000Z",
+        "reviewerName": "Ana",
+        "reviewerEmail": "ana@example.com"
+      }
+    ],
+    "returnPolicy": "30 days return policy",
+    "minimumOrderQuantity": 1,
+    "meta": {
+      "createdAt": "2025-01-01T00:00:00.000Z",
+      "updatedAt": "2025-01-01T00:00:00.000Z",
+      "barcode": "0",
+      "qrCode": ""
+    },
+    "images": [],
+    "thumbnail": "",
+    "id": 5,
+    "title": "Red Nail Polish",
+    "category": "beauty",
+    "price": 8.99,
+    "stock": 79,
+    "rating": 4.5,
+    "description": "Red Nail Polish description.",
+    "discountPercentage": 5,
+    "sku": "SKU-005",
+    "brand": "Nail Couture"
+  },
+  {
+    "tags": ["demo"],
+    "weight": 1,
+    "dimensions": {
+      "width": 10,
+      "height": 10,
+      "depth": 10
+    },
+    "warrantyInformation": "1 year warranty",
+    "shippingInformation": "Ships in 2 days",
+    "availabilityStatus": "In Stock",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "Great",
+        "date": "2025-01-01T00:00:00.000Z",
+        "reviewerName": "Ana",
+        "reviewerEmail": "ana@example.com"
+      }
+    ],
+    "returnPolicy": "30 days return policy",
+    "minimumOrderQuantity": 1,
+    "meta": {
+      "createdAt": "2025-01-01T00:00:00.000Z",
+      "updatedAt": "2025-01-01T00:00:00.000Z",
+      "barcode": "0",
+      "qrCode": ""
+    },
+    "images": [],
+    "thumbnail": "",
+    "id": 6,
+    "title": "Calvin Klein CK One",
+    "category": "fragrances",
+    "price": 49.99,
+    "stock": 29,
+    "rating": 4.5,
+    "description": "Calvin Klein CK One description.",
+    "discountPercentage": 5,
+    "sku": "SKU-006",
+    "brand": "Calvin Klein"
+  },
+  {
+    "tags": ["demo"],
+    "weight": 1,
+    "dimensions": {
+      "width": 10,
+      "height": 10,
+      "depth": 10
+    },
+    "warrantyInformation": "1 year warranty",
+    "shippingInformation": "Ships in 2 days",
+    "availabilityStatus": "In Stock",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "Great",
+        "date": "2025-01-01T00:00:00.000Z",
+        "reviewerName": "Ana",
+        "reviewerEmail": "ana@example.com"
+      }
+    ],
+    "returnPolicy": "30 days return policy",
+    "minimumOrderQuantity": 1,
+    "meta": {
+      "createdAt": "2025-01-01T00:00:00.000Z",
+      "updatedAt": "2025-01-01T00:00:00.000Z",
+      "barcode": "0",
+      "qrCode": ""
+    },
+    "images": [],
+    "thumbnail": "",
+    "id": 7,
+    "title": "Chanel Coco Noir Eau De",
+    "category": "fragrances",
+    "price": 129.99,
+    "stock": 58,
+    "rating": 4.5,
+    "description": "Chanel Coco Noir Eau De description.",
+    "discountPercentage": 5,
+    "sku": "SKU-007",
+    "brand": "Chanel"
+  },
+  {
+    "tags": ["demo"],
+    "weight": 1,
+    "dimensions": {
+      "width": 10,
+      "height": 10,
+      "depth": 10
+    },
+    "warrantyInformation": "1 year warranty",
+    "shippingInformation": "Ships in 2 days",
+    "availabilityStatus": "In Stock",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "Great",
+        "date": "2025-01-01T00:00:00.000Z",
+        "reviewerName": "Ana",
+        "reviewerEmail": "ana@example.com"
+      }
+    ],
+    "returnPolicy": "30 days return policy",
+    "minimumOrderQuantity": 1,
+    "meta": {
+      "createdAt": "2025-01-01T00:00:00.000Z",
+      "updatedAt": "2025-01-01T00:00:00.000Z",
+      "barcode": "0",
+      "qrCode": ""
+    },
+    "images": [],
+    "thumbnail": "",
+    "id": 8,
+    "title": "Dior J'adore",
+    "category": "fragrances",
+    "price": 89.99,
+    "stock": 98,
+    "rating": 4.5,
+    "description": "Dior J'adore description.",
+    "discountPercentage": 5,
+    "sku": "SKU-008",
+    "brand": "Dior"
+  },
+  {
+    "tags": ["demo"],
+    "weight": 1,
+    "dimensions": {
+      "width": 10,
+      "height": 10,
+      "depth": 10
+    },
+    "warrantyInformation": "1 year warranty",
+    "shippingInformation": "Ships in 2 days",
+    "availabilityStatus": "In Stock",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "Great",
+        "date": "2025-01-01T00:00:00.000Z",
+        "reviewerName": "Ana",
+        "reviewerEmail": "ana@example.com"
+      }
+    ],
+    "returnPolicy": "30 days return policy",
+    "minimumOrderQuantity": 1,
+    "meta": {
+      "createdAt": "2025-01-01T00:00:00.000Z",
+      "updatedAt": "2025-01-01T00:00:00.000Z",
+      "barcode": "0",
+      "qrCode": ""
+    },
+    "images": [],
+    "thumbnail": "",
+    "id": 9,
+    "title": "Dolce Shine Eau de",
+    "category": "fragrances",
+    "price": 69.99,
+    "stock": 4,
+    "rating": 4.5,
+    "description": "Dolce Shine Eau de description.",
+    "discountPercentage": 5,
+    "sku": "SKU-009",
+    "brand": "Dolce & Gabbana"
+  },
+  {
+    "tags": ["demo"],
+    "weight": 1,
+    "dimensions": {
+      "width": 10,
+      "height": 10,
+      "depth": 10
+    },
+    "warrantyInformation": "1 year warranty",
+    "shippingInformation": "Ships in 2 days",
+    "availabilityStatus": "In Stock",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "Great",
+        "date": "2025-01-01T00:00:00.000Z",
+        "reviewerName": "Ana",
+        "reviewerEmail": "ana@example.com"
+      }
+    ],
+    "returnPolicy": "30 days return policy",
+    "minimumOrderQuantity": 1,
+    "meta": {
+      "createdAt": "2025-01-01T00:00:00.000Z",
+      "updatedAt": "2025-01-01T00:00:00.000Z",
+      "barcode": "0",
+      "qrCode": ""
+    },
+    "images": [],
+    "thumbnail": "",
+    "id": 10,
+    "title": "Gucci Bloom Eau de",
+    "category": "fragrances",
+    "price": 79.99,
+    "stock": 91,
+    "rating": 4.5,
+    "description": "Gucci Bloom Eau de description.",
+    "discountPercentage": 5,
+    "sku": "SKU-010",
+    "brand": "Gucci"
+  },
+  {
+    "tags": ["demo"],
+    "weight": 1,
+    "dimensions": {
+      "width": 10,
+      "height": 10,
+      "depth": 10
+    },
+    "warrantyInformation": "1 year warranty",
+    "shippingInformation": "Ships in 2 days",
+    "availabilityStatus": "In Stock",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "Great",
+        "date": "2025-01-01T00:00:00.000Z",
+        "reviewerName": "Ana",
+        "reviewerEmail": "ana@example.com"
+      }
+    ],
+    "returnPolicy": "30 days return policy",
+    "minimumOrderQuantity": 1,
+    "meta": {
+      "createdAt": "2025-01-01T00:00:00.000Z",
+      "updatedAt": "2025-01-01T00:00:00.000Z",
+      "barcode": "0",
+      "qrCode": ""
+    },
+    "images": [],
+    "thumbnail": "",
+    "id": 11,
+    "title": "Annibale Colombo Bed",
+    "category": "furniture",
+    "price": 1899.99,
+    "stock": 88,
+    "rating": 4.5,
+    "description": "Annibale Colombo Bed description.",
+    "discountPercentage": 5,
+    "sku": "SKU-011",
+    "brand": "Annibale Colombo"
+  },
+  {
+    "tags": ["demo"],
+    "weight": 1,
+    "dimensions": {
+      "width": 10,
+      "height": 10,
+      "depth": 10
+    },
+    "warrantyInformation": "1 year warranty",
+    "shippingInformation": "Ships in 2 days",
+    "availabilityStatus": "In Stock",
+    "reviews": [
+      {
+        "rating": 5,
+        "comment": "Great",
+        "date": "2025-01-01T00:00:00.000Z",
+        "reviewerName": "Ana",
+        "reviewerEmail": "ana@example.com"
+      }
+    ],
+    "returnPolicy": "30 days return policy",
+    "minimumOrderQuantity": 1,
+    "meta": {
+      "createdAt": "2025-01-01T00:00:00.000Z",
+      "updatedAt": "2025-01-01T00:00:00.000Z",
+      "barcode": "0",
+      "qrCode": ""
+    },
+    "images": [],
+    "thumbnail": "",
+    "id": 12,
+    "title": "Apple",
+    "category": "groceries",
+    "price": 1.99,
+    "stock": 8,
+    "rating": 4.5,
+    "description": "Apple description.",
+    "discountPercentage": 5,
+    "sku": "SKU-012"
+  }
+]

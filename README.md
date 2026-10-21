@@ -4,7 +4,7 @@ f4: Product details : 14:12 (start) -> 14:26"
 f5: Product manipulation: 14: 28(start) -> 15:09
 f6: Bookmarked: 15:11(start) -> 15;21
 Refactor: 15:26 -> 15:29
-Unit test: 20:52 ->
+Unit test+e2e: 20:52 -> 21:07 (one component for now)
 
 # Inventory Console
 
@@ -85,6 +85,25 @@ src/app/
 - **Bookmarked:** a personal working list of products to keep an eye on. Ids live in `localStorage`, not `sessionStorage` like the session and local edits: a bookmark should survive closing the tab. DummyJSON has no favorites/bookmarks resource and cannot fetch several ids in one request, so the page loads the catalog once with list fields only (`limit=0&select=…`, ~194 small items) and keeps the bookmarked ones; one request regardless of the number of bookmarks, always current prices and stock. A real backend would offer `?ids=` or a bookmarks endpoint. The page reuses `ProductsTable`, `ProductCards`, the skeleton, the edit dialog and the delete flow; search and sorting run in the browser (short list, no paginator). One `BookmarkButton` (filled icon + `aria-pressed`, label with the product name, tooltip) is used in the table, the cards and the detail page; the side nav shows the count with screen reader text ("3 products").
 - **Responsive list:** a sortable table from 1024px; below that, cards with a "Sort by" dropdown. Stock status is a shared chip with text, icon and color.
 - **Accessibility:** skip link to the main content (WCAG 2.4.1), landmarks (`header`, `nav`, `main`), `aria-current` on the active link, visible focus ring, `prefers-reduced-motion` respected, page title per route.
+
+## Testing
+
+```bash
+npm test          # unit tests (Vitest, through `ng test`; add `-- --watch=false` for a single run)
+npm run e2e       # end-to-end test (Playwright); starts `ng serve` if it is not running
+```
+
+First run of the E2E test: `npx playwright install chromium` (downloads the browser once).
+
+- **Unit tests (29, in `features/products/data-access/`):**
+  - `products-store.spec.ts` – loads a page; keeps pages full after a delete (`limit = page × size + deleted`, `skip = 0`) with no product shown twice; removes a row at once and brings it back on Undo; empty last page; "no results"; keeps rows while the next page loads; ignores an outdated response (`switchMap`); keeps the query after an error so "Try again" repeats it.
+  - `local-changes.spec.ts` – optimistic edit and rollback to the previous value; delete hides without calling the API; failed `DELETE` brings the product back; survives a reload; broken storage starts empty.
+  - `product-deletion.spec.ts` – confirm only on "Delete" (Cancel, Esc, click outside = no); Undo restores and never sends `DELETE`; timeout sends `DELETE`; failed `DELETE` restores with a message.
+  - `product-query-params.spec.ts` – URL → query and back; invalid or hand-edited values fall back to defaults; search wins over category; spaces-only search; defaults are left out of the URL.
+  - `ProductsApi` and Material dialogs/snackbars are fakes; the real `LocalChanges` runs on jsdom `sessionStorage`, so the store and the local layer are tested together.
+- **E2E – main flow** (`e2e/product-flow.spec.ts`): sign in → search → detail → edit in the dialog → delete with confirmation → Undo, and checks that the `PATCH` was sent and the `DELETE` was not (undone in time).
+- **Why mocks:** DummyJSON does not store changes and the data can change, so the E2E test answers every API call from fixed fixtures (`e2e/fixtures/`, `e2e/support/mock-api.ts`). The test is fast, stable and works offline.
+- **Selectors by role and label** (`getByRole`, `getByLabel`), never CSS classes: if a control loses its accessible name, the test fails. That makes the E2E test a small accessibility check too.
 
 ## Possible improvements
 
