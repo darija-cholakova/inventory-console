@@ -131,6 +131,8 @@ Start = prompt sent to Claude, end = feature committed and pushed (times from gi
 | Feature 6 – Bookmarked      | 15:11   | 15:21    | 10 min   |
 | Refactor – API layer, types | 15:21   | 15:29    | 8 min    |
 | Feature 7 – Tests           | 20:52   | 21:10    | 18 min   |
+| Feature 8 – A11y review     | 21:13   | 21:24    | 11 min   |
+| Fixes – account menu        | 21:28   |          |          |
 
 ## Time spent
 
