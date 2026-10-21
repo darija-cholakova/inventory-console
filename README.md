@@ -6,7 +6,7 @@ f6: Bookmarked: 15:11(start) -> 15;21
 Refactor: 15:26 -> 15:29
 Unit test+e2e: 20:52 -> 21:07 (one component for now)
 restore 15-minute access token lifetime ~ <1m
-Checks: 21:13
+readable rating in table and label-in-name for account button & a11y labels in table and account menu, validate stored local changes: 21:13 -> 21:24
 
 # Inventory Console
 
@@ -97,9 +97,9 @@ npm run e2e       # end-to-end test (Playwright); starts `ng serve` if it is not
 
 First run of the E2E test: `npx playwright install chromium` (downloads the browser once).
 
-- **Unit tests (29, in `features/products/data-access/`):**
+- **Unit tests (32, in `features/products/data-access/`):**
   - `products-store.spec.ts` – loads a page; keeps pages full after a delete (`limit = page × size + deleted`, `skip = 0`) with no product shown twice; removes a row at once and brings it back on Undo; empty last page; "no results"; keeps rows while the next page loads; ignores an outdated response (`switchMap`); keeps the query after an error so "Try again" repeats it.
-  - `local-changes.spec.ts` – optimistic edit and rollback to the previous value; delete hides without calling the API; failed `DELETE` brings the product back; survives a reload; broken storage starts empty.
+  - `local-changes.spec.ts` – optimistic edit and rollback to the previous value; delete hides without calling the API; failed `DELETE` brings the product back; survives a reload; broken or old storage data (invalid JSON, `null`, wrong shape) starts empty instead of crashing.
   - `product-deletion.spec.ts` – confirm only on "Delete" (Cancel, Esc, click outside = no); Undo restores and never sends `DELETE`; timeout sends `DELETE`; failed `DELETE` restores with a message.
   - `product-query-params.spec.ts` – URL → query and back; invalid or hand-edited values fall back to defaults; search wins over category; spaces-only search; defaults are left out of the URL.
   - `ProductsApi` and Material dialogs/snackbars are fakes; the real `LocalChanges` runs on jsdom `sessionStorage`, so the store and the local layer are tested together.

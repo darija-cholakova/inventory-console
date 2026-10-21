@@ -46,9 +46,9 @@
   <ng-container matColumnDef="rating">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Rating</th>
     <td mat-cell *matCellDef="let product">
-      <span [attr.aria-label]="'Rating ' + (product.rating | number: '1.1-1') + ' out of 5'">
-        <span aria-hidden="true">★ {{ product.rating | number: '1.1-1' }}</span>
-      </span>
+      <!-- aria-label is not allowed on a plain span; screen readers get hidden text instead -->
+      <span aria-hidden="true">★ {{ product.rating | number: '1.1-1' }}</span>
+      <span class="visually-hidden">Rating {{ product.rating | number: '1.1-1' }} out of 5</span>
     </td>
   </ng-container>
 

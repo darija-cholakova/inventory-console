@@ -80,8 +80,13 @@ describe('LocalChanges', () => {
     expect(reloaded.apply({ ...PRODUCT, id: 2 }).stock).toBe(0);
   });
 
-  it('starts empty when the stored data is broken', () => {
-    sessionStorage.setItem('inventory-console.local-changes', '{not json');
+  it.each([
+    ['not JSON', '{not json'],
+    ['null', 'null'],
+    ['an empty object', '{}'],
+    ['a wrong shape', '{"edits":[],"deleted":"7"}'],
+  ])('starts empty when the stored data is %s', (_label, stored) => {
+    sessionStorage.setItem('inventory-console.local-changes', stored);
 
     const { local } = setup();
 

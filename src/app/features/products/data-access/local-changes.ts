@@ -92,12 +92,26 @@ export class LocalChanges {
     }
   }
 
+  /** Storage is outside our control (old app versions, manual edits): check the shape before use. */
   private read(): StoredChanges {
+    const empty: StoredChanges = { edits: {}, deleted: [] };
     try {
-      const raw = sessionStorage.getItem(STORAGE_KEY);
-      return raw ? (JSON.parse(raw) as StoredChanges) : { edits: {}, deleted: [] };
+      const stored: unknown = JSON.parse(sessionStorage.getItem(STORAGE_KEY) ?? 'null');
+      if (!isStoredChanges(stored)) return empty;
+      return {
+        edits: stored.edits,
+        deleted: stored.deleted.filter((id) => typeof id === 'number'),
+      };
     } catch {
-      return { edits: {}, deleted: [] };
+      return empty;
     }
   }
+}
+
+function isStoredChanges(value: unknown): value is StoredChanges {
+  if (typeof value !== 'object' || value === null) return false;
+  const { edits, deleted } = value as Partial<StoredChanges>;
+  return (
+    typeof edits === 'object' && edits !== null && !Array.isArray(edits) && Array.isArray(deleted)
+  );
 }
