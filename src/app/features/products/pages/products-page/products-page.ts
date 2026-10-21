@@ -21,6 +21,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
 
 import { TABLE_VIEW_QUERY } from '../../../../shared/utils/breakpoints';
+import { focusRowAfterDelete } from '../../../../shared/utils/focus-after-delete';
 import { StateMessage } from '../../../../shared/ui/state-message/state-message';
 import { LocalChanges } from '../../../../core/products/local-changes';
 import { ProductDeletion } from '../../data-access/product-deletion';
@@ -59,6 +60,7 @@ export class ProductsPage {
   private readonly announcer = inject(LiveAnnouncer);
   private readonly deletion = inject(ProductDeletion);
   private readonly injector = inject(Injector);
+  private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly dialog = inject(MatDialog);
   private readonly heading = viewChild.required<ElementRef<HTMLHeadingElement>>('heading');
 
@@ -146,10 +148,14 @@ export class ProductsPage {
   protected async onDelete(product: Product): Promise<void> {
     // Cancelled: the dialog returns focus to the row's menu button
     if (!(await this.deletion.confirm(product))) return;
+    const index = this.store.items().findIndex((item) => item.id === product.id);
     this.deletion.delete(product);
-    // The row and its menu button are gone; after the re-render (and the menu's own focus
-    // restore) move focus to the heading instead of losing it to <body>
-    afterNextRender(() => this.heading().nativeElement.focus(), { injector: this.injector });
+    // The row and its menu button are gone: after the re-render (and the menu's own focus
+    // restore) focus the next row in the same place, so the page stays where it was
+    afterNextRender(
+      () => focusRowAfterDelete(this.host.nativeElement, index, this.heading().nativeElement),
+      { injector: this.injector },
+    );
   }
 
   protected clearFilters(): void {

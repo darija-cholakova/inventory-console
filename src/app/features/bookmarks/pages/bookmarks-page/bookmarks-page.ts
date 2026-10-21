@@ -1,5 +1,14 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  Injector,
+  afterNextRender,
+  computed,
+  inject,
+  signal,
+} from '@angular/core';
 import { rxResource, toSignal } from '@angular/core/rxjs-interop';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
@@ -11,6 +20,7 @@ import { RouterLink } from '@angular/router';
 import { map } from 'rxjs';
 
 import { TABLE_VIEW_QUERY } from '../../../../shared/utils/breakpoints';
+import { focusRowAfterDelete } from '../../../../shared/utils/focus-after-delete';
 import { StateMessage } from '../../../../shared/ui/state-message/state-message';
 import { LocalChanges } from '../../../../core/products/local-changes';
 import { ProductDeletion } from '../../../products/data-access/product-deletion';
@@ -55,6 +65,8 @@ export class BookmarksPage {
   private readonly local = inject(LocalChanges);
   private readonly deletion = inject(ProductDeletion);
   private readonly dialog = inject(MatDialog);
+  private readonly injector = inject(Injector);
+  private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
   protected readonly bookmarks = inject(Bookmarks);
 
   protected readonly showTable = toSignal(
@@ -145,6 +157,12 @@ export class BookmarksPage {
   }
 
   protected async onDelete(product: Product): Promise<void> {
-    if (await this.deletion.confirm(product)) this.deletion.delete(product);
+    if (!(await this.deletion.confirm(product))) return;
+    const index = this.items().findIndex((item) => item.id === product.id);
+    this.deletion.delete(product);
+    // Keep the place in the list: focus the row that moves into the same position
+    afterNextRender(() => focusRowAfterDelete(this.host.nativeElement, index), {
+      injector: this.injector,
+    });
   }
 }

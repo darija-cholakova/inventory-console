@@ -1,6 +1,7 @@
 <table
   mat-table
   [dataSource]="items()"
+  [trackBy]="trackById"
   matSort
   [matSortActive]="activeSort()"
   [matSortDirection]="direction()"

@@ -54,6 +54,9 @@ export class ProductsTable {
     'rating',
     'actions',
   ];
+  /** Rows keep their DOM (and focus) when the list is recomputed after an edit or delete. */
+  protected readonly trackById = (_index: number, product: Product) => product.id;
+
   protected readonly activeSort = computed(() => this.query().sortBy ?? '');
   protected readonly direction = computed(() => (this.query().sortBy ? this.query().order : ''));
 
