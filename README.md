@@ -5,6 +5,7 @@ f5: Product manipulation: 14: 28(start) -> 15:09
 f6: Bookmarked: 15:11(start) -> 15;21
 Refactor: 15:26 -> 15:29
 Unit test+e2e: 20:52 -> 21:07 (one component for now)
+restore 15-minute access token lifetime ~ <1m
 
 # Inventory Console
 
