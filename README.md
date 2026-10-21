@@ -114,6 +114,8 @@ flowchart LR
 - **Theme:** palette generated from the seed color Signal Blue `#1E63D6` with the official `theme-color` schematic; Inter font; light and dark theme from the same tokens via `light-dark()`. Blue is the calm, trusted color of admin and security tools and stays far from the green / amber / red stock statuses. Success and warning colors are app tokens (`--app-*`) because Material 3 has none. Only tokens are used in styles, no hard-coded colors, spacing or radii.
 - **Design process:** low-fidelity wireframes first, then a design system and the screens in [Figma](https://www.figma.com/design/s1SZiP9cZpyqIjp4nBXkto/Inventory-Console) (colors for both themes, type scale, components bound to the same tokens as the code).
 
+- **Motion:** Material 3 durations and easing curves as tokens (`--app-motion-*`, `--app-easing-*`). On the sign-in page the card fades in, and messages slide open and closed so the fields move smoothly instead of jumping. Built with Angular's `animate.enter` / `animate.leave` and plain CSS (no `@angular/animations`); the height animates with `grid-template-rows: 0fr → 1fr`. With "Reduce motion" turned on in the OS, animations are switched off.
+
 ### Authentication and security
 
 - **Session:** sign-in against `/auth/login`. User and tokens are kept in `sessionStorage`: a reload keeps the user signed in, closing the tab signs them out. Access tokens live 15 minutes (`expiresInMins: 15`, short-lived as OWASP recommends).
@@ -224,6 +226,11 @@ Start = prompt sent to Claude, end = feature committed and pushed (times from gi
 | Feature 6 – Bookmarked      | 15:11   | 15:21    | 10 min   |
 | Refactor – API layer, types | 15:21   | 15:29    | 8 min    |
 | Feature 7 – Tests           | 20:52   | 21:10    | 18 min   |
+| Feature 8 – A11y review     | 21:13   | 21:24    | 11 min   |
+| Account menu and profile    | 21:28   | 21:46    | 18 min   |
+| Stock / quantity, sign-in   | 21:50   | 21:58    | 8 min    |
+| README update               | 21:59   | 22:02    | 3 min    |
+| Sign-in animations          | 22:03   | 22:07    | 4 min    |
 
 ## Time spent
 

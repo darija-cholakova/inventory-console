@@ -10,24 +10,33 @@
       <p class="subtitle">Manage products, stock and pricing.</p>
     </header>
 
+    <!-- Messages slide open (the fields move down smoothly) and collapse when they go -->
     @if (errorMessage(); as message) {
-      <div class="banner banner--error" role="alert">
-        <mat-icon aria-hidden="true">error</mat-icon>
-        <span class="banner-text">{{ message }}</span>
-        <button
-          matIconButton
-          type="button"
-          class="banner-close"
-          aria-label="Dismiss error message"
-          (click)="dismissError()"
-        >
-          <mat-icon>close</mat-icon>
-        </button>
+      <div class="banner-slot" animate.enter="banner-enter" animate.leave="banner-leave">
+        <div class="banner-clip">
+          <div class="banner banner--error" role="alert">
+            <mat-icon aria-hidden="true">error</mat-icon>
+            <span class="banner-text">{{ message }}</span>
+            <button
+              matIconButton
+              type="button"
+              class="banner-close"
+              aria-label="Dismiss error message"
+              (click)="dismissError()"
+            >
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        </div>
       </div>
     } @else if (sessionExpired()) {
-      <div class="banner banner--info" role="status">
-        <mat-icon aria-hidden="true">schedule</mat-icon>
-        <span class="banner-text">Your session expired. Sign in again to continue.</span>
+      <div class="banner-slot" animate.enter="banner-enter" animate.leave="banner-leave">
+        <div class="banner-clip">
+          <div class="banner banner--info" role="status">
+            <mat-icon aria-hidden="true">schedule</mat-icon>
+            <span class="banner-text">Your session expired. Sign in again to continue.</span>
+          </div>
+        </div>
       </div>
     }
 

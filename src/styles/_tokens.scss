@@ -30,6 +30,12 @@
   // Sign-in card: fixed distance from the top of the page (from 600px)
   --app-login-top-offset: 96px;
 
+  // Motion (Material 3 durations and easing curves)
+  --app-motion-short: 150ms;
+  --app-motion-medium: 250ms;
+  --app-easing-decelerate: cubic-bezier(0.05, 0.7, 0.1, 1); // emphasized decelerate: enters
+  --app-easing-accelerate: cubic-bezier(0.3, 0, 0.8, 0.15); // emphasized accelerate: exits
+
   // Status colors (success / warning are not part of M3), harmonized with Signal Blue
   --app-success-container: light-dark(#92f7bc, #005231);
   --app-on-success-container: light-dark(#002111, #92f7bc);
