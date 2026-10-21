@@ -1,4 +1,5 @@
-// for me> Sign in: 13:24
+// for me> Sign in: 13:24(start) - almost done: 13:45 (needs few style tweaks)
+F2: Products list: 13:47(start)
 
 # Inventory Console
 
