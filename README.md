@@ -6,6 +6,7 @@ f6: Bookmarked: 15:11(start) -> 15;21
 Refactor: 15:26 -> 15:29
 Unit test+e2e: 20:52 -> 21:07 (one component for now)
 restore 15-minute access token lifetime ~ <1m
+Checks: 21:13
 
 # Inventory Console
 
@@ -127,7 +128,9 @@ Start = prompt sent to Claude, end = feature committed and pushed (times from gi
 | Feature 3 – Products list   | 13:47   | 14:09    | 22 min   |
 | Feature 4 – Product detail  | 14:12   | 14:26    | 14 min   |
 | Feature 5 – Edit and delete | 14:29   | 15:09    | 40 min   |
-| Feature 6 – Bookmarked      | 15:11   |          |          |
+| Feature 6 – Bookmarked      | 15:11   | 15:21    | 10 min   |
+| Refactor – API layer, types | 15:21   | 15:29    | 8 min    |
+| Feature 7 – Tests           | 20:52   | 21:10    | 18 min   |
 
 ## Time spent
 
