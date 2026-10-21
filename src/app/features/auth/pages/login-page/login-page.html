@@ -13,12 +13,21 @@
     @if (errorMessage(); as message) {
       <div class="banner banner--error" role="alert">
         <mat-icon aria-hidden="true">error</mat-icon>
-        <span>{{ message }}</span>
+        <span class="banner-text">{{ message }}</span>
+        <button
+          matIconButton
+          type="button"
+          class="banner-close"
+          aria-label="Dismiss error message"
+          (click)="dismissError()"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
       </div>
     } @else if (sessionExpired()) {
       <div class="banner banner--info" role="status">
         <mat-icon aria-hidden="true">schedule</mat-icon>
-        <span>Your session expired. Sign in again to continue.</span>
+        <span class="banner-text">Your session expired. Sign in again to continue.</span>
       </div>
     }
 
@@ -35,12 +44,13 @@
           #usernameInput
           matInput
           formControlName="username"
+          [errorStateMatcher]="errorStateMatcher"
           autocomplete="username"
           autocapitalize="none"
           spellcheck="false"
           required
         />
-        @if (form.controls.username.hasError('required')) {
+        @if (form.controls.username.invalid) {
           <mat-error>Username is required.</mat-error>
         }
       </mat-form-field>
@@ -51,6 +61,7 @@
           #passwordInput
           matInput
           formControlName="password"
+          [errorStateMatcher]="errorStateMatcher"
           [type]="passwordVisible() ? 'text' : 'password'"
           autocomplete="current-password"
           required

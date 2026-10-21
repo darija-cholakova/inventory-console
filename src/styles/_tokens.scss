@@ -14,6 +14,8 @@
   // Layout
   --app-nav-width: 240px;
   --app-content-max-width: 1200px;
+  // Sign-in card: tall enough for the form plus a two-line message banner
+  --app-login-card-min-height: 560px;
 
   // Status colors (success / warning are not part of M3), harmonized with Signal Blue
   --app-success-container: light-dark(#92f7bc, #005231);

@@ -7,19 +7,19 @@
 
 .page {
   display: grid;
-  place-items: start center;
+  place-items: center;
   min-height: 100dvh;
   padding: var(--app-space-16);
   box-sizing: border-box;
-
-  @media (min-width: 600px) {
-    place-items: center;
-  }
 }
 
 .card {
   display: flex;
   flex-direction: column;
+  // Content stays vertically centered; the fixed minimum height already fits the error banner,
+  // so a message only shifts the content a little instead of resizing the card.
+  justify-content: center;
+  min-block-size: var(--app-login-card-min-height);
   gap: var(--app-space-24);
   inline-size: 100%;
   max-inline-size: 420px;
@@ -71,6 +71,19 @@
   padding: var(--app-space-12);
   border-radius: var(--mat-sys-corner-small);
   font: var(--mat-sys-body-medium);
+
+  .banner-text {
+    flex: 1;
+  }
+
+  // Compact icon button that fits the banner line height
+  .banner-close {
+    --mat-icon-button-state-layer-size: 32px;
+    margin-block: calc(var(--app-space-4) * -1);
+    margin-inline-end: calc(var(--app-space-4) * -1);
+    padding: var(--app-space-4);
+    color: inherit;
+  }
 
   &--error {
     background: var(--mat-sys-error-container);

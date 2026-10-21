@@ -18,6 +18,7 @@ import { MatToolbar } from '@angular/material/toolbar';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { map } from 'rxjs';
 
+import { AuthService } from '../../auth/auth.service';
 import { ThemeService } from '../../theme/theme.service';
 import { AccountMenu } from '../account-menu/account-menu';
 import { NavItem } from './nav-item.model';
@@ -50,6 +51,11 @@ const EXPANDED_QUERY = '(min-width: 840px)';
 })
 export class Shell {
   protected readonly theme = inject(ThemeService);
+
+  constructor() {
+    // The shell only renders for a signed-in user: confirm the stored session is still valid.
+    inject(AuthService).verifySession();
+  }
 
   protected readonly navItems: NavItem[] = [
     { label: 'Products', path: '/products', icon: 'inventory_2' },

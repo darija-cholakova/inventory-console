@@ -9,6 +9,7 @@ import {
   viewChild,
 } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatError, MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
@@ -53,9 +54,19 @@ export class LoginPage {
   readonly reason = input<string>();
 
   protected readonly form = inject(NonNullableFormBuilder).group({
-    username: ['', Validators.required],
+    // pattern(/\S/) also rejects a username made of spaces only
+    username: ['', [Validators.required, Validators.pattern(/\S/)]],
     password: ['', Validators.required],
   });
+
+  /**
+   * Field errors appear only after a sign-in attempt (validation on submit) and are hidden again
+   * after a failed sign-in, so the cleared password is not flagged next to the error banner.
+   */
+  private readonly showFieldErrors = signal(false);
+  protected readonly errorStateMatcher: ErrorStateMatcher = {
+    isErrorState: (control) => !!control?.invalid && this.showFieldErrors(),
+  };
 
   protected readonly submitting = signal(false);
   protected readonly passwordVisible = signal(false);
@@ -75,6 +86,10 @@ export class LoginPage {
   private readonly passwordInput =
     viewChild.required<ElementRef<HTMLInputElement>>('passwordInput');
 
+  protected dismissError(): void {
+    this.errorKind.set(null);
+  }
+
   protected togglePasswordVisibility(): void {
     this.passwordVisible.update((visible) => !visible);
   }
@@ -83,7 +98,7 @@ export class LoginPage {
     if (this.submitting()) return;
 
     if (this.form.invalid) {
-      this.form.markAllAsTouched();
+      this.showFieldErrors.set(true);
       this.focusFirstInvalidField();
       return;
     }
@@ -92,7 +107,9 @@ export class LoginPage {
     this.submitting.set(true);
     this.form.disable();
 
-    this.auth.login(this.form.getRawValue()).subscribe({
+    const { username, password } = this.form.getRawValue();
+    // Trim the username only: spaces can be part of a password.
+    this.auth.login({ username: username.trim(), password }).subscribe({
       next: () => {
         void this.router.navigateByUrl(safeReturnUrl(this.returnUrl()), { replaceUrl: true });
       },
@@ -100,6 +117,7 @@ export class LoginPage {
         this.submitting.set(false);
         this.form.enable();
         this.errorKind.set(kind);
+        this.showFieldErrors.set(false);
         if (kind === 'invalid-credentials') {
           this.form.controls.password.reset();
           // Wait for the re-enabled input before moving focus.

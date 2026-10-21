@@ -14,8 +14,11 @@ import {
 } from './models/auth.model';
 
 const STORAGE_KEY = 'inventory-console.session';
-/** Short-lived access token; the refresh token renews it silently. */
-const ACCESS_TOKEN_MINUTES = 15;
+/**
+ * Short-lived access token; the refresh token renews it silently.
+ * TEMP: 1 minute (the API accepts whole minutes) to test the refresh flow; set back to 15 before committing.
+ */
+const ACCESS_TOKEN_MINUTES = 1;
 
 /**
  * Owns the signed-in session.
@@ -49,6 +52,28 @@ export class AuthService {
       }),
       catchError((error: unknown) => throwError(() => toLoginErrorKind(error))),
     );
+  }
+
+  /**
+   * Re-checks a session restored from sessionStorage with GET /auth/me.
+   * An expired access token gets refreshed by the interceptor; a dead session ends there.
+   */
+  verifySession(): void {
+    if (!this.session()) return;
+
+    this.http.get<AuthUser>(`${this.apiUrl}/auth/me`).subscribe({
+      next: ({ id, username, email, firstName, lastName, gender, image }) => {
+        const current = this.session();
+        if (current) {
+          this.saveSession({
+            ...current,
+            user: { id, username, email, firstName, lastName, gender, image },
+          });
+        }
+      },
+      // Errors are handled by the interceptor (refresh or expire session).
+      error: () => undefined,
+    });
   }
 
   /** Exchanges the refresh token for a new token pair. */
