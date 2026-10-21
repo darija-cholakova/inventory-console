@@ -19,14 +19,15 @@ import { MatIcon } from '@angular/material/icon';
 import { Title } from '@angular/platform-browser';
 import { Router, RouterLink } from '@angular/router';
 
-import { BookmarkButton } from '../../../bookmarks/ui/bookmark-button/bookmark-button';
+import { BookmarkButton } from '../../../../shared/ui/bookmark-button/bookmark-button';
+import { BackLink } from '../../../../shared/ui/back-link/back-link';
 import { StateMessage } from '../../../../shared/ui/state-message/state-message';
 import { StockChip } from '../../../../shared/ui/stock-chip/stock-chip';
 import { LocalChanges } from '../../data-access/local-changes';
 import { ProductDeletion } from '../../data-access/product-deletion';
 import { ProductsApi } from '../../../../core/api/products-api';
 import { ProductsListUrl } from '../../data-access/products-list-url';
-import { ProductEditDialog } from '../../ui/product-edit-dialog/product-edit-dialog';
+import { ProductEditDialog } from '../../dialogs/product-edit-dialog/product-edit-dialog';
 import { ProductGallery } from '../../ui/product-gallery/product-gallery';
 import { RatingStars } from '../../ui/rating-stars/rating-stars';
 import { ProductDetail } from '../../../../shared/models/interfaces';
@@ -34,6 +35,7 @@ import { ProductDetail } from '../../../../shared/models/interfaces';
 @Component({
   selector: 'app-product-detail-page',
   imports: [
+    BackLink,
     RouterLink,
     MatIcon,
     MatButton,

@@ -1,7 +1,7 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { Injectable, computed, inject, signal } from '@angular/core';
 
-import { BookmarkTarget } from '../../../shared/models/interfaces';
+import { BookmarkTarget } from '../../shared/models/interfaces';
 
 const STORAGE_KEY = 'inventory-console.bookmarks';
 

@@ -60,28 +60,39 @@ npm run e2e        # end-to-end test (Playwright); first run: npx playwright ins
 
 ```
 src/app/
-  core/          app-wide singletons
-    api/           all HTTP clients: api.config.ts (base URL), auth-api.ts, products-api.ts, users-api.ts
-    auth/          session (AuthService), interceptor, guards, safe return URL
-    layout/        shell (top bar, side nav), account menu
-    routing/       page title strategy, unsaved-changes guard
-    theme/         light / dark / system theme
+  core/            app-wide singletons and state
+    api/             all HTTP clients: api.config.ts (base URL), auth-api.ts, products-api.ts, users-api.ts
+    auth/            session (AuthService), interceptor, guards, safe return URL
+    bookmarks/       bookmarked ids (localStorage); used by the nav count, the button and the Bookmarked page
+    layout/          shell (top bar, side nav), account menu
+    routing/         page title strategy, unsaved-changes guard
+    theme/           light / dark / system theme
   shared/
-    models/        interfaces.ts (all interfaces) and types.ts (all type aliases)
-    ui/            reusable components: state message, stock chip, product image,
-                   confirm dialog, dialog shell, undo snackbar
-    utils/         small pure helpers (stock status, breakpoints)
-    styles/
-  features/      one folder per feature: auth, products, bookmarks, profile
-    <feature>/     pages/ (routed), ui/ (components), data-access/ (stores, services), utils/
+    models/          interfaces.ts (all interfaces) and types.ts (all type aliases)
+    ui/              reusable components, no feature logic:
+      dialogs/         confirm-dialog (+ confirmDiscardChanges), dialog-shell (frame + close logic)
+      banner/          inline error / info message, full width of its container
+      form-error-summary/  error list with links to the fields
+      back-link/       "‹ Products" link
+      products-table/, product-cards/, products-skeleton/  the product list views (Products and Bookmarked)
+      bookmark-button/, stock-chip/, product-image/, state-message/, undo-snackbar/
+    utils/           small pure helpers (stock status, breakpoints)
+    styles/          page headings, skeleton mixin
+  features/        one folder per feature: auth, products, bookmarks, profile
+    <feature>/
+      pages/           routed screens
+      dialogs/         dialogs opened from several places (product edit, profile edit)
+      ui/              feature-only components (product form, gallery, toolbar, profile form)
+      data-access/     stores and services (state, local changes, delete flow)
+      utils/           validation schemas, mappers, constants
 ```
 
 ```mermaid
 flowchart LR
   subgraph UI
     Pages[Pages<br/>products, detail, edit, bookmarked, profile]
-    Ui[Feature UI<br/>table, cards, forms, dialogs]
-    Shared[Shared UI<br/>dialogs, chips, states]
+    Ui[Feature UI and dialogs<br/>forms, gallery, edit dialogs]
+    Shared[Shared UI<br/>table, cards, dialog shell, banner, chips]
   end
   subgraph State
     Store[ProductsStore<br/>SignalStore]
@@ -104,7 +115,11 @@ flowchart LR
 - Every route is lazy loaded; the shell is a layout route that wraps all signed-in pages.
 - **API layer:** every HTTP call goes through a small, stateless client in `core/api/`. Services and stores above it own the state (session, local edits, current page), so the endpoints can be found, mocked or replaced in one place.
 - **Types:** all of them live in two files, `shared/models/interfaces.ts` (object shapes: API responses, state, form models, dialog data) and `shared/models/types.ts` (unions and derived types such as `LoadStatus`, `SortField`, `ProductChanges = Partial<Pick<…>>`, `LoginResponse = AuthUser & AuthTokens`), grouped by area with section comments. Components and services only import them.
-- **Pages vs UI:** pages are routed and talk to stores and services; UI components get data through `input()` and report through `output()`, so the same table, cards and forms are reused in several places.
+- **Where things go:** anything used by more than one feature lives in `shared/ui` (the product table, cards and skeleton are used by Products and Bookmarked; the bookmark button by the table, the cards and the detail page), so features never import from each other. App-wide state that the shell also needs (bookmarks, session, theme) lives in `core/`. `shared` depends only on `core` and Angular, never on a feature.
+- **Pages, dialogs and UI:** pages are routed and talk to stores and services; `dialogs/` holds feature dialogs that load and save data (opened from several pages); shared UI components get data through `input()` and report through `output()`.
+- **One dialog frame:** `DialogShell` owns closing for every form dialog: Esc, a click outside, the X button and the form's Cancel all go through `requestClose()`, which asks "Discard unsaved changes?" when the form reports changes. Feature dialogs only pass `hasUnsavedChanges`.
+- **Shared form feedback:** `Banner` (error / info, full width, `role="alert"` or `"status"`) is used on the sign-in page and in both forms; `FormErrorSummary` lists the errors with links to the fields in both forms. Skeleton blocks use one SCSS mixin (`shared/styles/_skeleton.scss`).
+- **`ProductDeletion` is a small facade:** it sits in `data-access` but also opens the confirmation dialog and the Undo snackbar, because the delete flow (confirm → hide → Undo window → `DELETE` → rollback on error) is one piece of logic used by the list, the cards, Bookmarked and the detail page. Keeping it in one service means every place behaves the same; components only call `confirm()` and `delete()`.
 
 ## Technical decisions
 
@@ -232,6 +247,8 @@ Start = prompt sent to Claude, end = feature committed and pushed (times from gi
 | Stock / quantity, sign-in   | 21:50   | 21:58    | 8 min    |
 | README update               | 21:59   | 22:02    | 3 min    |
 | Sign-in animations          | 22:03   | 22:07    | 4 min    |
+| Bundle size check           | 22:08   | 22:11    | 3 min    |
+| Architecture refactor       | 22:15   | 22:23    | 8 min    |
 
 ## Time spent
 

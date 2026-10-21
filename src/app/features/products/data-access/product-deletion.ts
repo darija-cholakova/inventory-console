@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { firstValueFrom } from 'rxjs';
 
-import { ConfirmDialog } from '../../../shared/ui/confirm-dialog/confirm-dialog';
+import { ConfirmDialog } from '../../../shared/ui/dialogs/confirm-dialog/confirm-dialog';
 
 import { UndoSnackbar } from '../../../shared/ui/undo-snackbar/undo-snackbar';
 import { LocalChanges } from './local-changes';

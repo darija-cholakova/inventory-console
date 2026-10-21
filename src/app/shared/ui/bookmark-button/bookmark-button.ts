@@ -3,8 +3,8 @@ import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
 
-import { Bookmarks } from '../../data-access/bookmarks';
-import { BookmarkTarget } from '../../../../shared/models/interfaces';
+import { Bookmarks } from '../../../core/bookmarks/bookmarks';
+import { BookmarkTarget } from '../../models/interfaces';
 
 /** Toggle button used in the table, the cards and the detail page. State = filled icon + aria-pressed. */
 @Component({

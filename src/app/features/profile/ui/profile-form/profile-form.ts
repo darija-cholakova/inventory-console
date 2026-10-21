@@ -8,16 +8,23 @@ import {
   output,
   signal,
 } from '@angular/core';
-import { FieldTree, FormField, FormRoot, form } from '@angular/forms/signals';
+import { FormField, FormRoot, form } from '@angular/forms/signals';
 import { MatButton } from '@angular/material/button';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatIcon } from '@angular/material/icon';
 import { MatInput } from '@angular/material/input';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { firstValueFrom } from 'rxjs';
 
-import { ProfileFormModel, SummaryField, UserProfile } from '../../../../shared/models/interfaces';
+import { Banner } from '../../../../shared/ui/banner/banner';
+import { FormErrorSummary } from '../../../../shared/ui/form-error-summary/form-error-summary';
+
+import {
+  ProfileFormModel,
+  FormErrorItem,
+  SummaryField,
+  UserProfile,
+} from '../../../../shared/models/interfaces';
 import { ProfileEdits } from '../../data-access/profile-edits';
 import { profileFormSchema } from '../../utils/profile-form.schema';
 
@@ -34,8 +41,9 @@ const EMPTY_FORM: ProfileFormModel = { firstName: '', lastName: '', phone: '', j
     MatError,
     MatInput,
     MatButton,
-    MatIcon,
     MatProgressSpinner,
+    Banner,
+    FormErrorSummary,
   ],
   templateUrl: './profile-form.html',
   styleUrl: './profile-form.scss',
@@ -83,19 +91,18 @@ export class ProfileForm {
     { id: 'profile-job-title', field: this.profileForm.jobTitle },
   ];
 
-  protected readonly summary = computed(() =>
+  protected readonly summary = computed<FormErrorItem[]>(() =>
     this.summaryFields
       .filter(({ field }) => field().invalid())
-      .map(({ id, field }) => ({ id, field, message: field().errors()[0]?.message ?? '' })),
+      .map(({ id, field }) => ({
+        id,
+        message: field().errors()[0]?.message ?? '',
+        focus: () => field().focusBoundControl(),
+      })),
   );
 
   hasUnsavedChanges(): boolean {
     return !this.isSaved && this.profileForm().dirty();
-  }
-
-  protected focusField(event: Event, field: FieldTree<unknown>): void {
-    event.preventDefault();
-    field().focusBoundControl();
   }
 
   private firstInvalid(): SummaryField | undefined {

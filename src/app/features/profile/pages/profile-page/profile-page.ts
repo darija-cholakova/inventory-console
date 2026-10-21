@@ -8,7 +8,7 @@ import { MatProgressBar } from '@angular/material/progress-bar';
 import { AuthApi } from '../../../../core/api/auth-api';
 import { StateMessage } from '../../../../shared/ui/state-message/state-message';
 import { ProfileEdits } from '../../data-access/profile-edits';
-import { ProfileEditDialog } from '../../ui/profile-edit-dialog/profile-edit-dialog';
+import { ProfileEditDialog } from '../../dialogs/profile-edit-dialog/profile-edit-dialog';
 
 /**
  * Profile of the signed-in user (GET /auth/me) with local edits applied. Only work-related

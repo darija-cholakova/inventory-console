@@ -1,7 +1,4 @@
-<a class="back" [routerLink]="listUrl()">
-  <mat-icon aria-hidden="true">chevron_left</mat-icon>
-  Products
-</a>
+<app-back-link [link]="listUrl()" label="Products" />
 
 @if (product.isLoading()) {
   <div class="skeleton" role="status">

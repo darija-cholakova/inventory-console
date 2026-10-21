@@ -7,11 +7,11 @@ import { MatSort, MatSortHeader, Sort } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { RouterLink } from '@angular/router';
 
-import { BookmarkButton } from '../../../bookmarks/ui/bookmark-button/bookmark-button';
-import { ProductImage } from '../../../../shared/ui/product-image/product-image';
-import { StockChip } from '../../../../shared/ui/stock-chip/stock-chip';
-import { Product, ProductQuery, SortChange } from '../../../../shared/models/interfaces';
-import { SortField } from '../../../../shared/models/types';
+import { BookmarkButton } from '../bookmark-button/bookmark-button';
+import { ProductImage } from '../product-image/product-image';
+import { StockChip } from '../stock-chip/stock-chip';
+import { Product, ProductQuery, SortChange } from '../../models/interfaces';
+import { SortField } from '../../models/types';
 
 /** Desktop list: sorting happens on the server, so MatSort only reports header clicks. */
 @Component({

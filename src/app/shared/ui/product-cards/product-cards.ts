@@ -5,10 +5,10 @@ import { MatIcon } from '@angular/material/icon';
 import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
 import { RouterLink } from '@angular/router';
 
-import { BookmarkButton } from '../../../bookmarks/ui/bookmark-button/bookmark-button';
-import { ProductImage } from '../../../../shared/ui/product-image/product-image';
-import { StockChip } from '../../../../shared/ui/stock-chip/stock-chip';
-import { Product } from '../../../../shared/models/interfaces';
+import { BookmarkButton } from '../bookmark-button/bookmark-button';
+import { ProductImage } from '../product-image/product-image';
+import { StockChip } from '../stock-chip/stock-chip';
+import { Product } from '../../models/interfaces';
 
 /**
  * Small-screen list: same data as the table, laid out as cards.

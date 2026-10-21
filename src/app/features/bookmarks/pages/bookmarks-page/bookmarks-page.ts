@@ -14,11 +14,11 @@ import { StateMessage } from '../../../../shared/ui/state-message/state-message'
 import { LocalChanges } from '../../../products/data-access/local-changes';
 import { ProductDeletion } from '../../../products/data-access/product-deletion';
 import { ProductsApi } from '../../../../core/api/products-api';
-import { ProductCards } from '../../../products/ui/product-cards/product-cards';
-import { ProductEditDialog } from '../../../products/ui/product-edit-dialog/product-edit-dialog';
-import { ProductsSkeleton } from '../../../products/ui/products-skeleton/products-skeleton';
-import { ProductsTable } from '../../../products/ui/products-table/products-table';
-import { Bookmarks } from '../../data-access/bookmarks';
+import { ProductCards } from '../../../../shared/ui/product-cards/product-cards';
+import { ProductEditDialog } from '../../../products/dialogs/product-edit-dialog/product-edit-dialog';
+import { ProductsSkeleton } from '../../../../shared/ui/products-skeleton/products-skeleton';
+import { ProductsTable } from '../../../../shared/ui/products-table/products-table';
+import { Bookmarks } from '../../../../core/bookmarks/bookmarks';
 import { DEFAULT_QUERY } from '../../../products/utils/product-query.constants';
 import { Product, ProductQuery, SortChange } from '../../../../shared/models/interfaces';
 

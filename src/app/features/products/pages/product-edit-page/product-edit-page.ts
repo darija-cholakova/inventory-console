@@ -9,11 +9,11 @@ import {
 } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { MatButton } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, RouterLink } from '@angular/router';
 
+import { BackLink } from '../../../../shared/ui/back-link/back-link';
 import { StateMessage } from '../../../../shared/ui/state-message/state-message';
 import { LocalChanges } from '../../data-access/local-changes';
 import { ProductsApi } from '../../../../core/api/products-api';
@@ -26,7 +26,7 @@ import { HasUnsavedChanges } from '../../../../shared/models/interfaces';
  */
 @Component({
   selector: 'app-product-edit-page',
-  imports: [RouterLink, MatButton, MatIcon, MatProgressBar, StateMessage, ProductForm],
+  imports: [BackLink, RouterLink, MatButton, MatProgressBar, StateMessage, ProductForm],
   templateUrl: './product-edit-page.html',
   styleUrl: './product-edit-page.scss',
   // Closing or reloading the tab is outside the router: let the browser ask instead

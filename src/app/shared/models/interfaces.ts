@@ -260,6 +260,13 @@ export interface ConfirmDialogData {
   confirmLabel: string;
 }
 
+/** One entry of a form's error summary: link target, message and how to focus the field. */
+export interface FormErrorItem {
+  id: string;
+  message: string;
+  focus: () => void;
+}
+
 export interface UndoSnackbarData {
   message: string;
   /** Time before the snackbar closes on its own; paused while hovered or focused. */

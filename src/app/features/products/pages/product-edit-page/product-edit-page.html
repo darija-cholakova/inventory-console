@@ -1,7 +1,4 @@
-<a class="back" [routerLink]="['/products', id()]">
-  <mat-icon aria-hidden="true">chevron_left</mat-icon>
-  Product
-</a>
+<app-back-link [link]="['/products', id()]" label="Product" />
 
 @if (product.isLoading()) {
   <div role="status">

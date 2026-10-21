@@ -41,5 +41,8 @@ export type ProductEditDialogResult = true | undefined;
 
 // ─── Shared UI ───────────────────────────────────────────────────────────
 
+/** Look and live-region role of a banner: error = role="alert", info = role="status". */
+export type BannerKind = 'error' | 'info';
+
 /** Stock level shown to the user. */
 export type StockStatus = 'in-stock' | 'low-stock' | 'out-of-stock';

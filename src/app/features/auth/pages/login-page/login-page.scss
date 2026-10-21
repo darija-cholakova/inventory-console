@@ -114,38 +114,6 @@
   }
 }
 
-.banner {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--app-space-8);
-  padding: var(--app-space-12);
-  border-radius: var(--mat-sys-corner-small);
-  font: var(--mat-sys-body-medium);
-
-  .banner-text {
-    flex: 1;
-  }
-
-  // Compact icon button that fits the banner line height
-  .banner-close {
-    --mat-icon-button-state-layer-size: 32px;
-    margin-block: calc(var(--app-space-4) * -1);
-    margin-inline-end: calc(var(--app-space-4) * -1);
-    padding: var(--app-space-4);
-    color: inherit;
-  }
-
-  &--error {
-    background: var(--mat-sys-error-container);
-    color: var(--mat-sys-on-error-container);
-  }
-
-  &--info {
-    background: var(--mat-sys-secondary-container);
-    color: var(--mat-sys-on-secondary-container);
-  }
-}
-
 .form {
   display: flex;
   flex-direction: column;

@@ -1,0 +1,15 @@
+// Loading placeholders: a muted block that pulses (switched off by prefers-reduced-motion).
+@mixin block {
+  display: block;
+  border-radius: var(--mat-sys-corner-extra-small);
+  background: var(--mat-sys-surface-container-highest);
+  animation: skeleton-pulse 1.4s ease-in-out infinite;
+}
+
+@mixin keyframes {
+  @keyframes skeleton-pulse {
+    50% {
+      opacity: 0.5;
+    }
+  }
+}

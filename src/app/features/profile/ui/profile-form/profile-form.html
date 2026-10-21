@@ -1,26 +1,11 @@
 @if (saveFailed()) {
-  <div class="banner" role="alert">
-    <mat-icon aria-hidden="true">error</mat-icon>
-    <span>Couldn't save your profile. Check your connection and try again.</span>
-  </div>
+  <app-banner kind="error"
+    >Couldn't save your profile. Check your connection and try again.</app-banner
+  >
 }
 
 @if (attempted() && summary().length) {
-  <section class="summary" aria-labelledby="profile-summary-title">
-    <h3 id="profile-summary-title" class="summary-title">
-      <mat-icon aria-hidden="true">error</mat-icon>
-      Fix {{ summary().length }} {{ summary().length === 1 ? 'error' : 'errors' }} to save
-    </h3>
-    <ul>
-      @for (error of summary(); track error.id) {
-        <li>
-          <a [href]="'#' + error.id" (click)="focusField($event, error.field)">{{
-            error.message
-          }}</a>
-        </li>
-      }
-    </ul>
-  </section>
+  <app-form-error-summary [items]="summary()" />
 }
 
 <form class="form" [formRoot]="profileForm" [attr.aria-busy]="profileForm().submitting()">

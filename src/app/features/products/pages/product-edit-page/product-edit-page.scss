@@ -10,17 +10,6 @@
   margin-inline: auto;
 }
 
-.back {
-  align-self: flex-start;
-  display: inline-flex;
-  align-items: center;
-  gap: var(--app-space-4);
-  font: var(--mat-sys-label-large);
-  color: var(--mat-sys-primary);
-  text-decoration: none;
-  border-radius: var(--mat-sys-corner-small);
-}
-
 .card {
   display: flex;
   flex-direction: column;

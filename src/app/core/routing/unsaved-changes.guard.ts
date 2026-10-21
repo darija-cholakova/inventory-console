@@ -14,7 +14,7 @@ export const unsavedChangesGuard: CanDeactivateFn<HasUnsavedChanges> = async (pa
   const injector = inject(Injector);
   const [{ MatDialog }, { confirmDiscardChanges }, { firstValueFrom }] = await Promise.all([
     import('@angular/material/dialog'),
-    import('../../shared/ui/confirm-dialog/confirm-discard'),
+    import('../../shared/ui/dialogs/confirm-dialog/confirm-discard'),
     import('rxjs'),
   ]);
   return firstValueFrom(confirmDiscardChanges(injector.get(MatDialog)));

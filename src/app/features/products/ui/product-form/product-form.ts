@@ -8,7 +8,7 @@ import {
   output,
   signal,
 } from '@angular/core';
-import { FieldTree, FormField, FormRoot, form } from '@angular/forms/signals';
+import { FormField, FormRoot, form } from '@angular/forms/signals';
 import { MatButton } from '@angular/material/button';
 import { ErrorStateMatcher } from '@angular/material/core';
 import {
@@ -19,11 +19,13 @@ import {
   MatPrefix,
   MatSuffix,
 } from '@angular/material/form-field';
-import { MatIcon } from '@angular/material/icon';
 import { MatInput } from '@angular/material/input';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatOption, MatSelect } from '@angular/material/select';
 import { firstValueFrom } from 'rxjs';
+
+import { Banner } from '../../../../shared/ui/banner/banner';
+import { FormErrorSummary } from '../../../../shared/ui/form-error-summary/form-error-summary';
 
 import { ProductImage } from '../../../../shared/ui/product-image/product-image';
 import { LocalChanges } from '../../data-access/local-changes';
@@ -33,6 +35,7 @@ import {
   Category,
   ProductDetail,
   ProductFormModel,
+  FormErrorItem,
   SummaryField,
 } from '../../../../shared/models/interfaces';
 
@@ -65,8 +68,9 @@ const EMPTY_FORM: ProductFormModel = {
     MatSelect,
     MatOption,
     MatButton,
-    MatIcon,
     MatProgressSpinner,
+    Banner,
+    FormErrorSummary,
     ProductImage,
   ],
   templateUrl: './product-form.html',
@@ -125,19 +129,18 @@ export class ProductForm {
     { id: 'product-stock', field: this.productForm.stock },
   ];
 
-  protected readonly summary = computed(() =>
+  protected readonly summary = computed<FormErrorItem[]>(() =>
     this.summaryFields
       .filter(({ field }) => field().invalid())
-      .map(({ id, field }) => ({ id, field, message: field().errors()[0]?.message ?? '' })),
+      .map(({ id, field }) => ({
+        id,
+        message: field().errors()[0]?.message ?? '',
+        focus: () => field().focusBoundControl(),
+      })),
   );
 
   hasUnsavedChanges(): boolean {
     return !this.isSaved && this.productForm().dirty();
-  }
-
-  protected focusField(event: Event, field: FieldTree<unknown>): void {
-    event.preventDefault();
-    field().focusBoundControl();
   }
 
   private firstInvalid(): SummaryField | undefined {

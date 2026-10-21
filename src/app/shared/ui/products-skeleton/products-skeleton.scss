@@ -1,3 +1,5 @@
+@use '../../styles/skeleton';
+
 :host {
   display: grid;
   gap: var(--app-space-12);
@@ -19,10 +21,7 @@
 }
 
 .block {
-  display: block;
-  border-radius: var(--mat-sys-corner-extra-small);
-  background: var(--mat-sys-surface-container-highest);
-  animation: pulse 1.4s ease-in-out infinite;
+  @include skeleton.block;
 }
 
 .thumb {
@@ -45,8 +44,4 @@
   block-size: 24px;
 }
 
-@keyframes pulse {
-  50% {
-    opacity: 0.5;
-  }
-}
+@include skeleton.keyframes;

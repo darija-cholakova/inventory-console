@@ -14,28 +14,21 @@
     @if (errorMessage(); as message) {
       <div class="banner-slot" animate.enter="banner-enter" animate.leave="banner-leave">
         <div class="banner-clip">
-          <div class="banner banner--error" role="alert">
-            <mat-icon aria-hidden="true">error</mat-icon>
-            <span class="banner-text">{{ message }}</span>
-            <button
-              matIconButton
-              type="button"
-              class="banner-close"
-              aria-label="Dismiss error message"
-              (click)="dismissError()"
-            >
-              <mat-icon>close</mat-icon>
-            </button>
-          </div>
+          <app-banner
+            kind="error"
+            dismissLabel="Dismiss error message"
+            (dismissed)="dismissError()"
+          >
+            {{ message }}
+          </app-banner>
         </div>
       </div>
     } @else if (sessionExpired()) {
       <div class="banner-slot" animate.enter="banner-enter" animate.leave="banner-leave">
         <div class="banner-clip">
-          <div class="banner banner--info" role="status">
-            <mat-icon aria-hidden="true">schedule</mat-icon>
-            <span class="banner-text">Your session expired. Sign in again to continue.</span>
-          </div>
+          <app-banner kind="info" icon="schedule">
+            Your session expired. Sign in again to continue.
+          </app-banner>
         </div>
       </div>
     }

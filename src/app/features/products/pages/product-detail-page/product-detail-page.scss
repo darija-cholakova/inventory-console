@@ -1,23 +1,13 @@
 @use '@angular/material' as mat;
 @use '../../../../shared/styles/page';
 @use '../../../../../styles/breakpoints' as bp;
+@use '../../../../shared/styles/skeleton';
 
 // Mobile first: one column; from the two-column breakpoint gallery and summary sit side by side.
 :host {
   display: flex;
   flex-direction: column;
   gap: var(--app-space-24);
-}
-
-.back {
-  align-self: flex-start;
-  display: inline-flex;
-  align-items: center;
-  gap: var(--app-space-4);
-  font: var(--mat-sys-label-large);
-  color: var(--mat-sys-primary);
-  text-decoration: none;
-  border-radius: var(--mat-sys-corner-small);
 }
 
 // Mobile first: actions wrap under the title; side by side from 600px
@@ -219,11 +209,8 @@
 }
 
 .block {
-  display: block;
+  @include skeleton.block;
   block-size: 16px;
-  border-radius: var(--mat-sys-corner-extra-small);
-  background: var(--mat-sys-surface-container-highest);
-  animation: pulse 1.4s ease-in-out infinite;
 }
 
 .title-block {
@@ -237,8 +224,4 @@
   border-radius: var(--mat-sys-corner-large);
 }
 
-@keyframes pulse {
-  50% {
-    opacity: 0.5;
-  }
-}
+@include skeleton.keyframes;
