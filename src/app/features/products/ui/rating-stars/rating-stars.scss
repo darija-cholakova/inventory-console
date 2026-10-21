@@ -1,0 +1,18 @@
+:host {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--app-space-8);
+}
+
+.stars {
+  letter-spacing: var(--app-space-2);
+  color: var(--mat-sys-outline);
+
+  .filled {
+    color: var(--mat-sys-tertiary);
+  }
+}
+
+.value {
+  font: var(--mat-sys-label-large);
+}

@@ -1,0 +1,4 @@
+// Layout breakpoints shared by components (media queries cannot use CSS custom properties).
+
+// Product detail: image and summary side by side only when both have enough room
+$detail-two-columns: 1256px;

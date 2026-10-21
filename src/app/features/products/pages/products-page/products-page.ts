@@ -1,7 +1,7 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { ChangeDetectionStrategy, Component, computed, effect, inject } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { MatButton } from '@angular/material/button';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatProgressBar } from '@angular/material/progress-bar';
@@ -10,6 +10,7 @@ import { map } from 'rxjs';
 
 import { StateMessage } from '../../../../shared/ui/state-message/state-message';
 import { paramsFromQuery, queryFromParams } from '../../data-access/product-query-params';
+import { ProductsListUrl } from '../../data-access/products-list-url';
 import { ProductsStore } from '../../data-access/products-store';
 import { PAGE_SIZE_OPTIONS, ProductQuery } from '../../models/product-query.model';
 import { ProductCards } from '../../ui/product-cards/product-cards';
@@ -67,6 +68,14 @@ export class ProductsPage {
     // The URL is the source of truth: every change of its query params loads that page.
     this.store.load(this.route.queryParams.pipe(map(queryFromParams)));
     this.store.loadCategories();
+
+    // Remember the list URL with its filters for the "Back to products" link
+    const listUrl = inject(ProductsListUrl);
+    this.route.queryParams
+      .pipe(takeUntilDestroyed())
+      .subscribe((queryParams) =>
+        listUrl.url.set(this.router.createUrlTree(['/products'], { queryParams })),
+      );
 
     // Tell screen reader users the result of each load.
     effect(() => {

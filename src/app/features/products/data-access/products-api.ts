@@ -3,6 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable, map } from 'rxjs';
 
 import { API_BASE_URL } from '../../../core/api/api.config';
+import { ProductDetail } from '../models/product-detail.model';
 import { Category, ProductListResponse, ProductsPage } from '../models/product.model';
 import { ProductQuery } from '../models/product-query.model';
 
@@ -40,6 +41,10 @@ export class ProductsApi {
     return this.http
       .get<ProductListResponse>(url, { params })
       .pipe(map(({ products, total }) => ({ items: products, total })));
+  }
+
+  getProduct(id: number): Observable<ProductDetail> {
+    return this.http.get<ProductDetail>(`${this.apiUrl}/products/${id}`);
   }
 
   getCategories(): Observable<Category[]> {

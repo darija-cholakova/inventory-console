@@ -1,4 +1,4 @@
-import { CurrencyPipe, DecimalPipe, NgOptimizedImage } from '@angular/common';
+import { CurrencyPipe, DecimalPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
@@ -7,6 +7,7 @@ import { MatSort, MatSortHeader, Sort } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { RouterLink } from '@angular/router';
 
+import { ProductImage } from '../../../../shared/ui/product-image/product-image';
 import { StockChip } from '../../../../shared/ui/stock-chip/stock-chip';
 import { Product } from '../../models/product.model';
 import { ProductQuery, SortField } from '../../models/product-query.model';
@@ -25,7 +26,7 @@ import { SortChange } from '../products-toolbar/products-toolbar';
     MatIcon,
     MatIconButton,
     RouterLink,
-    NgOptimizedImage,
+    ProductImage,
     CurrencyPipe,
     DecimalPipe,
     StockChip,

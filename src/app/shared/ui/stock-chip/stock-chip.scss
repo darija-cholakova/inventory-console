@@ -1,6 +1,9 @@
 :host {
   display: inline-flex;
   align-items: center;
+  // Same width for every status so the column lines up
+  inline-size: var(--app-stock-chip-width);
+  box-sizing: border-box;
   gap: var(--app-space-4);
   padding: var(--app-space-2) var(--app-space-8);
   border-radius: var(--mat-sys-corner-small);

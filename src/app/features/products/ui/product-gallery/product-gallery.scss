@@ -1,0 +1,48 @@
+@use '../../../../../styles/breakpoints' as bp;
+:host {
+  display: grid;
+  gap: var(--app-space-12);
+
+  // On wide screens the image and thumbnails join the parent grid (see product-detail-page),
+  // so the summary card next to them can match the image height.
+  @media (min-width: bp.$detail-two-columns) {
+    display: contents;
+
+    .main {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .thumbs {
+      grid-column: 1;
+      grid-row: 2;
+    }
+  }
+}
+
+.main {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: var(--mat-sys-corner-large);
+  background: var(--mat-sys-surface-container-high);
+  overflow: hidden;
+}
+
+.thumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--app-space-8);
+}
+
+.thumb {
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: var(--mat-sys-corner-small);
+  background: var(--mat-sys-surface-container-high);
+  cursor: pointer;
+  overflow: hidden;
+
+  &.active {
+    border-color: var(--mat-sys-primary);
+  }
+}

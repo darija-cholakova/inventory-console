@@ -1,7 +1,7 @@
 <ul class="cards" aria-label="Products">
   @for (product of items(); track product.id) {
     <li class="card">
-      <img class="thumb" [ngSrc]="product.thumbnail" width="64" height="64" alt="" />
+      <app-product-image class="thumb" [src]="product.thumbnail" [size]="64" />
       <div class="info">
         <a class="title" [routerLink]="['/products', product.id]">{{ product.title }}</a>
         <span class="meta">

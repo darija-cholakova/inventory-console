@@ -1,0 +1,115 @@
+<a class="back" [routerLink]="listUrl()">
+  <mat-icon aria-hidden="true">chevron_left</mat-icon>
+  Products
+</a>
+
+@if (product.isLoading()) {
+  <div class="skeleton" role="status">
+    <span class="visually-hidden">Loading product…</span>
+    <span class="block title-block" aria-hidden="true"></span>
+    <div class="layout" aria-hidden="true">
+      <span class="block image-block"></span>
+      <div class="lines">
+        @for (line of [60, 40, 80, 90, 70]; track $index) {
+          <span class="block" [style.inline-size.%]="line"></span>
+        }
+      </div>
+    </div>
+  </div>
+} @else if (notFound()) {
+  <app-state-message
+    icon="search_off"
+    title="Product not found"
+    message="This product may have been deleted, or the link is wrong."
+  >
+    <a matButton="filled" [routerLink]="listUrl()">Back to products</a>
+  </app-state-message>
+} @else if (product.error()) {
+  <app-state-message
+    icon="error"
+    title="Couldn't load the product"
+    message="The server didn't respond."
+  >
+    <button matButton="tonal" type="button" (click)="product.reload()">Try again</button>
+  </app-state-message>
+} @else if (product.hasValue()) {
+  @let p = product.value();
+  <header class="header">
+    <div class="heading">
+      <h1 #heading class="page-title" tabindex="-1">{{ p.title }}</h1>
+      <p class="page-subtitle">
+        @if (p.brand) {
+          {{ p.brand }} ·
+        }
+        SKU {{ p.sku }}
+      </p>
+    </div>
+    <!-- Edit and Delete actions arrive in feature 5 -->
+  </header>
+
+  <div class="layout">
+    <app-product-gallery [images]="p.images" [title]="p.title" />
+
+    <section class="summary" aria-label="Summary">
+      <p class="category">{{ p.category }}</p>
+
+      <div class="price-row">
+        <span class="price">{{ p.price | currency: 'USD' }}</span>
+        @if (p.discountPercentage > 0) {
+          <span class="discount">{{ p.discountPercentage | number: '1.0-0' }}% off</span>
+        }
+      </div>
+
+      <div class="status-row">
+        <app-stock-chip [stock]="p.stock" />
+        <app-rating-stars [rating]="p.rating" />
+        <span class="review-count"
+          >{{ p.reviews.length }} {{ p.reviews.length === 1 ? 'review' : 'reviews' }}</span
+        >
+      </div>
+
+      <p class="description">{{ p.description }}</p>
+
+      <dl class="details">
+        <dt>Warranty</dt>
+        <dd>{{ p.warrantyInformation }}</dd>
+        <dt>Shipping</dt>
+        <dd>{{ p.shippingInformation }}</dd>
+        <dt>Return policy</dt>
+        <dd>{{ p.returnPolicy }}</dd>
+        <dt>Minimum order</dt>
+        <dd>{{ p.minimumOrderQuantity }} {{ p.minimumOrderQuantity === 1 ? 'item' : 'items' }}</dd>
+      </dl>
+
+      @if (p.tags.length) {
+        <ul class="tags" aria-label="Tags">
+          @for (tag of p.tags; track tag) {
+            <li class="tag">{{ tag }}</li>
+          }
+        </ul>
+      }
+    </section>
+  </div>
+
+  <section class="reviews" aria-labelledby="reviews-title">
+    <h2 id="reviews-title" class="section-title">Reviews ({{ p.reviews.length }})</h2>
+    @if (p.reviews.length) {
+      <ul class="review-list">
+        @for (review of p.reviews; track $index) {
+          <li class="review">
+            <div class="review-head">
+              <span class="reviewer">{{ review.reviewerName }}</span>
+              <app-rating-stars [rating]="review.rating" />
+            </div>
+            <p class="comment">{{ review.comment }}</p>
+            <time class="date" [attr.datetime]="review.date">{{
+              review.date | date: 'mediumDate'
+            }}</time>
+          </li>
+        }
+      </ul>
+    } @else {
+      <p class="empty">No reviews yet.</p>
+    }
+  </section>
+}

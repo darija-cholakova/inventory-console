@@ -1,11 +1,223 @@
 @use '../../../../shared/styles/page';
+@use '../../../../../styles/breakpoints' as bp;
+
+// Mobile first: one column; from the two-column breakpoint gallery and summary sit side by side.
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: var(--app-space-24);
+}
 
 .back {
+  align-self: flex-start;
   display: inline-flex;
   align-items: center;
   gap: var(--app-space-4);
-  margin-block-end: var(--app-space-16);
   font: var(--mat-sys-label-large);
   color: var(--mat-sys-primary);
   text-decoration: none;
+  border-radius: var(--mat-sys-corner-small);
+}
+
+.page-title:focus {
+  outline: none;
+}
+
+.layout {
+  display: grid;
+  gap: var(--app-space-24);
+
+  // Stacked layout: keep the image at a sensible size on wide tablets and small laptops
+  app-product-gallery {
+    inline-size: 100%;
+    max-inline-size: var(--app-gallery-max-width);
+  }
+
+  @media (min-width: bp.$detail-two-columns) {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    // Row 1: main image + summary (same height), row 2: thumbnails
+    grid-template-rows: auto auto;
+    gap: var(--app-space-12) var(--app-space-32);
+    align-items: start;
+
+    .summary {
+      grid-column: 2;
+      grid-row: 1;
+      align-self: stretch;
+    }
+  }
+}
+
+.summary {
+  display: flex;
+  flex-direction: column;
+  gap: var(--app-space-16);
+  padding: var(--app-space-16);
+  border-radius: var(--mat-sys-corner-large);
+  border: 1px solid var(--mat-sys-outline-variant);
+  background: var(--mat-sys-surface-container-lowest);
+
+  @media (min-width: 600px) {
+    padding: var(--app-space-24);
+  }
+
+  // When the card is stretched to the image height, spread its blocks over the full height;
+  // the tags end up at the bottom
+  @media (min-width: bp.$detail-two-columns) {
+    justify-content: space-between;
+    padding: var(--app-space-32);
+  }
+}
+
+.category {
+  font: var(--mat-sys-label-large);
+  color: var(--mat-sys-on-surface-variant);
+  text-transform: capitalize;
+}
+
+.price-row,
+.status-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--app-space-12);
+}
+
+.price {
+  font: var(--mat-sys-headline-medium);
+  font-variant-numeric: tabular-nums;
+}
+
+.discount {
+  padding: var(--app-space-2) var(--app-space-8);
+  border-radius: var(--mat-sys-corner-small);
+  background: var(--mat-sys-tertiary-container);
+  color: var(--mat-sys-on-tertiary-container);
+  font: var(--mat-sys-label-medium);
+}
+
+.review-count {
+  font: var(--mat-sys-body-small);
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.description {
+  font: var(--mat-sys-body-large);
+}
+
+.details {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: var(--app-space-8) var(--app-space-16);
+  margin: 0;
+  font: var(--mat-sys-body-medium);
+
+  dt {
+    color: var(--mat-sys-on-surface-variant);
+  }
+
+  dd {
+    margin: 0;
+  }
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--app-space-8);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tag {
+  padding: var(--app-space-4) var(--app-space-12);
+  border-radius: var(--mat-sys-corner-small);
+  border: 1px solid var(--mat-sys-outline-variant);
+  font: var(--mat-sys-label-medium);
+  text-transform: capitalize;
+}
+
+.reviews {
+  display: flex;
+  flex-direction: column;
+  gap: var(--app-space-12);
+}
+
+.section-title {
+  font: var(--mat-sys-title-large);
+}
+
+.review-list {
+  display: grid;
+  gap: var(--app-space-12);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.review {
+  display: grid;
+  gap: var(--app-space-4);
+  padding: var(--app-space-16);
+  border-radius: var(--mat-sys-corner-medium);
+  border: 1px solid var(--mat-sys-outline-variant);
+}
+
+.review-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--app-space-8);
+}
+
+.reviewer {
+  font: var(--mat-sys-title-small);
+}
+
+.comment {
+  font: var(--mat-sys-body-medium);
+}
+
+.date,
+.empty {
+  font: var(--mat-sys-body-small);
+  color: var(--mat-sys-on-surface-variant);
+}
+
+// Loading placeholder shaped like the page
+.skeleton {
+  display: grid;
+  gap: var(--app-space-24);
+}
+
+.lines {
+  display: grid;
+  gap: var(--app-space-12);
+  align-content: start;
+}
+
+.block {
+  display: block;
+  block-size: 16px;
+  border-radius: var(--mat-sys-corner-extra-small);
+  background: var(--mat-sys-surface-container-highest);
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+.title-block {
+  inline-size: 50%;
+  block-size: 32px;
+}
+
+.image-block {
+  aspect-ratio: 1;
+  block-size: auto;
+  border-radius: var(--mat-sys-corner-large);
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.5;
+  }
 }

@@ -17,6 +17,12 @@
   // Product table: fixed row height (fits title + brand line)
   --app-table-row-height: 64px;
 
+  // Product detail gallery width when image and summary are stacked
+  --app-gallery-max-width: 560px;
+
+  // Stock chip: one width for all statuses ("Out of stock" / "Low stock · 10" fit)
+  --app-stock-chip-width: 128px;
+
   // Sign-in card: tall enough for the form plus a two-line message banner
   --app-login-card-min-height: 560px;
 

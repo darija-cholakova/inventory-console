@@ -1,6 +1,6 @@
 // for me> Sign in: 13:24(start) - almost done: 13:45 (needs few style tweaks)
 F2: Products list: 13:47(start) - almost done: 14:09
-f3: Product details : 14:12 (start)
+f3: Product details : 14:12 (start) -> 14:26"
 
 # Inventory Console
 
@@ -57,6 +57,9 @@ src/app/
 - **Sorting by stock instead of a stock filter:** the API cannot filter by stock, but it can sort by any field. Sorting by stock (low to high) brings low and out-of-stock items to the top without loading the whole catalog in the browser.
 - **Smaller responses:** list requests use `select` to fetch only the fields the list shows.
 - **List states:** skeleton on the first load, a thin progress bar while a new page loads (rows stay visible), an empty state with "Clear filters", and an error state with "Try again". A live region announces the number of results.
+- **Product detail with `rxResource`:** one read request per page, so the detail page uses Angular's `rxResource` (stable in v22) instead of a store. It exposes loading, value and error as signals and refetches when the `:id` changes. A `404` shows "Product not found"; other errors show "Try again" (`reload()`).
+- **Back to the list keeps the filters:** the list remembers its last URL (as a `UrlTree`) in a small root service, so "Products" on the detail page returns to the same search, sort and page.
+- **Detail page accessibility:** the tab title becomes the product name and focus moves to the heading after load; the gallery thumbnails are one tab stop with arrow-key navigation; stars are decorative and the rating is read as "Rating 4.6 out of 5". The main image uses `NgOptimizedImage` with `priority` (LCP), thumbnails are lazy loaded.
 - **Responsive list:** a sortable table from 1024px; below that, cards with a "Sort by" dropdown. Stock status is a shared chip with text, icon and color.
 - **Accessibility:** skip link to the main content (WCAG 2.4.1), landmarks (`header`, `nav`, `main`), `aria-current` on the active link, visible focus ring, `prefers-reduced-motion` respected, page title per route.
 
@@ -76,6 +79,7 @@ Start = prompt sent to Claude, end = feature committed and pushed (times from gi
 | Feature 1 – Setup and shell | 13:04   | 13:22    | 18 min   |
 | Feature 2 – Authentication  | 13:24   | 13:45    | 21 min   |
 | Feature 3 – Products list   | 13:47   | 14:09    | 22 min   |
+| Feature 4 – Product detail  | 14:12   |          |          |
 
 ## Time spent
 

@@ -25,10 +25,7 @@ tr.mat-mdc-row:last-child td {
 }
 
 .thumb {
-  display: block;
   border-radius: var(--mat-sys-corner-extra-small);
-  background: var(--mat-sys-surface-container-high);
-  object-fit: cover;
 }
 
 .title {

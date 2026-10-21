@@ -1,0 +1,29 @@
+<div class="main">
+  <app-product-image
+    [src]="current()"
+    fill
+    priority
+    showText
+    [alt]="title() + ', image ' + (selected() + 1) + ' of ' + images().length"
+  />
+</div>
+
+@if (images().length > 1) {
+  <div class="thumbs" role="toolbar" aria-label="Product images">
+    @for (image of images(); track image; let i = $index) {
+      <button
+        #thumb
+        type="button"
+        class="thumb"
+        [class.active]="i === selected()"
+        [attr.aria-pressed]="i === selected()"
+        [attr.aria-label]="'Show image ' + (i + 1) + ' of ' + images().length"
+        [tabindex]="i === selected() ? 0 : -1"
+        (click)="select(i)"
+        (keydown)="onKeydown($event, i)"
+      >
+        <app-product-image [src]="image" [size]="64" />
+      </button>
+    }
+  </div>
+}

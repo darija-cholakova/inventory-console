@@ -10,7 +10,7 @@
   <ng-container matColumnDef="thumbnail">
     <th mat-header-cell *matHeaderCellDef><span class="visually-hidden">Image</span></th>
     <td mat-cell *matCellDef="let product">
-      <img class="thumb" [ngSrc]="product.thumbnail" width="40" height="40" alt="" />
+      <app-product-image class="thumb" [src]="product.thumbnail" [size]="40" />
     </td>
   </ng-container>
 
