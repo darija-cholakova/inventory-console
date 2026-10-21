@@ -8,11 +8,8 @@ import { AuthSession, AuthTokens, AuthUser, LoginRequest } from '../../shared/mo
 import { LoginErrorKind } from '../../shared/models/types';
 
 const STORAGE_KEY = 'inventory-console.session';
-/**
- * Short-lived access token; the refresh token renews it silently.
- * TEMP: 1 minute (the API accepts whole minutes) to test the refresh flow; set back to 15 before committing.
- */
-const ACCESS_TOKEN_MINUTES = 1;
+/** Short-lived access token (OWASP); the refresh token renews it silently on a 401. */
+const ACCESS_TOKEN_MINUTES = 15;
 
 /**
  * Owns the signed-in session.
