@@ -1,0 +1,21 @@
+// Mobile first: fields stack; from 600px they sit in one row.
+.toolbar {
+  display: grid;
+  gap: var(--app-space-12);
+
+  @media (min-width: 600px) {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+
+    .sort {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: minmax(0, 340px) minmax(0, 240px) minmax(0, 240px);
+
+    .sort {
+      grid-column: auto;
+    }
+  }
+}

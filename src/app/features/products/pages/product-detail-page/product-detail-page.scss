@@ -1,0 +1,11 @@
+@use '../../../../shared/styles/page';
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--app-space-4);
+  margin-block-end: var(--app-space-16);
+  font: var(--mat-sys-label-large);
+  color: var(--mat-sys-primary);
+  text-decoration: none;
+}

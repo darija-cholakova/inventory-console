@@ -25,6 +25,14 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'products/:id',
+        title: 'Product',
+        loadComponent: () =>
+          import('./features/products/pages/product-detail-page/product-detail-page').then(
+            (m) => m.ProductDetailPage,
+          ),
+      },
+      {
         path: 'bookmarked',
         title: 'Bookmarked',
         loadComponent: () =>

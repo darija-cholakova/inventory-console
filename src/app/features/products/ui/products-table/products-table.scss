@@ -1,0 +1,99 @@
+:host {
+  display: block;
+  overflow-x: auto;
+
+  // Fixed column widths; the product column takes the remaining space
+  --col-thumbnail: 72px;
+  --col-category: 160px;
+  --col-price: 120px;
+  --col-stock: 168px;
+  --col-rating: 96px;
+  --col-actions: 72px;
+}
+
+table {
+  inline-size: 100%;
+  table-layout: fixed; // widths come from the columns, not from the cell content
+  background: transparent;
+  // Same height for every row, with or without a brand line, so sorting does not shift the layout
+  --mat-table-row-item-container-height: var(--app-table-row-height);
+}
+
+// Last row separated from the paginator below
+tr.mat-mdc-row:last-child td {
+  border-block-end: 1px solid var(--mat-sys-outline-variant);
+}
+
+.thumb {
+  display: block;
+  border-radius: var(--mat-sys-corner-extra-small);
+  background: var(--mat-sys-surface-container-high);
+  object-fit: cover;
+}
+
+.title {
+  display: block;
+  font: var(--mat-sys-title-small);
+  color: var(--mat-sys-primary);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.brand {
+  font: var(--mat-sys-body-small);
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.category {
+  text-transform: capitalize;
+}
+
+// Prices right-aligned with tabular digits; extra end padding keeps them apart from the Stock column
+.numeric {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+  padding-inline-end: var(--app-space-24);
+}
+
+.mat-column-thumbnail {
+  inline-size: var(--col-thumbnail);
+}
+
+.mat-column-category {
+  inline-size: var(--col-category);
+}
+
+.mat-column-price {
+  inline-size: var(--col-price);
+}
+
+.mat-column-stock {
+  inline-size: var(--col-stock);
+}
+
+.mat-column-rating {
+  inline-size: var(--col-rating);
+}
+
+.mat-column-actions {
+  inline-size: var(--col-actions);
+}
+
+// Long titles are cut with an ellipsis instead of widening the column
+.mat-column-title {
+  overflow: hidden;
+
+  .title,
+  .brand {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .brand {
+    display: block;
+  }
+}

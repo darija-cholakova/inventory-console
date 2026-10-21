@@ -1,0 +1,36 @@
+<ul class="cards" aria-label="Products">
+  @for (product of items(); track product.id) {
+    <li class="card">
+      <img class="thumb" [ngSrc]="product.thumbnail" width="64" height="64" alt="" />
+      <div class="info">
+        <a class="title" [routerLink]="['/products', product.id]">{{ product.title }}</a>
+        <span class="meta">
+          {{ product.category }}
+          <span aria-hidden="true">· ★ {{ product.rating | number: '1.1-1' }}</span>
+          <span class="visually-hidden"
+            >, rating {{ product.rating | number: '1.1-1' }} out of 5</span
+          >
+        </span>
+        <span class="row">
+          <span class="price">{{ product.price | currency: 'USD' }}</span>
+          <app-stock-chip [stock]="product.stock" />
+        </span>
+      </div>
+      <button
+        matIconButton
+        type="button"
+        class="actions"
+        [matMenuTriggerFor]="cardMenu"
+        [attr.aria-label]="'Actions for ' + product.title"
+      >
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #cardMenu="matMenu" xPosition="before">
+        <a mat-menu-item [routerLink]="['/products', product.id]">
+          <mat-icon>visibility</mat-icon>
+          <span>View details</span>
+        </a>
+      </mat-menu>
+    </li>
+  }
+</ul>

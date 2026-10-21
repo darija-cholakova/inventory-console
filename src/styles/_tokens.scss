@@ -14,6 +14,9 @@
   // Layout
   --app-nav-width: 240px;
   --app-content-max-width: 1200px;
+  // Product table: fixed row height (fits title + brand line)
+  --app-table-row-height: 64px;
+
   // Sign-in card: tall enough for the form plus a two-line message banner
   --app-login-card-min-height: 560px;
 

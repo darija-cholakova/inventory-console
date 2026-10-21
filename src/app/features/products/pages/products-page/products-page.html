@@ -1,0 +1,60 @@
+<header class="header">
+  <h1 class="page-title">Products</h1>
+  @if (store.status() === 'success' || store.isRefreshing()) {
+    <p class="summary">{{ summary() }}</p>
+  }
+</header>
+
+<app-products-toolbar
+  [query]="store.query()"
+  [categories]="store.categories()"
+  [showSort]="!showTable()"
+  (searchChange)="onSearch($event)"
+  (categoryChange)="onCategory($event)"
+  (sortChange)="onSort($event)"
+/>
+
+<section class="results" aria-label="Product results">
+  @if (store.isRefreshing()) {
+    <mat-progress-bar class="refresh-bar" mode="indeterminate" aria-label="Updating products" />
+  }
+
+  @if (store.isInitialLoading()) {
+    <app-products-skeleton />
+  } @else if (store.status() === 'error') {
+    <app-state-message
+      icon="error"
+      title="Couldn't load products"
+      message="The server didn't respond. Your filters are kept."
+    >
+      <button matButton="tonal" type="button" (click)="retry()">Try again</button>
+    </app-state-message>
+  } @else if (store.isEmpty()) {
+    <app-state-message
+      icon="search_off"
+      [title]="emptyTitle()"
+      message="Check the spelling or clear the filters."
+    >
+      <button matButton="tonal" type="button" (click)="clearFilters()">Clear filters</button>
+    </app-state-message>
+  } @else {
+    @if (showTable()) {
+      <app-products-table
+        [items]="store.items()"
+        [query]="store.query()"
+        (sortChange)="onSort($event)"
+      />
+    } @else {
+      <app-product-cards [items]="store.items()" />
+    }
+
+    <mat-paginator
+      [length]="store.total()"
+      [pageIndex]="store.query().page - 1"
+      [pageSize]="store.query().pageSize"
+      [pageSizeOptions]="pageSizeOptions"
+      (page)="onPage($event)"
+      aria-label="Select page of products"
+    />
+  }
+</section>

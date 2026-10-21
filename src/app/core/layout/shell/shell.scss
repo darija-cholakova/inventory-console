@@ -1,8 +1,9 @@
 // Mobile first: base styles target small screens, min-width queries add the wider layouts.
 :host {
+  // Fixed viewport height: the top bar and nav stay in place, only the content area scrolls
   display: flex;
   flex-direction: column;
-  min-height: 100dvh;
+  height: 100dvh;
 }
 
 .skip-link {
@@ -83,6 +84,7 @@
 
 .body {
   flex: 1;
+  min-block-size: 0; // lets the sidenav content scroll inside the flex column
   background: var(--mat-sys-surface);
 }
 

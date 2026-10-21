@@ -1,0 +1,52 @@
+:host {
+  display: grid;
+  gap: var(--app-space-12);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--app-space-12);
+  padding: var(--app-space-12);
+  border-radius: var(--mat-sys-corner-medium);
+  border: 1px solid var(--mat-sys-outline-variant);
+}
+
+.lines {
+  display: grid;
+  flex: 1;
+  gap: var(--app-space-8);
+}
+
+.block {
+  display: block;
+  border-radius: var(--mat-sys-corner-extra-small);
+  background: var(--mat-sys-surface-container-highest);
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+.thumb {
+  inline-size: 48px;
+  block-size: 48px;
+}
+
+.line-long {
+  inline-size: 60%;
+  block-size: 12px;
+}
+
+.line-short {
+  inline-size: 35%;
+  block-size: 10px;
+}
+
+.chip {
+  inline-size: 88px;
+  block-size: 24px;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.5;
+  }
+}
