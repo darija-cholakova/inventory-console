@@ -1,3 +1,5 @@
+// for me> Sign in: 13:24
+
 # Inventory Console
 
 A small inventory management console built with Angular on top of the public [DummyJSON](https://dummyjson.com/) API: sign in, browse and search products, open a product, edit or delete it locally.
@@ -18,14 +20,14 @@ npm test           # unit tests (Vitest)
 
 ## Tech stack
 
-| Area | Choice |
-| --- | --- |
-| Framework | Angular 22 (standalone, signals, zoneless, new control flow, OnPush) |
-| UI library | Angular Material 3 + CDK |
-| Styling | SCSS, Material 3 system tokens (`--mat-sys-*`), mobile first |
-| State | NgRx Signals (SignalStore) |
-| Tests | Vitest (unit), Playwright (E2E) |
-| Tooling | Angular CLI, ESLint, Prettier |
+| Area       | Choice                                                               |
+| ---------- | -------------------------------------------------------------------- |
+| Framework  | Angular 22 (standalone, signals, zoneless, new control flow, OnPush) |
+| UI library | Angular Material 3 + CDK                                             |
+| Styling    | SCSS, Material 3 system tokens (`--mat-sys-*`), mobile first         |
+| State      | NgRx Signals (SignalStore)                                           |
+| Tests      | Vitest (unit), Playwright (E2E)                                      |
+| Tooling    | Angular CLI, ESLint, Prettier                                        |
 
 ## Architecture
 
@@ -52,6 +54,6 @@ _Filled in at the end._
 
 ## Time spent
 
-| Part | Time |
-| --- | --- |
-| Feature 1 – Setup and shell (started 13:04) | |
+| Part                                        | Time |
+| ------------------------------------------- | ---- |
+| Feature 1 – Setup and shell (started 13:04) |      |
