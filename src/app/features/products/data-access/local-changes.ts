@@ -1,17 +1,12 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { Observable, catchError, tap, throwError } from 'rxjs';
 
-import { ProductChanges } from '../models/product-changes.model';
+import { ProductChanges, StoredChanges } from '../models/product-changes.model';
 import { ProductDetail } from '../models/product-detail.model';
 import { Product } from '../models/product.model';
-import { ProductsApi } from './products-api';
+import { ProductsApi } from '../../../core/api/products-api';
 
 const STORAGE_KEY = 'inventory-console.local-changes';
-
-interface StoredChanges {
-  edits: Record<number, ProductChanges>;
-  deleted: number[];
-}
 
 /**
  * DummyJSON accepts PATCH and DELETE but never persists them. This layer keeps the user's

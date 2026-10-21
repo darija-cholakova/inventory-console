@@ -59,7 +59,14 @@
   background: var(--mat-sys-surface-container-low);
 }
 
-// Stays clickable above the stretched link
+// Stay clickable above the stretched link
+.bookmark {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  margin-block-start: calc(var(--app-space-8) * -1);
+}
+
 .actions {
   position: relative;
   z-index: 1;

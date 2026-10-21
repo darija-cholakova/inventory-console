@@ -11,7 +11,7 @@ import { confirmDiscardChanges } from '../../../../shared/ui/confirm-dialog/conf
 import { DialogShell } from '../../../../shared/ui/dialog-shell/dialog-shell';
 import { StateMessage } from '../../../../shared/ui/state-message/state-message';
 import { LocalChanges } from '../../data-access/local-changes';
-import { ProductsApi } from '../../data-access/products-api';
+import { ProductsApi } from '../../../../core/api/products-api';
 import { ProductForm } from '../product-form/product-form';
 import { ProductEditDialogData, ProductEditDialogResult } from './product-edit-dialog.model';
 

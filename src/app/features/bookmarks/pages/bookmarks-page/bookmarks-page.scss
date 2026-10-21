@@ -1,0 +1,31 @@
+@use '../../../../shared/styles/page';
+
+// Same layout as the product list: cards on small screens, a bordered table panel from 1024px.
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: var(--app-space-16);
+
+  @media (min-width: 840px) {
+    gap: var(--app-space-24);
+  }
+}
+
+.search {
+  inline-size: 100%;
+
+  @media (min-width: 600px) {
+    max-inline-size: 400px;
+  }
+}
+
+.results {
+  border-radius: var(--mat-sys-corner-medium);
+
+  @media (min-width: 1024px) {
+    padding: var(--app-space-8) 0 0;
+    border: 1px solid var(--mat-sys-outline-variant);
+    background: var(--mat-sys-surface-container-lowest);
+    overflow: hidden;
+  }
+}

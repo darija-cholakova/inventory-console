@@ -3,23 +3,10 @@ import { patchState, signalStore, withComputed, withMethods, withState } from '@
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { EMPTY, catchError, pipe, switchMap, tap } from 'rxjs';
 
-import { Category, Product } from '../models/product.model';
 import { DEFAULT_QUERY, ProductQuery } from '../models/product-query.model';
+import { ProductsState } from '../models/products-state.model';
 import { LocalChanges } from './local-changes';
-import { ProductsApi } from './products-api';
-
-export type LoadStatus = 'idle' | 'loading' | 'success' | 'error';
-
-interface ProductsState {
-  query: ProductQuery;
-  /** Page as the server returned it; local edits and deletions are applied on top. */
-  serverItems: Product[];
-  serverTotal: number;
-  /** Where the visible page starts in serverItems (> 0 only when fetched from the start). */
-  windowStart: number;
-  status: LoadStatus;
-  categories: Category[];
-}
+import { ProductsApi } from '../../../core/api/products-api';
 
 const initialState: ProductsState = {
   query: DEFAULT_QUERY,

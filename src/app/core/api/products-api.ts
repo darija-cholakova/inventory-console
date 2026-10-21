@@ -2,16 +2,21 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, map } from 'rxjs';
 
-import { API_BASE_URL } from '../../../core/api/api.config';
-import { ProductChanges } from '../models/product-changes.model';
-import { ProductDetail } from '../models/product-detail.model';
-import { Category, ProductListResponse, ProductsPage } from '../models/product.model';
-import { ProductQuery } from '../models/product-query.model';
+import { API_BASE_URL } from './api.config';
+import { ProductChanges } from '../../features/products/models/product-changes.model';
+import { ProductDetail } from '../../features/products/models/product-detail.model';
+import {
+  Category,
+  Product,
+  ProductListResponse,
+  ProductsPage,
+} from '../../features/products/models/product.model';
+import { ProductQuery } from '../../features/products/models/product-query.model';
 
 /** Only the fields the list shows, to keep responses small. */
 const LIST_FIELDS = 'title,brand,category,price,stock,rating,thumbnail';
 
-/** HTTP access to DummyJSON products. No state, no UI logic. */
+/** HTTP access to DummyJSON products. No state, no UI logic; local edits live in LocalChanges. */
 @Injectable({ providedIn: 'root' })
 export class ProductsApi {
   private readonly http = inject(HttpClient);
@@ -42,6 +47,14 @@ export class ProductsApi {
     return this.http
       .get<ProductListResponse>(url, { params })
       .pipe(map(({ products, total }) => ({ items: products, total })));
+  }
+
+  /** The whole catalog with list fields only (~194 items); used to resolve bookmarked ids. */
+  getAllProducts(): Observable<Product[]> {
+    const params = new HttpParams().set('limit', 0).set('select', LIST_FIELDS);
+    return this.http
+      .get<ProductListResponse>(`${this.apiUrl}/products`, { params })
+      .pipe(map(({ products }) => products));
   }
 
   getProduct(id: number): Observable<ProductDetail> {

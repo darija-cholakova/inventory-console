@@ -8,7 +8,7 @@
   --col-price: 120px;
   --col-stock: 168px;
   --col-rating: 96px;
-  --col-actions: 72px;
+  --col-actions: 112px; // bookmark + menu
 }
 
 table {
@@ -77,6 +77,10 @@ tr.mat-mdc-row:last-child td {
 
 .mat-column-actions {
   inline-size: var(--col-actions);
+}
+
+td.actions {
+  white-space: nowrap;
 }
 
 // Long titles are cut with an ellipsis instead of widening the column

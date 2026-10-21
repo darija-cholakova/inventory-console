@@ -117,3 +117,20 @@
     padding: var(--app-space-24) var(--app-space-32);
   }
 }
+
+// Count next to a nav label (e.g. bookmarked products)
+.nav-meta {
+  align-self: center;
+}
+
+.nav-count {
+  display: inline-block;
+  min-inline-size: var(--app-space-24);
+  padding: var(--app-space-2) var(--app-space-8);
+  border-radius: var(--mat-sys-corner-full);
+  background: var(--mat-sys-secondary-container);
+  color: var(--mat-sys-on-secondary-container);
+  font: var(--mat-sys-label-medium);
+  text-align: center;
+  box-sizing: border-box;
+}

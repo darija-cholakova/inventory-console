@@ -7,3 +7,9 @@ export type EditableProductFields = Pick<
 >;
 
 export type ProductChanges = Partial<EditableProductFields>;
+
+/** What LocalChanges keeps in sessionStorage. */
+export interface StoredChanges {
+  edits: Record<number, ProductChanges>;
+  deleted: number[];
+}

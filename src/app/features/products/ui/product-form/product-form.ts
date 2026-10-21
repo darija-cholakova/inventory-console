@@ -28,7 +28,12 @@ import { firstValueFrom } from 'rxjs';
 import { ProductImage } from '../../../../shared/ui/product-image/product-image';
 import { LocalChanges } from '../../data-access/local-changes';
 import { ProductDetail } from '../../models/product-detail.model';
-import { ProductFormModel, toFormModel, toProductChanges } from '../../models/product-form.model';
+import {
+  ProductFormModel,
+  SummaryField,
+  toFormModel,
+  toProductChanges,
+} from '../../models/product-form.model';
 import { productFormSchema } from '../../models/product-form.schema';
 import { Category } from '../../models/product.model';
 
@@ -41,11 +46,6 @@ const EMPTY_FORM: ProductFormModel = {
   discountPercentage: null,
   stock: null,
 };
-
-interface SummaryField {
-  id: string;
-  field: FieldTree<unknown>;
-}
 
 /**
  * The product edit form, shared by the edit dialog and the /products/:id/edit page.

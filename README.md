@@ -2,7 +2,7 @@
 F3: Products list: 13:47(start) - almost done: 14:09
 f4: Product details : 14:12 (start) -> 14:26"
 f5: Product manipulation: 14: 28(start) -> 15:09
-f6: Bookmarked: 15:11(start)
+f6: Bookmarked: 15:11(start) -> 15;21
 
 # Inventory Console
 
@@ -37,13 +37,19 @@ npm test           # unit tests (Vitest)
 
 ```
 src/app/
-  core/        app-wide singletons: layout shell, theme, routing helpers (auth comes later)
-  shared/      reusable UI pieces and styles
+  core/        app-wide singletons
+    api/         all HTTP clients in one place: api.config.ts (base URL), auth-api.ts, products-api.ts
+    auth/        session (AuthService), interceptor, guards
+    layout/      shell, account menu
+    routing/     title strategy, unsaved-changes guard
+    theme/
+  shared/      reusable UI (state message, stock chip, product image, confirm dialog, dialog shell, undo snackbar) and styles
   features/    one folder per feature (products, bookmarks), each with pages/, ui/, data-access/, models/
 ```
 
 - Every route is lazy loaded; the shell is a layout route that wraps all signed-in pages.
-- Interfaces and types live in their own `*.model.ts` files.
+- **API layer:** every HTTP call goes through a small, stateless client in `core/api/` (`AuthApi`, `ProductsApi`). Services and stores above it own the state (session, local edits, page), so the endpoints can be found, mocked or replaced in one place.
+- **Types:** `interface` for object shapes (API responses, state, form model), `type` for unions and derived types (`LoadStatus`, `SortField`, `ProductChanges = Partial<Pick<…>>`, `LoginResponse = AuthUser & AuthTokens`). They live in `*.model.ts` files, never inside components or services.
 
 ## Technical decisions
 
@@ -70,6 +76,7 @@ src/app/
 - **Form validation UX:** errors appear after the first save attempt (not while the user is still filling in the form) and then update live. An error summary lists every problem with links to the fields, and focus moves to the first invalid field. The button shows "Saving…" while the request runs; after saving, the detail page opens with a "Changes saved" snackbar.
 - **Edit in a dialog, or as a page from a link:** inside the app, Edit (row menu, card menu, detail page) opens the form in a dialog over the current screen, so the user keeps their place in the list. A direct link to `/products/:id/edit` opens the same form as a centered page. Both hosts load the product and reuse one `ProductForm` component; the dialog frame (`DialogShell`: title, close button, scrollable body) is a shared UI component.
 - **Unsaved changes:** leaving a changed form asks "Discard unsaved changes?" ("Keep editing" has the initial focus). On the page this is a `canDeactivate` guard (plus the browser's own prompt on tab close via `beforeunload`); in the dialog, Esc, the backdrop and the close button go through the same check (`disableClose` + `backdropClick` / `keydownEvents`).
+- **Bookmarked:** a personal working list of products to keep an eye on. Ids live in `localStorage`, not `sessionStorage` like the session and local edits: a bookmark should survive closing the tab. DummyJSON has no favorites/bookmarks resource and cannot fetch several ids in one request, so the page loads the catalog once with list fields only (`limit=0&select=…`, ~194 small items) and keeps the bookmarked ones; one request regardless of the number of bookmarks, always current prices and stock. A real backend would offer `?ids=` or a bookmarks endpoint. The page reuses `ProductsTable`, `ProductCards`, the skeleton, the edit dialog and the delete flow; search and sorting run in the browser (short list, no paginator). One `BookmarkButton` (filled icon + `aria-pressed`, label with the product name, tooltip) is used in the table, the cards and the detail page; the side nav shows the count with screen reader text ("3 products").
 - **Responsive list:** a sortable table from 1024px; below that, cards with a "Sort by" dropdown. Stock status is a shared chip with text, icon and color.
 - **Accessibility:** skip link to the main content (WCAG 2.4.1), landmarks (`header`, `nav`, `main`), `aria-current` on the active link, visible focus ring, `prefers-reduced-motion` respected, page title per route.
 
@@ -78,6 +85,7 @@ src/app/
 - Store tokens in `HttpOnly` cookies set by a real backend instead of `sessionStorage` (not readable by injected scripts).
 - Password reset and sign-up flows (DummyJSON has no reset endpoint, and `/users/add` does not persist users).
 - Specific messages for rate limiting (`429`) and timeouts.
+- Product images: DummyJSON stores images as URLs and has no upload endpoint, so the edit form shows the image but cannot change it. Uploading needs a backend with file storage.
 - Add product: DummyJSON has `POST /products/add` (simulated, not stored). The `ProductForm` component and `productFormSchema` are reusable for it; it was left out to stay within the time budget.
 - A keyboard shortcut to reach Undo in the snackbar.
 - Search within a category and a real stock filter (In stock / Low stock / Out of stock) need a backend that combines these filters; DummyJSON offers neither.
@@ -92,7 +100,8 @@ Start = prompt sent to Claude, end = feature committed and pushed (times from gi
 | Feature 2 – Authentication  | 13:24   | 13:45    | 21 min   |
 | Feature 3 – Products list   | 13:47   | 14:09    | 22 min   |
 | Feature 4 – Product detail  | 14:12   | 14:26    | 14 min   |
-| Feature 5 – Edit and delete | 14:29   |          |          |
+| Feature 5 – Edit and delete | 14:29   | 15:09    | 40 min   |
+| Feature 6 – Bookmarked      | 15:11   |          |          |
 
 ## Time spent
 

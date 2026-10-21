@@ -19,11 +19,12 @@ import { MatIcon } from '@angular/material/icon';
 import { Title } from '@angular/platform-browser';
 import { Router, RouterLink } from '@angular/router';
 
+import { BookmarkButton } from '../../../bookmarks/ui/bookmark-button/bookmark-button';
 import { StateMessage } from '../../../../shared/ui/state-message/state-message';
 import { StockChip } from '../../../../shared/ui/stock-chip/stock-chip';
 import { LocalChanges } from '../../data-access/local-changes';
 import { ProductDeletion } from '../../data-access/product-deletion';
-import { ProductsApi } from '../../data-access/products-api';
+import { ProductsApi } from '../../../../core/api/products-api';
 import { ProductsListUrl } from '../../data-access/products-list-url';
 import { ProductDetail } from '../../models/product-detail.model';
 import { ProductEditDialog } from '../../ui/product-edit-dialog/product-edit-dialog';
@@ -43,6 +44,7 @@ import { RatingStars } from '../../ui/rating-stars/rating-stars';
     StockChip,
     ProductGallery,
     RatingStars,
+    BookmarkButton,
   ],
   templateUrl: './product-detail-page.html',
   styleUrl: './product-detail-page.scss',

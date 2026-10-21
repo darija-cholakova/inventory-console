@@ -11,7 +11,13 @@ import {
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
-import { MatListItem, MatListItemIcon, MatListItemTitle, MatNavList } from '@angular/material/list';
+import {
+  MatListItem,
+  MatListItemIcon,
+  MatListItemMeta,
+  MatListItemTitle,
+  MatNavList,
+} from '@angular/material/list';
 import { MatSidenav, MatSidenavContainer, MatSidenavContent } from '@angular/material/sidenav';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { MatToolbar } from '@angular/material/toolbar';
@@ -21,6 +27,7 @@ import { map } from 'rxjs';
 import { AuthService } from '../../auth/auth.service';
 import { ThemeService } from '../../theme/theme.service';
 import { AccountMenu } from '../account-menu/account-menu';
+import { Bookmarks } from '../../../features/bookmarks/data-access/bookmarks';
 import { NavItem } from './nav-item.model';
 
 /** M3 "expanded" window class starts at 840px: from there the nav is always visible. */
@@ -40,6 +47,7 @@ const EXPANDED_QUERY = '(min-width: 840px)';
     MatSidenav,
     MatSidenavContent,
     MatNavList,
+    MatListItemMeta,
     MatListItem,
     MatListItemIcon,
     MatListItemTitle,
@@ -57,9 +65,17 @@ export class Shell {
     inject(AuthService).verifySession();
   }
 
+  private readonly bookmarks = inject(Bookmarks);
+
   protected readonly navItems: NavItem[] = [
     { label: 'Products', path: '/products', icon: 'inventory_2' },
-    { label: 'Bookmarked', path: '/bookmarked', icon: 'bookmark' },
+    {
+      label: 'Bookmarked',
+      path: '/bookmarked',
+      icon: 'bookmark',
+      count: this.bookmarks.count,
+      countLabel: 'products',
+    },
   ];
 
   protected readonly isExpanded = toSignal(

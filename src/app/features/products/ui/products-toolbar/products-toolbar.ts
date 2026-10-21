@@ -17,17 +17,7 @@ import { MatOption, MatSelect } from '@angular/material/select';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs';
 
 import { Category } from '../../models/product.model';
-import { ProductQuery, SortField, SortOrder } from '../../models/product-query.model';
-
-export interface SortChange {
-  sortBy: SortField | null;
-  order: SortOrder;
-}
-
-interface SortOption extends SortChange {
-  value: string;
-  label: string;
-}
+import { ProductQuery, SortChange, SortOption } from '../../models/product-query.model';
 
 /** Sort choices for small screens, where the table headers are not shown. */
 const SORT_OPTIONS: SortOption[] = [

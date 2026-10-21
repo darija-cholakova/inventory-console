@@ -14,10 +14,10 @@ import { MatProgressBar } from '@angular/material/progress-bar';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, RouterLink } from '@angular/router';
 
-import { HasUnsavedChanges } from '../../../../core/routing/unsaved-changes.guard';
+import { HasUnsavedChanges } from '../../../../core/routing/unsaved-changes.model';
 import { StateMessage } from '../../../../shared/ui/state-message/state-message';
 import { LocalChanges } from '../../data-access/local-changes';
-import { ProductsApi } from '../../data-access/products-api';
+import { ProductsApi } from '../../../../core/api/products-api';
 import { ProductForm } from '../../ui/product-form/product-form';
 
 /**

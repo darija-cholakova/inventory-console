@@ -27,12 +27,12 @@ import { paramsFromQuery, queryFromParams } from '../../data-access/product-quer
 import { ProductsListUrl } from '../../data-access/products-list-url';
 import { ProductsStore } from '../../data-access/products-store';
 import { Product } from '../../models/product.model';
-import { PAGE_SIZE_OPTIONS, ProductQuery } from '../../models/product-query.model';
+import { PAGE_SIZE_OPTIONS, ProductQuery, SortChange } from '../../models/product-query.model';
 import { ProductCards } from '../../ui/product-cards/product-cards';
 import { ProductEditDialog } from '../../ui/product-edit-dialog/product-edit-dialog';
 import { ProductsSkeleton } from '../../ui/products-skeleton/products-skeleton';
 import { ProductsTable } from '../../ui/products-table/products-table';
-import { ProductsToolbar, SortChange } from '../../ui/products-toolbar/products-toolbar';
+import { ProductsToolbar } from '../../ui/products-toolbar/products-toolbar';
 
 /** The table needs room for seven columns next to the side nav. */
 const TABLE_QUERY = '(min-width: 1024px)';

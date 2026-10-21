@@ -1,0 +1,77 @@
+<header class="header">
+  <h1 class="page-title">Bookmarked</h1>
+  <p class="page-subtitle">Products you keep an eye on. Stored in this browser.</p>
+</header>
+
+@if (isEmpty()) {
+  <app-state-message
+    icon="bookmark"
+    title="No bookmarked products yet"
+    message="Use the bookmark icon on a product to keep it here."
+  >
+    <a matButton="filled" routerLink="/products">Browse products</a>
+  </app-state-message>
+} @else {
+  <div class="toolbar" role="search">
+    <mat-form-field appearance="outline" class="search" subscriptSizing="dynamic">
+      <mat-label>Search bookmarked</mat-label>
+      <mat-icon matPrefix aria-hidden="true">search</mat-icon>
+      <input
+        matInput
+        type="search"
+        [value]="search()"
+        (input)="onSearch($event)"
+        placeholder="Search by name, brand…"
+      />
+      @if (search()) {
+        <button
+          matIconButton
+          matSuffix
+          type="button"
+          aria-label="Clear search"
+          (click)="search.set('')"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      }
+    </mat-form-field>
+  </div>
+
+  <section class="results" aria-label="Bookmarked products">
+    @if (isLoading()) {
+      <app-products-skeleton [count]="skeletonRows()" />
+    } @else if (catalog.error()) {
+      <app-state-message
+        icon="error"
+        title="Couldn't load bookmarked products"
+        message="The server didn't respond."
+      >
+        <button matButton="tonal" type="button" (click)="catalog.reload()">Try again</button>
+      </app-state-message>
+    } @else if (!items().length) {
+      <app-state-message
+        icon="search_off"
+        [title]="'No bookmarked products match “' + search() + '”'"
+        message="Check the spelling or clear the search."
+      >
+        <button matButton="tonal" type="button" (click)="search.set('')">Clear search</button>
+      </app-state-message>
+    } @else if (showTable()) {
+      <app-products-table
+        [items]="items()"
+        [query]="query()"
+        (sortChange)="onSort($event)"
+        (edit)="onEdit($event)"
+        (delete)="onDelete($event)"
+      />
+    } @else {
+      <app-product-cards [items]="items()" (edit)="onEdit($event)" (delete)="onDelete($event)" />
+    }
+  </section>
+
+  <p class="visually-hidden" role="status">
+    @if (catalog.hasValue()) {
+      {{ items().length }} {{ items().length === 1 ? 'bookmarked product' : 'bookmarked products' }}
+    }
+  </p>
+}

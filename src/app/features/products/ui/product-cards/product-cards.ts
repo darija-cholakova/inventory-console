@@ -5,6 +5,7 @@ import { MatIcon } from '@angular/material/icon';
 import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
 import { RouterLink } from '@angular/router';
 
+import { BookmarkButton } from '../../../bookmarks/ui/bookmark-button/bookmark-button';
 import { ProductImage } from '../../../../shared/ui/product-image/product-image';
 import { StockChip } from '../../../../shared/ui/stock-chip/stock-chip';
 import { Product } from '../../models/product.model';
@@ -27,6 +28,7 @@ import { Product } from '../../models/product.model';
     MatMenu,
     MatMenuItem,
     MatMenuTrigger,
+    BookmarkButton,
   ],
   templateUrl: './product-cards.html',
   styleUrl: './product-cards.scss',

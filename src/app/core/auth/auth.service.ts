@@ -1,16 +1,15 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, catchError, finalize, map, shareReplay, tap, throwError } from 'rxjs';
 
-import { API_BASE_URL } from '../api/api.config';
+import { AuthApi } from '../api/auth-api';
 import {
   AuthSession,
   AuthTokens,
   AuthUser,
   LoginErrorKind,
   LoginRequest,
-  LoginResponse,
 } from './models/auth.model';
 
 const STORAGE_KEY = 'inventory-console.session';
@@ -26,9 +25,8 @@ const ACCESS_TOKEN_MINUTES = 1;
  */
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private readonly http = inject(HttpClient);
+  private readonly api = inject(AuthApi);
   private readonly router = inject(Router);
-  private readonly apiUrl = inject(API_BASE_URL);
 
   private readonly session = signal<AuthSession | null>(this.readSession());
   /** Shared in-flight refresh, so parallel 401s trigger only one refresh call. */
@@ -45,7 +43,7 @@ export class AuthService {
   login(credentials: Omit<LoginRequest, 'expiresInMins'>): Observable<AuthUser> {
     const body: LoginRequest = { ...credentials, expiresInMins: ACCESS_TOKEN_MINUTES };
 
-    return this.http.post<LoginResponse>(`${this.apiUrl}/auth/login`, body).pipe(
+    return this.api.login(body).pipe(
       map(({ accessToken, refreshToken, ...user }) => {
         this.saveSession({ user, tokens: { accessToken, refreshToken } });
         return user;
@@ -61,7 +59,7 @@ export class AuthService {
   verifySession(): void {
     if (!this.session()) return;
 
-    this.http.get<AuthUser>(`${this.apiUrl}/auth/me`).subscribe({
+    this.api.me().subscribe({
       next: ({ id, username, email, firstName, lastName, gender, image }) => {
         const current = this.session();
         if (current) {
@@ -83,11 +81,8 @@ export class AuthService {
       return throwError(() => new Error('No session to refresh'));
     }
 
-    this.refreshInFlight$ ??= this.http
-      .post<AuthTokens>(`${this.apiUrl}/auth/refresh`, {
-        refreshToken: current.tokens.refreshToken,
-        expiresInMins: ACCESS_TOKEN_MINUTES,
-      })
+    this.refreshInFlight$ ??= this.api
+      .refresh({ refreshToken: current.tokens.refreshToken, expiresInMins: ACCESS_TOKEN_MINUTES })
       .pipe(
         tap((tokens) => this.saveSession({ ...current, tokens })),
         finalize(() => (this.refreshInFlight$ = null)),

@@ -17,6 +17,12 @@ export interface AuthUser {
   image: string;
 }
 
+/** Body of POST /auth/refresh. */
+export interface RefreshRequest {
+  refreshToken: string;
+  expiresInMins?: number;
+}
+
 export interface AuthTokens {
   accessToken: string;
   refreshToken: string;

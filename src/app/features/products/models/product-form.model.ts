@@ -1,3 +1,5 @@
+import { FieldTree } from '@angular/forms/signals';
+
 import { ProductDetail } from './product-detail.model';
 import { ProductChanges } from './product-changes.model';
 
@@ -38,4 +40,10 @@ export function toProductChanges(value: ProductFormModel): ProductChanges {
     discountPercentage: value.discountPercentage ?? 0,
     stock: value.stock ?? 0,
   };
+}
+
+/** A field in the form's error summary: the id its link points to and the field to focus. */
+export interface SummaryField {
+  id: string;
+  field: FieldTree<unknown>;
 }

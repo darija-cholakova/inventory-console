@@ -56,6 +56,13 @@
             >
               <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
               <span matListItemTitle>{{ item.label }}</span>
+              @if (item.count?.(); as count) {
+                <span matListItemMeta class="nav-meta">
+                  <span class="nav-count"
+                    >{{ count }}<span class="visually-hidden"> {{ item.countLabel }}</span></span
+                  >
+                </span>
+              }
             </a>
           }
         </mat-nav-list>
