@@ -2,6 +2,7 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { Injectable, computed, inject, signal } from '@angular/core';
 
 import { BookmarkTarget } from '../../shared/models/interfaces';
+import { LocalChanges } from '../products/local-changes';
 
 const STORAGE_KEY = 'inventory-console.bookmarks';
 
@@ -14,7 +15,10 @@ export class Bookmarks {
   private readonly announcer = inject(LiveAnnouncer);
 
   readonly ids = signal<ReadonlySet<number>>(this.read());
-  readonly count = computed(() => this.ids().size);
+  private readonly local = inject(LocalChanges);
+
+  /** Deleted products stay bookmarked (Undo brings them back) but are not counted. */
+  readonly count = computed(() => [...this.ids()].filter((id) => !this.local.isDeleted(id)).length);
 
   isBookmarked(id: number): boolean {
     return this.ids().has(id);

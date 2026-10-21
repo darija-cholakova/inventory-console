@@ -7,7 +7,7 @@ import { firstValueFrom } from 'rxjs';
 import { ConfirmDialog } from '../../../shared/ui/dialogs/confirm-dialog/confirm-dialog';
 
 import { UndoSnackbar } from '../../../shared/ui/undo-snackbar/undo-snackbar';
-import { LocalChanges } from './local-changes';
+import { LocalChanges } from '../../../core/products/local-changes';
 import { ConfirmDialogData, Product, UndoSnackbarData } from '../../../shared/models/interfaces';
 
 /** Undo window; long enough to reach the button with a keyboard or screen reader. */

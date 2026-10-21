@@ -6,12 +6,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatFormField, MatLabel, MatPrefix, MatSuffix } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
 import { MatInput } from '@angular/material/input';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { RouterLink } from '@angular/router';
 import { map } from 'rxjs';
 
 import { TABLE_VIEW_QUERY } from '../../../../shared/utils/breakpoints';
 import { StateMessage } from '../../../../shared/ui/state-message/state-message';
-import { LocalChanges } from '../../../products/data-access/local-changes';
+import { LocalChanges } from '../../../../core/products/local-changes';
 import { ProductDeletion } from '../../../products/data-access/product-deletion';
 import { ProductsApi } from '../../../../core/api/products-api';
 import { ProductCards } from '../../../../shared/ui/product-cards/product-cards';
@@ -19,13 +20,13 @@ import { ProductEditDialog } from '../../../products/dialogs/product-edit-dialog
 import { ProductsSkeleton } from '../../../../shared/ui/products-skeleton/products-skeleton';
 import { ProductsTable } from '../../../../shared/ui/products-table/products-table';
 import { Bookmarks } from '../../../../core/bookmarks/bookmarks';
-import { DEFAULT_QUERY } from '../../../products/utils/product-query.constants';
+import { DEFAULT_QUERY, PAGE_SIZE_OPTIONS } from '../../../products/utils/product-query.constants';
 import { Product, ProductQuery, SortChange } from '../../../../shared/models/interfaces';
 
 /**
  * Bookmarked products. DummyJSON cannot fetch several ids at once, so the page loads the
  * catalog once (list fields only) and keeps the bookmarked ones. The list is short,
- * so search and sorting run in the browser and there is no paginator.
+ * so search, sorting and paging run in the browser.
  */
 @Component({
   selector: 'app-bookmarks-page',
@@ -43,6 +44,7 @@ import { Product, ProductQuery, SortChange } from '../../../../shared/models/int
     MatIcon,
     MatButton,
     MatIconButton,
+    MatPaginator,
   ],
   templateUrl: './bookmarks-page.html',
   styleUrl: './bookmarks-page.scss',
@@ -80,7 +82,8 @@ export class BookmarksPage {
     return this.local.applyToList(all.filter((p) => ids.has(p.id))).items;
   });
 
-  protected readonly items = computed(() => {
+  /** Bookmarked products after search and sort (all pages). */
+  protected readonly results = computed(() => {
     const q = this.search().trim().toLowerCase();
     const { sortBy, order } = this.sort();
     const found = q
@@ -93,6 +96,21 @@ export class BookmarksPage {
     );
   });
 
+  protected readonly pageSizeOptions = PAGE_SIZE_OPTIONS;
+  protected readonly pageSize = signal<number>(PAGE_SIZE_OPTIONS[0]);
+  private readonly requestedPage = signal(0);
+
+  /** Stays valid when the list shrinks (unbookmark, delete, search): never past the last page. */
+  protected readonly pageIndex = computed(() => {
+    const lastPage = Math.max(0, Math.ceil(this.results().length / this.pageSize()) - 1);
+    return Math.min(this.requestedPage(), lastPage);
+  });
+
+  protected readonly items = computed(() => {
+    const start = this.pageIndex() * this.pageSize();
+    return this.results().slice(start, start + this.pageSize());
+  });
+
   protected readonly skeletonRows = computed(() => Math.min(this.bookmarks.count(), 6));
 
   protected readonly isLoading = computed(
@@ -103,11 +121,23 @@ export class BookmarksPage {
   );
 
   protected onSearch(event: Event): void {
-    this.search.set((event.target as HTMLInputElement).value);
+    this.setSearch((event.target as HTMLInputElement).value);
+  }
+
+  protected setSearch(value: string): void {
+    this.search.set(value);
+    this.requestedPage.set(0);
   }
 
   protected onSort(sort: SortChange): void {
     this.sort.set(sort);
+    this.requestedPage.set(0);
+  }
+
+  protected onPage({ pageIndex, pageSize }: PageEvent): void {
+    const sizeChanged = pageSize !== this.pageSize();
+    this.pageSize.set(pageSize);
+    this.requestedPage.set(sizeChanged ? 0 : pageIndex);
   }
 
   protected onEdit(product: Product): void {

@@ -64,6 +64,7 @@ src/app/
     api/             all HTTP clients: api.config.ts (base URL), auth-api.ts, products-api.ts, users-api.ts
     auth/            session (AuthService), interceptor, guards, safe return URL
     bookmarks/       bookmarked ids (localStorage); used by the nav count, the button and the Bookmarked page
+    products/        LocalChanges: the user's product edits and deletions (sessionStorage), read by every feature
     layout/          shell (top bar, side nav), account menu
     routing/         page title strategy, unsaved-changes guard
     theme/           light / dark / system theme
@@ -115,7 +116,7 @@ flowchart LR
 - Every route is lazy loaded; the shell is a layout route that wraps all signed-in pages.
 - **API layer:** every HTTP call goes through a small, stateless client in `core/api/`. Services and stores above it own the state (session, local edits, current page), so the endpoints can be found, mocked or replaced in one place.
 - **Types:** all of them live in two files, `shared/models/interfaces.ts` (object shapes: API responses, state, form models, dialog data) and `shared/models/types.ts` (unions and derived types such as `LoadStatus`, `SortField`, `ProductChanges = Partial<Pick<…>>`, `LoginResponse = AuthUser & AuthTokens`), grouped by area with section comments. Components and services only import them.
-- **Where things go:** anything used by more than one feature lives in `shared/ui` (the product table, cards and skeleton are used by Products and Bookmarked; the bookmark button by the table, the cards and the detail page), so features never import from each other. App-wide state that the shell also needs (bookmarks, session, theme) lives in `core/`. `shared` depends only on `core` and Angular, never on a feature.
+- **Where things go:** anything used by more than one feature lives in `shared/ui` (the product table, cards and skeleton are used by Products and Bookmarked; the bookmark button by the table, the cards and the detail page), so features never import from each other. App-wide state that several features or the shell need (session, theme, bookmarks, local product changes) lives in `core/`. `shared` depends only on `core` and Angular, never on a feature.
 - **Pages, dialogs and UI:** pages are routed and talk to stores and services; `dialogs/` holds feature dialogs that load and save data (opened from several pages); shared UI components get data through `input()` and report through `output()`.
 - **One dialog frame:** `DialogShell` owns closing for every form dialog: Esc, a click outside, the X button and the form's Cancel all go through `requestClose()`, which asks "Discard unsaved changes?" when the form reports changes. Feature dialogs only pass `hasUnsavedChanges`.
 - **Shared form feedback:** `Banner` (error / info, full width, `role="alert"` or `"status"`) is used on the sign-in page and in both forms; `FormErrorSummary` lists the errors with links to the fields in both forms. Skeleton blocks use one SCSS mixin (`shared/styles/_skeleton.scss`).
@@ -159,7 +160,7 @@ flowchart LR
 
 - **Local changes layer:** DummyJSON answers `PATCH` and `DELETE` as if they succeeded but never stores them. `LocalChanges` keeps the user's edits and deletions in `sessionStorage` and applies them on top of every server response (list, detail, edit form, bookmarks).
 - **Optimistic update with rollback:** an edit shows everywhere at once and the `PATCH` runs in the background. If it fails, the edit is rolled back and the form shows an error, keeping the user's input.
-- **Full pages after a delete:** the server still counts deleted products, so its pages are shifted. While there are local deletions, the list fetches from the first item to the end of the current page plus the number of deletions (`limit = page × size + deleted`, `skip = 0`) and cuts the page in the store, so every page stays full and nothing is skipped or shown twice. On a large catalog this request grows with the page number; a real backend would handle deletions itself.
+- **Full pages after a delete:** the server still counts deleted products, so its pages are shifted. While there are local deletions, the list fetches from the first item to the end of the current page plus the number of deletions (`limit = page × size + deleted`, `skip = 0`) and cuts the page in the store, so every page stays full and nothing is skipped or shown twice. The total subtracts every deletion in the unfiltered list; with a search or category only the deletions in the loaded range are known, so the count can be slightly high until those pages are opened (a backend would return the exact count). On a large catalog this request grows with the page number; a real backend would handle deletions itself.
 - **Delete: confirmation and Undo:** every delete asks "Delete “…”?" first (Cancel has the initial focus). After confirming, the product disappears at once and a snackbar offers Undo for 8 seconds; the timer pauses while the pointer or keyboard focus is on it. `DELETE` is sent only when the window closes without Undo; if it fails, the product comes back with a message. After a delete from the list, focus moves to the page heading.
 - **Signal Forms:** stable in Angular 22 and a natural fit for a signals-first app: the form model is a `linkedSignal` seeded from the product, and the rules are a separate, reusable `schema` (`product-form.schema.ts`). Material 22 supports it directly (`matInput` and `mat-select` read the `[formField]` state). Rules: title, description, category, price, discount and stock are required; price > 0, discount 0–100, stock a whole number ≥ 0; brand is optional.
 - **Validation UX:** errors appear after the first save attempt and then update live; an error summary links to the fields; focus moves to the first invalid field; the button shows "Saving…".
@@ -170,7 +171,7 @@ flowchart LR
 
 - A personal working list. Ids live in `localStorage` (not `sessionStorage`): a bookmark should survive closing the tab.
 - DummyJSON has no favorites resource and cannot fetch several ids at once, so the page loads the catalog once with list fields only (`limit=0&select=…`, ~194 small items) and keeps the bookmarked ones: one request regardless of the number of bookmarks, always current prices and stock. A real backend would offer `?ids=` or a bookmarks endpoint.
-- Reuses the product table, cards, skeleton, edit dialog and delete flow; search and sorting run in the browser. One `BookmarkButton` (filled icon + `aria-pressed`, tooltip) is used in the table, the cards and the detail page; the side nav shows the count with screen reader text ("3 products").
+- Reuses the product table, cards, skeleton, edit dialog and delete flow; search, sorting and pagination (10 / 25 / 50) run in the browser, and the page stays valid when the list shrinks (unbookmark, delete, search). The count in the side nav leaves out deleted products (they stay bookmarked, so Undo brings them back). One `BookmarkButton` (filled icon + `aria-pressed`, tooltip) is used in the table, the cards and the detail page; the side nav shows the count with screen reader text ("3 products").
 
 ### Account menu and profile
 
@@ -196,9 +197,9 @@ npm test -- --watch=false   # unit tests (Vitest, through `ng test`)
 npm run e2e                 # end-to-end test (Playwright); starts `ng serve` if it is not running
 ```
 
-- **Unit tests (32, in `features/products/data-access/`):**
-  - `products-store.spec.ts` – loads a page; keeps pages full after a delete with no product shown twice; removes a row at once and brings it back on Undo; empty last page; "no results"; keeps rows while the next page loads; ignores an outdated response (`switchMap`); keeps the query after an error so "Try again" repeats it.
-  - `local-changes.spec.ts` – optimistic edit and rollback to the previous value; delete hides without calling the API; failed `DELETE` brings the product back; survives a reload; broken or old storage data (invalid JSON, `null`, wrong shape) starts empty instead of crashing.
+- **Unit tests (33, in `features/products/data-access/` and `core/products/`):**
+  - `products-store.spec.ts` – loads a page; keeps pages full after a delete with no product shown twice; counts a deletion outside the loaded page in the total; removes a row at once and brings it back on Undo; empty last page; "no results"; keeps rows while the next page loads; ignores an outdated response (`switchMap`); keeps the query after an error so "Try again" repeats it.
+  - `core/products/local-changes.spec.ts` – optimistic edit and rollback to the previous value; delete hides without calling the API; failed `DELETE` brings the product back; survives a reload; broken or old storage data (invalid JSON, `null`, wrong shape) starts empty instead of crashing.
   - `product-deletion.spec.ts` – confirm only on "Delete" (Cancel, Esc, click outside = no); Undo restores and never sends `DELETE`; timeout sends `DELETE`; failed `DELETE` restores with a message.
   - `product-query-params.spec.ts` – URL → query and back; invalid or hand-edited values fall back to defaults; search wins over category; spaces-only search; defaults are left out of the URL.
   - `ProductsApi` and Material dialogs / snackbars are fakes; the real `LocalChanges` runs on jsdom `sessionStorage`, so the store and the local layer are tested together.
@@ -249,6 +250,7 @@ Start = prompt sent to Claude, end = feature committed and pushed (times from gi
 | Sign-in animations          | 22:03   | 22:07    | 4 min    |
 | Bundle size check           | 22:08   | 22:11    | 3 min    |
 | Architecture refactor       | 22:15   | 22:23    | 8 min    |
+| Self-review fixes           | 22:32   | 22:36    | 4 min    |
 
 ## Time spent
 

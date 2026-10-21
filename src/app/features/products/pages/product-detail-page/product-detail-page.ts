@@ -23,7 +23,7 @@ import { BookmarkButton } from '../../../../shared/ui/bookmark-button/bookmark-b
 import { BackLink } from '../../../../shared/ui/back-link/back-link';
 import { StateMessage } from '../../../../shared/ui/state-message/state-message';
 import { StockChip } from '../../../../shared/ui/stock-chip/stock-chip';
-import { LocalChanges } from '../../data-access/local-changes';
+import { LocalChanges } from '../../../../core/products/local-changes';
 import { ProductDeletion } from '../../data-access/product-deletion';
 import { ProductsApi } from '../../../../core/api/products-api';
 import { ProductsListUrl } from '../../data-access/products-list-url';

@@ -28,7 +28,7 @@ import { Banner } from '../../../../shared/ui/banner/banner';
 import { FormErrorSummary } from '../../../../shared/ui/form-error-summary/form-error-summary';
 
 import { ProductImage } from '../../../../shared/ui/product-image/product-image';
-import { LocalChanges } from '../../data-access/local-changes';
+import { LocalChanges } from '../../../../core/products/local-changes';
 import { toFormModel, toProductChanges } from '../../utils/product-form.mapper';
 import { productFormSchema } from '../../utils/product-form.schema';
 import {

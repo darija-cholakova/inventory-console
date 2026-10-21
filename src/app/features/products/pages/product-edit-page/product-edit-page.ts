@@ -15,7 +15,7 @@ import { Router, RouterLink } from '@angular/router';
 
 import { BackLink } from '../../../../shared/ui/back-link/back-link';
 import { StateMessage } from '../../../../shared/ui/state-message/state-message';
-import { LocalChanges } from '../../data-access/local-changes';
+import { LocalChanges } from '../../../../core/products/local-changes';
 import { ProductsApi } from '../../../../core/api/products-api';
 import { ProductForm } from '../../ui/product-form/product-form';
 import { HasUnsavedChanges } from '../../../../shared/models/interfaces';

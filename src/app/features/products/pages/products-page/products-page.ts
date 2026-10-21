@@ -22,7 +22,7 @@ import { map } from 'rxjs';
 
 import { TABLE_VIEW_QUERY } from '../../../../shared/utils/breakpoints';
 import { StateMessage } from '../../../../shared/ui/state-message/state-message';
-import { LocalChanges } from '../../data-access/local-changes';
+import { LocalChanges } from '../../../../core/products/local-changes';
 import { ProductDeletion } from '../../data-access/product-deletion';
 import { paramsFromQuery, queryFromParams } from '../../data-access/product-query-params';
 import { ProductsListUrl } from '../../data-access/products-list-url';

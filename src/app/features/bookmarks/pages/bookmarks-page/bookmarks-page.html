@@ -29,7 +29,7 @@
           matSuffix
           type="button"
           aria-label="Clear search"
-          (click)="search.set('')"
+          (click)="setSearch('')"
         >
           <mat-icon>close</mat-icon>
         </button>
@@ -48,13 +48,13 @@
       >
         <button matButton="tonal" type="button" (click)="catalog.reload()">Try again</button>
       </app-state-message>
-    } @else if (!items().length) {
+    } @else if (!results().length) {
       <app-state-message
         icon="search_off"
         [title]="'No bookmarked products match “' + search() + '”'"
         message="Check the spelling or clear the search."
       >
-        <button matButton="tonal" type="button" (click)="search.set('')">Clear search</button>
+        <button matButton="tonal" type="button" (click)="setSearch('')">Clear search</button>
       </app-state-message>
     } @else if (showTable()) {
       <app-products-table
@@ -67,11 +67,23 @@
     } @else {
       <app-product-cards [items]="items()" (edit)="onEdit($event)" (delete)="onDelete($event)" />
     }
+
+    @if (catalog.hasValue() && results().length) {
+      <mat-paginator
+        [length]="results().length"
+        [pageIndex]="pageIndex()"
+        [pageSize]="pageSize()"
+        [pageSizeOptions]="pageSizeOptions"
+        (page)="onPage($event)"
+        aria-label="Select page of bookmarked products"
+      />
+    }
   </section>
 
   <p class="visually-hidden" role="status">
     @if (catalog.hasValue()) {
-      {{ items().length }} {{ items().length === 1 ? 'bookmarked product' : 'bookmarked products' }}
+      {{ results().length }}
+      {{ results().length === 1 ? 'bookmarked product' : 'bookmarked products' }}
     }
   </p>
 }

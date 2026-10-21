@@ -3,7 +3,7 @@ import { patchState, signalStore, withComputed, withMethods, withState } from '@
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { EMPTY, catchError, pipe, switchMap, tap } from 'rxjs';
 
-import { LocalChanges } from './local-changes';
+import { LocalChanges } from '../../../core/products/local-changes';
 import { ProductsApi } from '../../../core/api/products-api';
 import { DEFAULT_QUERY } from '../utils/product-query.constants';
 import { ProductQuery, ProductsState } from '../../../shared/models/interfaces';
@@ -29,8 +29,14 @@ export const ProductsStore = signalStore(
     const visible = computed(() => local.applyToList(serverItems()));
     return {
       items: computed(() => visible().items.slice(windowStart(), windowStart() + query().pageSize)),
-      // Deleted rows of this page leave the total too (the server still counts them)
-      total: computed(() => Math.max(0, serverTotal() - visible().removed)),
+      // The server still counts deleted products. The unfiltered list contains every product,
+      // so all deletions are subtracted; with a search or category only the deletions found
+      // in the loaded range are known (a backend would return the exact count).
+      total: computed(() => {
+        const { q, category } = query();
+        const deleted = !q && !category ? local.deletedCount() : visible().removed;
+        return Math.max(0, serverTotal() - deleted);
+      }),
     };
   }),
   withComputed(({ status, items, total }) => ({

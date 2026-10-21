@@ -5,7 +5,7 @@ import { MatSnackBar, MatSnackBarDismiss } from '@angular/material/snack-bar';
 import { Subject, of, throwError } from 'rxjs';
 
 import { ProductsApi } from '../../../core/api/products-api';
-import { LocalChanges } from './local-changes';
+import { LocalChanges } from '../../../core/products/local-changes';
 import { ProductDeletion } from './product-deletion';
 
 const PRODUCT = { id: 7, title: 'Chanel Coco Noir' };

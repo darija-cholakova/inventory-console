@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
 
-import { ProductsApi } from '../../../core/api/products-api';
-import { Product } from '../../../shared/models/interfaces';
+import { ProductsApi } from '../api/products-api';
+import { Product } from '../../shared/models/interfaces';
 import { LocalChanges } from './local-changes';
 
 const PRODUCT: Product = {

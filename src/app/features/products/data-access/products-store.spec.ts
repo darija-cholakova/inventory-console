@@ -4,7 +4,7 @@ import { Subject, of, throwError } from 'rxjs';
 import { ProductsApi } from '../../../core/api/products-api';
 import { Product, ProductQuery, ProductsPage } from '../../../shared/models/interfaces';
 import { DEFAULT_QUERY } from '../utils/product-query.constants';
-import { LocalChanges } from './local-changes';
+import { LocalChanges } from '../../../core/products/local-changes';
 import { ProductsStore } from './products-store';
 
 /** 30 products, ids 1–30; the fake API pages through them like DummyJSON. */
@@ -110,6 +110,16 @@ describe('ProductsStore', () => {
 
       expect(store.items().map((p) => p.id)).toContain(2);
       expect(store.total()).toBe(30);
+    });
+
+    it('counts a deletion outside the loaded range in the total (unfiltered list)', () => {
+      const { store, local } = setup();
+      local.markDeleted(25); // on page 3, not loaded
+
+      store.load(DEFAULT_QUERY);
+
+      expect(store.total()).toBe(29);
+      expect(store.items()).toHaveLength(10);
     });
 
     it('is empty when every product on the last page is deleted', () => {

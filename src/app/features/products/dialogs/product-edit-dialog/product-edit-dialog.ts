@@ -8,7 +8,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { DialogShell } from '../../../../shared/ui/dialogs/dialog-shell/dialog-shell';
 import { StateMessage } from '../../../../shared/ui/state-message/state-message';
-import { LocalChanges } from '../../data-access/local-changes';
+import { LocalChanges } from '../../../../core/products/local-changes';
 import { ProductsApi } from '../../../../core/api/products-api';
 import { ProductForm } from '../../ui/product-form/product-form';
 import { ProductEditDialogData } from '../../../../shared/models/interfaces';
