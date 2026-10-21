@@ -49,6 +49,7 @@ export class ProductsTable {
     'title',
     'category',
     'price',
+    'status',
     'stock',
     'rating',
     'actions',

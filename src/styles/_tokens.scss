@@ -21,6 +21,7 @@
 
   // Stock chip: one width for all statuses ("Out of stock" / "Low stock · 10" fit)
   --app-stock-chip-width: 128px;
+  --app-stock-chip-width-compact: 112px; // status only, in the product table
 
   // Form dialogs (edit product): wider and taller than Material's default (65vh body)
   --app-dialog-form-width: 800px;

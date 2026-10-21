@@ -3,11 +3,12 @@
   overflow-x: auto;
 
   // Fixed column widths; the product column takes the remaining space
-  --col-thumbnail: 72px;
-  --col-category: 160px;
-  --col-price: 120px;
-  --col-stock: 168px;
-  --col-rating: 96px;
+  --col-thumbnail: 64px;
+  --col-category: 128px;
+  --col-price: 104px;
+  --col-status: 128px;
+  --col-stock: 96px; // quantity
+  --col-rating: 80px;
   --col-actions: 112px; // bookmark + menu
 }
 
@@ -65,6 +66,10 @@ tr.mat-mdc-row:last-child td {
 
 .mat-column-price {
   inline-size: var(--col-price);
+}
+
+.mat-column-status {
+  inline-size: var(--col-status);
 }
 
 .mat-column-stock {

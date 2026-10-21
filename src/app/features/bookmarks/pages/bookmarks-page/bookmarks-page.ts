@@ -9,6 +9,7 @@ import { MatInput } from '@angular/material/input';
 import { RouterLink } from '@angular/router';
 import { map } from 'rxjs';
 
+import { TABLE_VIEW_QUERY } from '../../../../shared/utils/breakpoints';
 import { StateMessage } from '../../../../shared/ui/state-message/state-message';
 import { LocalChanges } from '../../../products/data-access/local-changes';
 import { ProductDeletion } from '../../../products/data-access/product-deletion';
@@ -20,8 +21,6 @@ import { ProductsTable } from '../../../products/ui/products-table/products-tabl
 import { Bookmarks } from '../../data-access/bookmarks';
 import { DEFAULT_QUERY } from '../../../products/utils/product-query.constants';
 import { Product, ProductQuery, SortChange } from '../../../../shared/models/interfaces';
-
-const TABLE_QUERY = '(min-width: 1024px)';
 
 /**
  * Bookmarked products. DummyJSON cannot fetch several ids at once, so the page loads the
@@ -58,7 +57,7 @@ export class BookmarksPage {
 
   protected readonly showTable = toSignal(
     inject(BreakpointObserver)
-      .observe(TABLE_QUERY)
+      .observe(TABLE_VIEW_QUERY)
       .pipe(map((state) => state.matches)),
     { initialValue: false },
   );

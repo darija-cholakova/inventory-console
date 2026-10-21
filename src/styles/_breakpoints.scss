@@ -2,3 +2,7 @@
 
 // Product detail: image and summary side by side only when both have enough room
 $detail-two-columns: 1256px;
+
+// Product table instead of cards: the table needs room for eight columns next to the side nav
+// (keep in sync with TABLE_VIEW_QUERY in shared/utils/breakpoints.ts)
+$table-view: 1200px;

@@ -10,6 +10,11 @@
   font: var(--mat-sys-label-medium);
   white-space: nowrap;
 
+  // Status only (no count): narrower, still one width for all statuses
+  &.compact {
+    inline-size: var(--app-stock-chip-width-compact);
+  }
+
   mat-icon {
     inline-size: 16px;
     block-size: 16px;

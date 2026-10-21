@@ -20,6 +20,7 @@ import { MatProgressBar } from '@angular/material/progress-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
 
+import { TABLE_VIEW_QUERY } from '../../../../shared/utils/breakpoints';
 import { StateMessage } from '../../../../shared/ui/state-message/state-message';
 import { LocalChanges } from '../../data-access/local-changes';
 import { ProductDeletion } from '../../data-access/product-deletion';
@@ -33,9 +34,6 @@ import { ProductsTable } from '../../ui/products-table/products-table';
 import { ProductsToolbar } from '../../ui/products-toolbar/products-toolbar';
 import { PAGE_SIZE_OPTIONS } from '../../utils/product-query.constants';
 import { Product, ProductQuery, SortChange } from '../../../../shared/models/interfaces';
-
-/** The table needs room for seven columns next to the side nav. */
-const TABLE_QUERY = '(min-width: 1024px)';
 
 @Component({
   selector: 'app-products-page',
@@ -67,7 +65,7 @@ export class ProductsPage {
   protected readonly pageSizeOptions = PAGE_SIZE_OPTIONS;
   protected readonly showTable = toSignal(
     inject(BreakpointObserver)
-      .observe(TABLE_QUERY)
+      .observe(TABLE_VIEW_QUERY)
       .pipe(map((state) => state.matches)),
     { initialValue: false },
   );

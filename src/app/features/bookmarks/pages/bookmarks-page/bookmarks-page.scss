@@ -1,6 +1,7 @@
 @use '../../../../shared/styles/page';
+@use '../../../../../styles/breakpoints' as bp;
 
-// Same layout as the product list: cards on small screens, a bordered table panel from 1024px.
+// Same layout as the product list: cards on small screens, a bordered table panel from the table breakpoint.
 :host {
   display: flex;
   flex-direction: column;
@@ -22,7 +23,7 @@
 .results {
   border-radius: var(--mat-sys-corner-medium);
 
-  @media (min-width: 1024px) {
+  @media (min-width: bp.$table-view) {
     padding: var(--app-space-8) 0 0;
     border: 1px solid var(--mat-sys-outline-variant);
     background: var(--mat-sys-surface-container-lowest);

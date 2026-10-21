@@ -1,3 +1,4 @@
+@use '../../../../../styles/breakpoints' as bp;
 // Mobile first: fields stack; from 600px they sit in one row.
 .toolbar {
   display: grid;
@@ -11,7 +12,7 @@
     }
   }
 
-  @media (min-width: 1024px) {
+  @media (min-width: bp.$table-view) {
     grid-template-columns: minmax(0, 340px) minmax(0, 240px) minmax(0, 240px);
 
     .sort {
