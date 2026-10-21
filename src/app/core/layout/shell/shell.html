@@ -1,0 +1,80 @@
+<a class="skip-link" href="#main-content" (click)="skipToMain($event)">Skip to main content</a>
+
+<mat-toolbar class="top-bar" role="banner">
+  @if (!isExpanded()) {
+    <button
+      matIconButton
+      type="button"
+      aria-label="Open navigation"
+      aria-controls="app-nav"
+      [attr.aria-expanded]="navOpened()"
+      (click)="toggleDrawer()"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
+  }
+
+  <a class="brand" routerLink="/products" aria-label="Inventory Console, go to products">
+    <span class="brand-logo" aria-hidden="true"><mat-icon>inventory_2</mat-icon></span>
+    <span class="brand-name">Inventory Console</span>
+  </a>
+
+  <span class="spacer"></span>
+
+  <mat-slide-toggle
+    class="theme-switch theme-switch--toolbar"
+    [checked]="theme.isDark()"
+    (change)="theme.setDark($event.checked)"
+  >
+    Dark theme
+  </mat-slide-toggle>
+
+  <!-- Account menu (sign out) is added in the auth feature -->
+</mat-toolbar>
+
+<mat-sidenav-container class="body">
+  <mat-sidenav
+    id="app-nav"
+    class="nav"
+    [mode]="isExpanded() ? 'side' : 'over'"
+    [opened]="navOpened()"
+    [disableClose]="isExpanded()"
+    (closedStart)="onDrawerClosed()"
+  >
+    <div class="nav-content">
+      <nav aria-label="Main">
+        <mat-nav-list>
+          @for (item of navItems; track item.path) {
+            <a
+              mat-list-item
+              [routerLink]="item.path"
+              routerLinkActive
+              #link="routerLinkActive"
+              [activated]="link.isActive"
+              ariaCurrentWhenActive="page"
+              (click)="onNavigate()"
+            >
+              <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+              <span matListItemTitle>{{ item.label }}</span>
+            </a>
+          }
+        </mat-nav-list>
+      </nav>
+
+      <!-- On small screens the toolbar has no room for the labelled switch, so it sits at the bottom of the drawer -->
+      <mat-slide-toggle
+        class="theme-switch theme-switch--drawer"
+        [checked]="theme.isDark()"
+        (change)="theme.setDark($event.checked)"
+      >
+        Dark theme
+      </mat-slide-toggle>
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <main id="main-content" #main class="main" tabindex="-1">
+      <router-outlet />
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

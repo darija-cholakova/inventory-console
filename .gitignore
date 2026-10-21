@@ -26,3 +26,17 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# IDEs and OS files
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
+.DS_Store
+
+# Claude desktop working files
+Claude outputs/
+project-instructions.md
+**/project-instructions.md

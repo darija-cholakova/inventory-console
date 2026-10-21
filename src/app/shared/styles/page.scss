@@ -1,0 +1,19 @@
+// Shared page heading styles
+:host {
+  display: block;
+}
+
+.page-title {
+  font: var(--mat-sys-headline-small);
+  color: var(--mat-sys-on-surface);
+
+  @media (min-width: 840px) {
+    font: var(--mat-sys-headline-medium);
+  }
+}
+
+.page-subtitle {
+  margin-block-start: var(--app-space-4);
+  font: var(--mat-sys-body-medium);
+  color: var(--mat-sys-on-surface-variant);
+}

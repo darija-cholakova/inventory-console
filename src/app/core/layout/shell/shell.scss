@@ -1,0 +1,117 @@
+// Mobile first: base styles target small screens, min-width queries add the wider layouts.
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+.skip-link {
+  position: absolute;
+  inset-block-start: var(--app-space-8);
+  inset-inline-start: var(--app-space-8);
+  z-index: 10;
+  padding: var(--app-space-8) var(--app-space-16);
+  border-radius: var(--mat-sys-corner-small);
+  background: var(--mat-sys-primary);
+  color: var(--mat-sys-on-primary);
+  font: var(--mat-sys-label-large);
+  text-decoration: none;
+  transform: translateY(-200%);
+
+  &:focus-visible {
+    transform: none;
+  }
+}
+
+.top-bar {
+  gap: var(--app-space-4);
+  padding-inline: var(--app-space-4) var(--app-space-16);
+  background: var(--mat-sys-surface-container);
+  border-block-end: 1px solid var(--mat-sys-outline-variant);
+
+  @media (min-width: 840px) {
+    padding-inline: var(--app-space-16) var(--app-space-24);
+  }
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--app-space-12);
+  color: inherit;
+  text-decoration: none;
+  border-radius: var(--mat-sys-corner-small);
+}
+
+.brand-logo {
+  display: inline-grid;
+  place-items: center;
+  inline-size: 40px;
+  block-size: 40px;
+  border-radius: var(--mat-sys-corner-medium);
+  background: var(--mat-sys-primary-container);
+  color: var(--mat-sys-on-primary-container);
+}
+
+.brand-name {
+  font: var(--mat-sys-title-medium);
+}
+
+.spacer {
+  flex: 1;
+}
+
+// One switch is visible at a time: drawer on small screens, toolbar from 600px up.
+.theme-switch--toolbar {
+  display: none;
+
+  @media (min-width: 600px) {
+    display: inline-flex;
+  }
+}
+
+.theme-switch--drawer {
+  margin-block-start: auto; // pushes the switch to the bottom of the drawer
+  padding: var(--app-space-16) var(--app-space-24);
+  border-block-start: 1px solid var(--mat-sys-outline-variant);
+
+  @media (min-width: 600px) {
+    display: none;
+  }
+}
+
+.body {
+  flex: 1;
+  background: var(--mat-sys-surface);
+}
+
+.nav-content {
+  display: flex;
+  flex-direction: column;
+  min-block-size: 100%;
+}
+
+.nav {
+  inline-size: var(--app-nav-width);
+  padding-block: var(--app-space-8);
+  background: var(--mat-sys-surface-container-low);
+
+  // Permanent nav on large screens is flat; the modal drawer keeps the M3 rounded edge.
+  @media (min-width: 840px) {
+    --mat-sidenav-container-shape: 0;
+  }
+}
+
+.main {
+  box-sizing: border-box;
+  max-inline-size: var(--app-content-max-width);
+  padding: var(--app-space-16);
+
+  &:focus {
+    outline: none;
+  }
+
+  @media (min-width: 840px) {
+    padding: var(--app-space-24) var(--app-space-32);
+  }
+}

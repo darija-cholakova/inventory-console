@@ -1,0 +1,23 @@
+// App-level design tokens that Material 3 does not provide.
+// Values mirror the Figma "Dimensions" and status color variables.
+:root {
+  // Spacing scale (4 px grid)
+  --app-space-2: 2px;
+  --app-space-4: 4px;
+  --app-space-8: 8px;
+  --app-space-12: 12px;
+  --app-space-16: 16px;
+  --app-space-24: 24px;
+  --app-space-32: 32px;
+  --app-space-48: 48px;
+
+  // Layout
+  --app-nav-width: 240px;
+  --app-content-max-width: 1200px;
+
+  // Status colors (success / warning are not part of M3), harmonized with Signal Blue
+  --app-success-container: light-dark(#92f7bc, #005231);
+  --app-on-success-container: light-dark(#002111, #92f7bc);
+  --app-warning-container: light-dark(#ffdea0, #5c4300);
+  --app-on-warning-container: light-dark(#261900, #ffdea0);
+}
