@@ -32,8 +32,7 @@
   >
     <button matButton="tonal" type="button" (click)="product.reload()">Try again</button>
   </app-state-message>
-} @else if (product.hasValue()) {
-  @let p = product.value();
+} @else if (view(); as p) {
   <header class="header">
     <div class="heading">
       <h1 #heading class="page-title" tabindex="-1">{{ p.title }}</h1>
@@ -44,7 +43,16 @@
         SKU {{ p.sku }}
       </p>
     </div>
-    <!-- Edit and Delete actions arrive in feature 5 -->
+    <div class="actions">
+      <button matButton="outlined" type="button" (click)="edit(p)">
+        <mat-icon>edit</mat-icon>
+        Edit
+      </button>
+      <button matButton="outlined" type="button" class="delete" (click)="delete(p)">
+        <mat-icon>delete</mat-icon>
+        Delete
+      </button>
+    </div>
   </header>
 
   <div class="layout">

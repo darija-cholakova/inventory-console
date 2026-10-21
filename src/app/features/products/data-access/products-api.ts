@@ -3,6 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable, map } from 'rxjs';
 
 import { API_BASE_URL } from '../../../core/api/api.config';
+import { ProductChanges } from '../models/product-changes.model';
 import { ProductDetail } from '../models/product-detail.model';
 import { Category, ProductListResponse, ProductsPage } from '../models/product.model';
 import { ProductQuery } from '../models/product-query.model';
@@ -45,6 +46,16 @@ export class ProductsApi {
 
   getProduct(id: number): Observable<ProductDetail> {
     return this.http.get<ProductDetail>(`${this.apiUrl}/products/${id}`);
+  }
+
+  /** DummyJSON simulates the update and does not persist it (see LocalChanges). */
+  updateProduct(id: number, changes: ProductChanges): Observable<ProductDetail> {
+    return this.http.patch<ProductDetail>(`${this.apiUrl}/products/${id}`, changes);
+  }
+
+  /** DummyJSON simulates the delete (returns isDeleted: true) and does not persist it. */
+  deleteProduct(id: number): Observable<unknown> {
+    return this.http.delete(`${this.apiUrl}/products/${id}`);
   }
 
   getCategories(): Observable<Category[]> {

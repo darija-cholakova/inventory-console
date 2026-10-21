@@ -12,6 +12,11 @@
   }
 }
 
+// Headings get programmatic focus (tabindex="-1") after navigation or a delete
+.page-title:focus {
+  outline: none;
+}
+
 .page-subtitle {
   margin-block-start: var(--app-space-4);
   font: var(--mat-sys-body-medium);

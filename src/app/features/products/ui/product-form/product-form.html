@@ -1,0 +1,148 @@
+@if (product(); as p) {
+  <div class="product">
+    <app-product-image class="thumb" [src]="p.thumbnail" [size]="64" />
+    <div class="product-info">
+      <span class="product-title">{{ p.title }}</span>
+      <span class="product-meta">
+        @if (p.brand) {
+          {{ p.brand }} ·
+        }
+        SKU {{ p.sku }}
+      </span>
+    </div>
+  </div>
+}
+
+@if (saveFailed()) {
+  <div class="banner" role="alert">
+    <mat-icon aria-hidden="true">error</mat-icon>
+    <span>Couldn't save the changes. Check your connection and try again.</span>
+  </div>
+}
+
+@if (attempted() && summary().length) {
+  <section class="summary" aria-labelledby="summary-title">
+    <h3 id="summary-title" class="summary-title">
+      <mat-icon aria-hidden="true">error</mat-icon>
+      Fix {{ summary().length }} {{ summary().length === 1 ? 'error' : 'errors' }} to save
+    </h3>
+    <ul>
+      @for (error of summary(); track error.id) {
+        <li>
+          <a [href]="'#' + error.id" (click)="focusField($event, error.field)">{{
+            error.message
+          }}</a>
+        </li>
+      }
+    </ul>
+  </section>
+}
+
+<form class="form" [formRoot]="productForm" [attr.aria-busy]="productForm().submitting()">
+  <mat-form-field appearance="outline" class="full">
+    <mat-label>Title</mat-label>
+    <input
+      id="product-title"
+      matInput
+      [formField]="productForm.title"
+      [errorStateMatcher]="matcher"
+      autocomplete="off"
+    />
+    <mat-error>{{ productForm.title().errors()[0]?.message }}</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full">
+    <mat-label>Description</mat-label>
+    <textarea
+      id="product-description"
+      matInput
+      rows="3"
+      [formField]="productForm.description"
+      [errorStateMatcher]="matcher"
+    ></textarea>
+    <mat-error>{{ productForm.description().errors()[0]?.message }}</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Category</mat-label>
+    <mat-select
+      id="product-category"
+      [formField]="productForm.category"
+      [errorStateMatcher]="matcher"
+    >
+      @for (category of categories(); track category.slug) {
+        <mat-option [value]="category.slug">{{ category.name }}</mat-option>
+      }
+    </mat-select>
+    <mat-error>{{ productForm.category().errors()[0]?.message }}</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Brand</mat-label>
+    <input
+      id="product-brand"
+      matInput
+      [formField]="productForm.brand"
+      [errorStateMatcher]="matcher"
+      autocomplete="off"
+    />
+    <mat-hint>Optional</mat-hint>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Price</mat-label>
+    <span matTextPrefix>$&nbsp;</span>
+    <input
+      id="product-price"
+      matInput
+      type="number"
+      inputmode="decimal"
+      step="0.01"
+      [formField]="productForm.price"
+      [errorStateMatcher]="matcher"
+    />
+    <mat-error>{{ productForm.price().errors()[0]?.message }}</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Discount</mat-label>
+    <input
+      id="product-discount"
+      matInput
+      type="number"
+      inputmode="decimal"
+      step="0.01"
+      [formField]="productForm.discountPercentage"
+      [errorStateMatcher]="matcher"
+    />
+    <span matTextSuffix>%</span>
+    <mat-error>{{ productForm.discountPercentage().errors()[0]?.message }}</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Stock</mat-label>
+    <input
+      id="product-stock"
+      matInput
+      type="number"
+      inputmode="numeric"
+      step="1"
+      [formField]="productForm.stock"
+      [errorStateMatcher]="matcher"
+    />
+    <mat-hint>Units available</mat-hint>
+    <mat-error>{{ productForm.stock().errors()[0]?.message }}</mat-error>
+  </mat-form-field>
+
+  <div class="actions">
+    <button matButton="outlined" type="button" (click)="cancelled.emit()">Cancel</button>
+    <button matButton="filled" type="submit" [disabled]="productForm().submitting()">
+      @if (productForm().submitting()) {
+        <mat-progress-spinner mode="indeterminate" diameter="18" aria-hidden="true" />
+        Saving…
+      } @else {
+        Save changes
+      }
+    </button>
+  </div>
+</form>

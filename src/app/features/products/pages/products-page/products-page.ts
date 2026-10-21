@@ -1,19 +1,35 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { ChangeDetectionStrategy, Component, computed, effect, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  Injector,
+  afterNextRender,
+  computed,
+  effect,
+  inject,
+  untracked,
+  viewChild,
+} from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { MatButton } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
 
 import { StateMessage } from '../../../../shared/ui/state-message/state-message';
+import { LocalChanges } from '../../data-access/local-changes';
+import { ProductDeletion } from '../../data-access/product-deletion';
 import { paramsFromQuery, queryFromParams } from '../../data-access/product-query-params';
 import { ProductsListUrl } from '../../data-access/products-list-url';
 import { ProductsStore } from '../../data-access/products-store';
+import { Product } from '../../models/product.model';
 import { PAGE_SIZE_OPTIONS, ProductQuery } from '../../models/product-query.model';
 import { ProductCards } from '../../ui/product-cards/product-cards';
+import { ProductEditDialog } from '../../ui/product-edit-dialog/product-edit-dialog';
 import { ProductsSkeleton } from '../../ui/products-skeleton/products-skeleton';
 import { ProductsTable } from '../../ui/products-table/products-table';
 import { ProductsToolbar, SortChange } from '../../ui/products-toolbar/products-toolbar';
@@ -43,6 +59,10 @@ export class ProductsPage {
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
   private readonly announcer = inject(LiveAnnouncer);
+  private readonly deletion = inject(ProductDeletion);
+  private readonly injector = inject(Injector);
+  private readonly dialog = inject(MatDialog);
+  private readonly heading = viewChild.required<ElementRef<HTMLHeadingElement>>('heading');
 
   protected readonly pageSizeOptions = PAGE_SIZE_OPTIONS;
   protected readonly showTable = toSignal(
@@ -77,6 +97,18 @@ export class ProductsPage {
         listUrl.url.set(this.router.createUrlTree(['/products'], { queryParams })),
       );
 
+    // A delete or undo changes which products fill the page: reload it (skips the first run)
+    const local = inject(LocalChanges);
+    let firstRun = true;
+    effect(() => {
+      local.deletedCount();
+      if (firstRun) {
+        firstRun = false;
+        return;
+      }
+      untracked(() => this.store.load(this.store.query()));
+    });
+
     // Tell screen reader users the result of each load.
     effect(() => {
       const status = this.store.status();
@@ -106,6 +138,20 @@ export class ProductsPage {
   protected onPage({ pageIndex, pageSize }: PageEvent): void {
     const sizeChanged = pageSize !== this.store.query().pageSize;
     this.updateQuery({ page: sizeChanged ? 1 : pageIndex + 1, pageSize });
+  }
+
+  /** The list updates on its own after a save (LocalChanges). */
+  protected onEdit(product: Product): void {
+    ProductEditDialog.open(this.dialog, product.id);
+  }
+
+  protected async onDelete(product: Product): Promise<void> {
+    // Cancelled: the dialog returns focus to the row's menu button
+    if (!(await this.deletion.confirm(product))) return;
+    this.deletion.delete(product);
+    // The row and its menu button are gone; after the re-render (and the menu's own focus
+    // restore) move focus to the heading instead of losing it to <body>
+    afterNextRender(() => this.heading().nativeElement.focus(), { injector: this.injector });
   }
 
   protected clearFilters(): void {

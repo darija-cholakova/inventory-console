@@ -1,5 +1,5 @@
 <header class="header">
-  <h1 class="page-title">Products</h1>
+  <h1 #heading class="page-title" tabindex="-1">Products</h1>
   @if (store.status() === 'success' || store.isRefreshing()) {
     <p class="summary">{{ summary() }}</p>
   }
@@ -43,9 +43,15 @@
         [items]="store.items()"
         [query]="store.query()"
         (sortChange)="onSort($event)"
+        (edit)="onEdit($event)"
+        (delete)="onDelete($event)"
       />
     } @else {
-      <app-product-cards [items]="store.items()" />
+      <app-product-cards
+        [items]="store.items()"
+        (edit)="onEdit($event)"
+        (delete)="onDelete($event)"
+      />
     }
 
     <mat-paginator

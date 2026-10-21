@@ -40,6 +40,8 @@ export class ProductsTable {
   readonly query = input.required<ProductQuery>();
 
   readonly sortChange = output<SortChange>();
+  readonly edit = output<Product>();
+  readonly delete = output<Product>();
 
   protected readonly columns = [
     'thumbnail',

@@ -107,7 +107,6 @@
 
 .main {
   box-sizing: border-box;
-  max-inline-size: var(--app-content-max-width);
   padding: var(--app-space-16);
 
   &:focus {

@@ -1,7 +1,7 @@
 // for me> f2: Sign in: 13:24(start) - almost done: 13:45 (needs few style tweaks)
 F3: Products list: 13:47(start) - almost done: 14:09
 f4: Product details : 14:12 (start) -> 14:26"
-f5: Product manipulation: 14: 28(start)
+f5: Product manipulation: 14: 28(start) -> 15:09
 
 # Inventory Console
 
@@ -61,6 +61,14 @@ src/app/
 - **Product detail with `rxResource`:** one read request per page, so the detail page uses Angular's `rxResource` (stable in v22) instead of a store. It exposes loading, value and error as signals and refetches when the `:id` changes. A `404` shows "Product not found"; other errors show "Try again" (`reload()`).
 - **Back to the list keeps the filters:** the list remembers its last URL (as a `UrlTree`) in a small root service, so "Products" on the detail page returns to the same search, sort and page.
 - **Detail page accessibility:** the tab title becomes the product name and focus moves to the heading after load; the gallery thumbnails are one tab stop with arrow-key navigation; stars are decorative and the rating is read as "Rating 4.6 out of 5". The main image uses `NgOptimizedImage` with `priority` (LCP), thumbnails are lazy loaded.
+- **Local changes layer:** DummyJSON answers `PATCH` and `DELETE` as if they succeeded but never stores them. `LocalChanges` (root service) keeps the user's edits and deletions in `sessionStorage` and applies them on top of every server response: the store derives the visible rows and total from the raw server page, and the detail and edit pages apply the edits to the fetched product. A deleted product is treated like a `404`.
+- **Full pages after a delete:** the server still counts deleted products, so its pages are shifted. While there are local deletions, the list fetches from the first item up to the end of the current page plus the number of deletions (`limit = page × size + deleted`, `skip = 0`), removes the deleted ones and cuts the page in the store. Every page stays full, nothing is skipped or shown twice, and a delete or Undo reloads the page at once. On a large catalog this request grows with the page number; a real backend would handle deletions itself.
+- **Optimistic update with rollback:** an edit is applied at once (list and detail show it immediately) and the `PATCH` runs in the background. If it fails, the edit is rolled back and the form shows an error, keeping the user's input.
+- **Delete: confirmation and Undo:** every delete asks "Delete “…”?" first (Cancel has the initial focus, the confirm button uses the error color). After confirming, the product disappears at once and a snackbar still offers Undo for 8 seconds as a safety net; the timer pauses while the pointer or keyboard focus is on the snackbar. `DELETE` is sent only when the window closes without Undo; if it fails, the product comes back with a message. After a delete from the list, focus moves to the page heading instead of being lost. Cancel in the edit form asks only when there are unsaved changes, so closing an untouched form stays one click.
+- **Edit form with Signal Forms:** `@angular/forms/signals` is stable in Angular 22 and fits a signals-first app: the form model is a `linkedSignal` seeded from the product, and the validation rules are a separate, reusable `schema` (`product-form.schema.ts`). Angular Material 22 supports it directly (`matInput` and `mat-select` read the `[formField]` state), so no adapter code was needed. Rules: title, description, category, price, discount and stock are required; price > 0, discount 0–100, stock a whole number ≥ 0; brand is optional (some products have none).
+- **Form validation UX:** errors appear after the first save attempt (not while the user is still filling in the form) and then update live. An error summary lists every problem with links to the fields, and focus moves to the first invalid field. The button shows "Saving…" while the request runs; after saving, the detail page opens with a "Changes saved" snackbar.
+- **Edit in a dialog, or as a page from a link:** inside the app, Edit (row menu, card menu, detail page) opens the form in a dialog over the current screen, so the user keeps their place in the list. A direct link to `/products/:id/edit` opens the same form as a centered page. Both hosts load the product and reuse one `ProductForm` component; the dialog frame (`DialogShell`: title, close button, scrollable body) is a shared UI component.
+- **Unsaved changes:** leaving a changed form asks "Discard unsaved changes?" ("Keep editing" has the initial focus). On the page this is a `canDeactivate` guard (plus the browser's own prompt on tab close via `beforeunload`); in the dialog, Esc, the backdrop and the close button go through the same check (`disableClose` + `backdropClick` / `keydownEvents`).
 - **Responsive list:** a sortable table from 1024px; below that, cards with a "Sort by" dropdown. Stock status is a shared chip with text, icon and color.
 - **Accessibility:** skip link to the main content (WCAG 2.4.1), landmarks (`header`, `nav`, `main`), `aria-current` on the active link, visible focus ring, `prefers-reduced-motion` respected, page title per route.
 
@@ -69,6 +77,8 @@ src/app/
 - Store tokens in `HttpOnly` cookies set by a real backend instead of `sessionStorage` (not readable by injected scripts).
 - Password reset and sign-up flows (DummyJSON has no reset endpoint, and `/users/add` does not persist users).
 - Specific messages for rate limiting (`429`) and timeouts.
+- Add product: DummyJSON has `POST /products/add` (simulated, not stored). The `ProductForm` component and `productFormSchema` are reusable for it; it was left out to stay within the time budget.
+- A keyboard shortcut to reach Undo in the snackbar.
 - Search within a category and a real stock filter (In stock / Low stock / Out of stock) need a backend that combines these filters; DummyJSON offers neither.
 
 ## Time log (personal notes – remove before submission)
@@ -81,6 +91,7 @@ Start = prompt sent to Claude, end = feature committed and pushed (times from gi
 | Feature 2 – Authentication  | 13:24   | 13:45    | 21 min   |
 | Feature 3 – Products list   | 13:47   | 14:09    | 22 min   |
 | Feature 4 – Product detail  | 14:12   | 14:26    | 14 min   |
+| Feature 5 – Edit and delete | 14:29   |          |          |
 
 ## Time spent
 

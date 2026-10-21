@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 
 import { authGuard, guestGuard } from './core/auth/auth.guards';
+import { unsavedChangesGuard } from './core/routing/unsaved-changes.guard';
 
 export const routes: Routes = [
   {
@@ -30,6 +31,15 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/products/pages/product-detail-page/product-detail-page').then(
             (m) => m.ProductDetailPage,
+          ),
+      },
+      {
+        path: 'products/:id/edit',
+        title: 'Edit product',
+        canDeactivate: [unsavedChangesGuard],
+        loadComponent: () =>
+          import('./features/products/pages/product-edit-page/product-edit-page').then(
+            (m) => m.ProductEditPage,
           ),
       },
       {

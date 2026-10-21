@@ -1,5 +1,5 @@
 import { CurrencyPipe, DecimalPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
@@ -34,4 +34,6 @@ import { Product } from '../../models/product.model';
 })
 export class ProductCards {
   readonly items = input.required<Product[]>();
+  readonly edit = output<Product>();
+  readonly delete = output<Product>();
 }

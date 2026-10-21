@@ -1,3 +1,4 @@
+@use '@angular/material' as mat;
 @use '../../../../shared/styles/page';
 @use '../../../../../styles/breakpoints' as bp;
 
@@ -19,8 +20,27 @@
   border-radius: var(--mat-sys-corner-small);
 }
 
-.page-title:focus {
-  outline: none;
+// Mobile first: actions wrap under the title; side by side from 600px
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--app-space-16);
+}
+
+.actions {
+  display: flex;
+  gap: var(--app-space-8);
+}
+
+.delete {
+  @include mat.button-overrides(
+    (
+      outlined-label-text-color: var(--mat-sys-error),
+      outlined-outline-color: var(--mat-sys-error),
+    )
+  );
 }
 
 .layout {

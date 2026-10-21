@@ -64,3 +64,13 @@ p {
     transition-duration: 0.01ms !important;
   }
 }
+
+// Destructive menu item (e.g. Delete). Menus render in an overlay, so the style is global.
+.mat-mdc-menu-item.destructive {
+  @include mat.menu-overrides(
+    (
+      item-label-text-color: var(--mat-sys-error),
+      item-icon-color: var(--mat-sys-error),
+    )
+  );
+}
