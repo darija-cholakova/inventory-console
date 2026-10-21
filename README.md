@@ -172,6 +172,7 @@ flowchart LR
 ### Performance
 
 - Lazy-loaded routes, zoneless change detection with OnPush, `select` for small list responses, `NgOptimizedImage`, one shared refresh request for parallel `401`s, and outdated list requests cancelled with `switchMap`.
+- **Initial bundle: 389 kB raw / 108 kB transferred** (production build). The unsaved-changes guard sits in the eagerly loaded route config, so it imports the dialog code on demand; before, a static import pulled `MatDialog` and the CDK overlay into the initial bundle (540 kB / 135 kB, over the 500 kB budget).
 
 ## Testing
 
