@@ -1,0 +1,103 @@
+<header class="header">
+  <div>
+    <h1 class="page-title">User profile</h1>
+    <p class="page-subtitle">Your account details from DummyJSON.</p>
+  </div>
+  @if (view()) {
+    <button matButton="filled" type="button" (click)="edit()">
+      <mat-icon>edit</mat-icon>
+      Edit profile
+    </button>
+  }
+</header>
+
+@if (profile.isLoading()) {
+  <div role="status">
+    <span class="visually-hidden">Loading profile…</span>
+    <mat-progress-bar mode="indeterminate" aria-hidden="true" />
+  </div>
+} @else if (profile.error()) {
+  <app-state-message
+    icon="error"
+    title="Couldn't load your profile"
+    message="The server didn't respond."
+  >
+    <button matButton="tonal" type="button" (click)="profile.reload()">Try again</button>
+  </app-state-message>
+} @else if (view(); as p) {
+  <section class="hero" aria-labelledby="profile-name">
+    <div class="photo">
+      <!-- Initials stay underneath if the photo does not load; decorative, the name is next to it -->
+      <span class="initials" aria-hidden="true">{{ initials() }}</span>
+      @if (p.image) {
+        <img [src]="p.image" alt="" width="96" height="96" />
+      }
+    </div>
+    <div class="identity">
+      <h2 id="profile-name" class="name">{{ p.firstName }} {{ p.lastName }}</h2>
+      <p class="headline">{{ p.company.title }} · {{ p.company.name }}</p>
+      <p class="meta">
+        <span>&#64;{{ p.username }}</span>
+        <span class="role">{{ p.role }}</span>
+      </p>
+    </div>
+  </section>
+
+  <div class="groups">
+    <section class="group" aria-labelledby="contact-title">
+      <h3 id="contact-title" class="group-title">Contact</h3>
+      <ul class="rows">
+        <li>
+          <mat-icon aria-hidden="true">mail</mat-icon>
+          <span class="row-text">
+            <span class="label">Email</span>
+            <a [href]="'mailto:' + p.email">{{ p.email }}</a>
+          </span>
+        </li>
+        <li>
+          <mat-icon aria-hidden="true">call</mat-icon>
+          <span class="row-text">
+            <span class="label">Phone</span>
+            <a [href]="'tel:' + p.phone">{{ p.phone }}</a>
+          </span>
+        </li>
+      </ul>
+    </section>
+
+    <section class="group" aria-labelledby="work-title">
+      <h3 id="work-title" class="group-title">Work</h3>
+      <ul class="rows">
+        <li>
+          <mat-icon aria-hidden="true">badge</mat-icon>
+          <span class="row-text"><span class="label">Job title</span>{{ p.company.title }}</span>
+        </li>
+        <li>
+          <mat-icon aria-hidden="true">groups</mat-icon>
+          <span class="row-text"
+            ><span class="label">Department</span>{{ p.company.department }}</span
+          >
+        </li>
+        <li>
+          <mat-icon aria-hidden="true">business</mat-icon>
+          <span class="row-text"><span class="label">Company</span>{{ p.company.name }}</span>
+        </li>
+      </ul>
+    </section>
+
+    <section class="group" aria-labelledby="location-title">
+      <h3 id="location-title" class="group-title">Location</h3>
+      <ul class="rows">
+        <li>
+          <mat-icon aria-hidden="true">location_on</mat-icon>
+          <span class="row-text"
+            ><span class="label">City</span>{{ p.address.city }}, {{ p.address.state }}</span
+          >
+        </li>
+        <li>
+          <mat-icon aria-hidden="true">public</mat-icon>
+          <span class="row-text"><span class="label">Country</span>{{ p.address.country }}</span>
+        </li>
+      </ul>
+    </section>
+  </div>
+}

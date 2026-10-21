@@ -62,26 +62,6 @@
   flex: 1;
 }
 
-// One switch is visible at a time: drawer on small screens, toolbar from 600px up.
-.theme-switch--toolbar {
-  display: none;
-  margin-inline-end: var(--app-space-16);
-
-  @media (min-width: 600px) {
-    display: inline-flex;
-  }
-}
-
-.theme-switch--drawer {
-  margin-block-start: auto; // pushes the switch to the bottom of the drawer
-  padding: var(--app-space-16) var(--app-space-24);
-  border-block-start: 1px solid var(--mat-sys-outline-variant);
-
-  @media (min-width: 600px) {
-    display: none;
-  }
-}
-
 .body {
   flex: 1;
   min-block-size: 0; // lets the sidenav content scroll inside the flex column

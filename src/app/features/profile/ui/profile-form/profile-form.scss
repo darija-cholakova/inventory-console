@@ -1,0 +1,73 @@
+// Mobile first: one column; two columns from 600px.
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: var(--app-space-16);
+}
+
+.form {
+  display: grid;
+  gap: var(--app-space-8) var(--app-space-16);
+
+  @media (min-width: 600px) {
+    grid-template-columns: 1fr 1fr;
+
+    .full,
+    .actions {
+      grid-column: 1 / -1;
+    }
+  }
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--app-space-8);
+  margin-block-start: var(--app-space-8);
+
+  mat-progress-spinner {
+    display: inline-block;
+    margin-inline-end: var(--app-space-8);
+    vertical-align: middle;
+    --mat-progress-spinner-active-indicator-color: currentColor;
+  }
+}
+
+.banner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--app-space-8);
+  padding: var(--app-space-12);
+  border-radius: var(--mat-sys-corner-small);
+  background: var(--mat-sys-error-container);
+  color: var(--mat-sys-on-error-container);
+  font: var(--mat-sys-body-medium);
+}
+
+// Error summary: links move focus to the field with the error
+.summary {
+  padding: var(--app-space-16);
+  border-radius: var(--mat-sys-corner-medium);
+  border: 1px solid var(--mat-sys-error);
+  background: var(--mat-sys-error-container);
+  color: var(--mat-sys-on-error-container);
+
+  ul {
+    margin: var(--app-space-8) 0 0;
+    padding-inline-start: var(--app-space-24);
+    font: var(--mat-sys-body-medium);
+  }
+
+  a {
+    color: inherit;
+  }
+}
+
+.summary-title {
+  display: flex;
+  align-items: center;
+  gap: var(--app-space-8);
+  margin: 0;
+  font: var(--mat-sys-title-small);
+}

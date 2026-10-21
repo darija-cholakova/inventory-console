@@ -31,3 +31,25 @@
     color: var(--mat-sys-on-surface-variant);
   }
 }
+
+::ng-deep .account-menu {
+  // Current value at the end of an item ("Theme · Light"), and the check for the chosen option
+  .mat-mdc-menu-item-text {
+    display: flex;
+    align-items: center;
+    gap: var(--app-space-8);
+    inline-size: 100%;
+  }
+
+  .item-value {
+    margin-inline-start: auto;
+    padding-inline-start: var(--app-space-16);
+    font: var(--mat-sys-body-small);
+    color: var(--mat-sys-on-surface-variant);
+  }
+
+  .check {
+    margin-inline: auto 0;
+    color: var(--mat-sys-primary);
+  }
+}

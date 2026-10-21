@@ -5,5 +5,17 @@
   "firstName": "Emily",
   "lastName": "Johnson",
   "gender": "female",
-  "image": ""
+  "image": "",
+  "phone": "+81 965-431-3024",
+  "role": "admin",
+  "address": {
+    "city": "Phoenix",
+    "state": "Mississippi",
+    "country": "United States"
+  },
+  "company": {
+    "name": "Dooley, Kozey and Cronin",
+    "title": "Sales Manager",
+    "department": "Engineering"
+  }
 }

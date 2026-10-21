@@ -32,6 +32,9 @@ export async function mockApi(page: Page): Promise<ApiLog> {
     if (path === '/auth/refresh') {
       return route.fulfill({ json: { accessToken: 'access', refreshToken: 'refresh' } });
     }
+    if (path.startsWith('/users/') && request.method() === 'PATCH') {
+      return route.fulfill({ json: { ...user, ...request.postDataJSON() } });
+    }
     if (path === '/products/categories') return route.fulfill({ json: categories });
 
     const byId = path.match(/^\/products\/(\d+)$/);

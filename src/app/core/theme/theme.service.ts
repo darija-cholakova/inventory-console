@@ -1,13 +1,13 @@
 import { DOCUMENT } from '@angular/common';
 import { Injectable, computed, effect, inject, signal } from '@angular/core';
 
-import { ThemeMode } from '../../shared/models/types';
+import { ThemeMode, ThemePreference } from '../../shared/models/types';
 
 const STORAGE_KEY = 'inventory-console.theme';
 
 /**
- * Light / dark theme state.
- * Until the user flips the switch the app follows `prefers-color-scheme`;
+ * Light / dark theme state, chosen in the account menu (Light, Dark or System).
+ * With "System" the app follows `prefers-color-scheme`;
  * an explicit choice is saved in localStorage and applied as `color-scheme` on <html>,
  * which drives every `light-dark()` value in the Material 3 tokens.
  */
@@ -20,6 +20,9 @@ export class ThemeService {
 
   private readonly userChoice = signal<ThemeMode | null>(this.readStoredChoice());
   private readonly systemPrefersDark = signal(this.mediaQuery?.matches ?? false);
+
+  /** Current choice for the account menu. */
+  readonly preference = computed<ThemePreference>(() => this.userChoice() ?? 'system');
 
   readonly isDark = computed(
     () => (this.userChoice() ?? (this.systemPrefersDark() ? 'dark' : 'light')) === 'dark',
@@ -36,11 +39,12 @@ export class ThemeService {
     });
   }
 
-  setDark(dark: boolean): void {
-    const mode: ThemeMode = dark ? 'dark' : 'light';
+  setPreference(preference: ThemePreference): void {
+    const mode = preference === 'system' ? null : preference;
     this.userChoice.set(mode);
     try {
-      localStorage.setItem(STORAGE_KEY, mode);
+      if (mode) localStorage.setItem(STORAGE_KEY, mode);
+      else localStorage.removeItem(STORAGE_KEY);
     } catch {
       // Storage can be unavailable (private mode); the choice then lasts for this session only.
     }

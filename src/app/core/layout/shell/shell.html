@@ -21,14 +21,6 @@
 
   <span class="spacer"></span>
 
-  <mat-slide-toggle
-    class="theme-switch theme-switch--toolbar"
-    [checked]="theme.isDark()"
-    (change)="theme.setDark($event.checked)"
-  >
-    Dark theme
-  </mat-slide-toggle>
-
   <app-account-menu />
 </mat-toolbar>
 
@@ -67,15 +59,6 @@
           }
         </mat-nav-list>
       </nav>
-
-      <!-- On small screens the toolbar has no room for the labelled switch, so it sits at the bottom of the drawer -->
-      <mat-slide-toggle
-        class="theme-switch theme-switch--drawer"
-        [checked]="theme.isDark()"
-        (change)="theme.setDark($event.checked)"
-      >
-        Dark theme
-      </mat-slide-toggle>
     </div>
   </mat-sidenav>
 

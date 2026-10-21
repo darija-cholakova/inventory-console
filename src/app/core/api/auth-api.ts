@@ -3,7 +3,13 @@ import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { API_BASE_URL } from './api.config';
-import { AuthTokens, AuthUser, LoginRequest, RefreshRequest } from '../../shared/models/interfaces';
+import {
+  AuthTokens,
+  AuthUser,
+  LoginRequest,
+  RefreshRequest,
+  UserProfile,
+} from '../../shared/models/interfaces';
 import { LoginResponse } from '../../shared/models/types';
 
 /** HTTP access to DummyJSON /auth. No state; the session lives in AuthService. */
@@ -19,6 +25,11 @@ export class AuthApi {
   /** Current user for the Bearer token (added by the interceptor). */
   me(): Observable<AuthUser> {
     return this.http.get<AuthUser>(`${this.apiUrl}/auth/me`);
+  }
+
+  /** Same endpoint as me(), typed with the profile fields the profile page shows. */
+  profile(): Observable<UserProfile> {
+    return this.http.get<UserProfile>(`${this.apiUrl}/auth/me`);
   }
 
   refresh(body: RefreshRequest): Observable<AuthTokens> {

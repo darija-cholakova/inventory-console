@@ -1,6 +1,6 @@
 import { FieldTree } from '@angular/forms/signals';
 
-import type { LoadStatus, ProductChanges, SortField, SortOrder } from './types';
+import type { LoadStatus, ProductChanges, SortField, SortOrder, ThemePreference } from './types';
 
 // All interfaces of the app (object shapes). Type aliases and unions are in ./types.ts.
 
@@ -36,6 +36,33 @@ export interface AuthTokens {
   refreshToken: string;
 }
 
+/**
+ * Work-related fields of GET /auth/me shown on the profile page. The API returns much more
+ * (bank card, SSN, IP, health data…); those are deliberately not typed or shown.
+ */
+export interface UserProfile extends AuthUser {
+  phone: string;
+  role: string;
+  address: { city: string; state: string; country: string };
+  company: { name: string; title: string; department: string };
+}
+
+/** Values of the profile edit form (job title maps to company.title). */
+export interface ProfileFormModel {
+  firstName: string;
+  lastName: string;
+  phone: string;
+  jobTitle: string;
+}
+
+/** Body of PATCH /users/{id} for the profile form. */
+export interface UserUpdateRequest {
+  firstName?: string;
+  lastName?: string;
+  phone?: string;
+  company?: { title: string };
+}
+
 /** What the app keeps in sessionStorage. */
 export interface AuthSession {
   user: AuthUser;
@@ -43,6 +70,21 @@ export interface AuthSession {
 }
 
 // ─── Layout and routing ──────────────────────────────────────────────────
+
+/** Entry of the Theme submenu in the account menu. */
+export interface ThemeOption {
+  value: ThemePreference;
+  label: string;
+  /** Material Symbols ligature name */
+  icon: string;
+}
+
+/** Entry of the Language submenu; only English exists for now (i18n is a possible improvement). */
+export interface LanguageOption {
+  code: string;
+  label: string;
+  available: boolean;
+}
 
 export interface NavItem {
   label: string;
@@ -189,6 +231,10 @@ export interface ProductFormModel {
 export interface SummaryField {
   id: string;
   field: FieldTree<unknown>;
+}
+
+export interface ProfileEditDialogData {
+  profile: UserProfile;
 }
 
 export interface ProductEditDialogData {

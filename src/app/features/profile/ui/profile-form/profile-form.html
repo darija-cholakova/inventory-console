@@ -1,0 +1,87 @@
+@if (saveFailed()) {
+  <div class="banner" role="alert">
+    <mat-icon aria-hidden="true">error</mat-icon>
+    <span>Couldn't save your profile. Check your connection and try again.</span>
+  </div>
+}
+
+@if (attempted() && summary().length) {
+  <section class="summary" aria-labelledby="profile-summary-title">
+    <h3 id="profile-summary-title" class="summary-title">
+      <mat-icon aria-hidden="true">error</mat-icon>
+      Fix {{ summary().length }} {{ summary().length === 1 ? 'error' : 'errors' }} to save
+    </h3>
+    <ul>
+      @for (error of summary(); track error.id) {
+        <li>
+          <a [href]="'#' + error.id" (click)="focusField($event, error.field)">{{
+            error.message
+          }}</a>
+        </li>
+      }
+    </ul>
+  </section>
+}
+
+<form class="form" [formRoot]="profileForm" [attr.aria-busy]="profileForm().submitting()">
+  <mat-form-field appearance="outline">
+    <mat-label>First name</mat-label>
+    <input
+      id="profile-first-name"
+      matInput
+      [formField]="profileForm.firstName"
+      [errorStateMatcher]="matcher"
+      autocomplete="given-name"
+    />
+    <mat-error>{{ profileForm.firstName().errors()[0]?.message }}</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Last name</mat-label>
+    <input
+      id="profile-last-name"
+      matInput
+      [formField]="profileForm.lastName"
+      [errorStateMatcher]="matcher"
+      autocomplete="family-name"
+    />
+    <mat-error>{{ profileForm.lastName().errors()[0]?.message }}</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Phone</mat-label>
+    <input
+      id="profile-phone"
+      matInput
+      type="tel"
+      [formField]="profileForm.phone"
+      [errorStateMatcher]="matcher"
+      autocomplete="tel"
+    />
+    <mat-error>{{ profileForm.phone().errors()[0]?.message }}</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Job title</mat-label>
+    <input
+      id="profile-job-title"
+      matInput
+      [formField]="profileForm.jobTitle"
+      [errorStateMatcher]="matcher"
+      autocomplete="organization-title"
+    />
+    <mat-error>{{ profileForm.jobTitle().errors()[0]?.message }}</mat-error>
+  </mat-form-field>
+
+  <div class="actions">
+    <button matButton="outlined" type="button" (click)="cancelled.emit()">Cancel</button>
+    <button matButton="filled" type="submit" [disabled]="profileForm().submitting()">
+      @if (profileForm().submitting()) {
+        <mat-progress-spinner mode="indeterminate" diameter="18" aria-hidden="true" />
+        Saving…
+      } @else {
+        Save changes
+      }
+    </button>
+  </div>
+</form>

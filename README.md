@@ -7,6 +7,7 @@ Refactor: 15:26 -> 15:29
 Unit test+e2e: 20:52 -> 21:07 (one component for now)
 restore 15-minute access token lifetime ~ <1m
 readable rating in table and label-in-name for account button & a11y labels in table and account menu, validate stored local changes: 21:13 -> 21:24
+User Profile> 21:30 -> 21:43
 
 # Inventory Console
 
@@ -131,8 +132,6 @@ Start = prompt sent to Claude, end = feature committed and pushed (times from gi
 | Feature 6 – Bookmarked      | 15:11   | 15:21    | 10 min   |
 | Refactor – API layer, types | 15:21   | 15:29    | 8 min    |
 | Feature 7 – Tests           | 20:52   | 21:10    | 18 min   |
-| Feature 8 – A11y review     | 21:13   | 21:24    | 11 min   |
-| Fixes – account menu        | 21:28   |          |          |
 
 ## Time spent
 

@@ -43,6 +43,12 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'profile',
+        title: 'User profile',
+        loadComponent: () =>
+          import('./features/profile/pages/profile-page/profile-page').then((m) => m.ProfilePage),
+      },
+      {
         path: 'bookmarked',
         title: 'Bookmarked',
         loadComponent: () =>

@@ -19,13 +19,11 @@ import {
   MatNavList,
 } from '@angular/material/list';
 import { MatSidenav, MatSidenavContainer, MatSidenavContent } from '@angular/material/sidenav';
-import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { MatToolbar } from '@angular/material/toolbar';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { map } from 'rxjs';
 
 import { AuthService } from '../../auth/auth.service';
-import { ThemeService } from '../../theme/theme.service';
 import { AccountMenu } from '../account-menu/account-menu';
 import { Bookmarks } from '../../../features/bookmarks/data-access/bookmarks';
 import { NavItem } from '../../../shared/models/interfaces';
@@ -42,7 +40,6 @@ const EXPANDED_QUERY = '(min-width: 840px)';
     MatToolbar,
     MatIcon,
     MatIconButton,
-    MatSlideToggle,
     MatSidenavContainer,
     MatSidenav,
     MatSidenavContent,
@@ -58,8 +55,6 @@ const EXPANDED_QUERY = '(min-width: 840px)';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Shell {
-  protected readonly theme = inject(ThemeService);
-
   constructor() {
     // The shell only renders for a signed-in user: confirm the stored session is still valid.
     inject(AuthService).verifySession();

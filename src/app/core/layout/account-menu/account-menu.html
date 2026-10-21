@@ -14,9 +14,66 @@
       <span class="user-email">{{ user.email }}</span>
     </div>
     <mat-divider />
+
+    <button mat-menu-item type="button" [matMenuTriggerFor]="themeMenu">
+      <mat-icon>{{ themeIcon() }}</mat-icon>
+      <span>Theme</span>
+      <span class="item-value">{{ themeLabel() }}</span>
+    </button>
+    <button mat-menu-item type="button" [matMenuTriggerFor]="languageMenu">
+      <mat-icon>language</mat-icon>
+      <span>Language</span>
+      <span class="item-value">English</span>
+    </button>
+    <a mat-menu-item routerLink="/profile">
+      <mat-icon>account_circle</mat-icon>
+      <span>User profile</span>
+    </a>
+
+    <mat-divider />
     <button mat-menu-item type="button" (click)="signOut()">
       <mat-icon>logout</mat-icon>
       <span>Sign out</span>
     </button>
+  </mat-menu>
+
+  <!-- Radio items: the menu stays the single place to change the theme -->
+  <mat-menu #themeMenu="matMenu" class="account-menu">
+    @for (option of themeOptions; track option.value) {
+      <button
+        mat-menu-item
+        type="button"
+        role="menuitemradio"
+        [attr.aria-checked]="theme.preference() === option.value"
+        (click)="theme.setPreference(option.value)"
+      >
+        <mat-icon>{{ option.icon }}</mat-icon>
+        <span>{{ option.label }}</span>
+        @if (theme.preference() === option.value) {
+          <!-- Wrapped: a direct mat-icon child would be placed in the leading icon slot -->
+          <span class="check" aria-hidden="true"><mat-icon>check</mat-icon></span>
+        }
+      </button>
+    }
+  </mat-menu>
+
+  <mat-menu #languageMenu="matMenu" class="account-menu">
+    @for (language of languages; track language.code) {
+      <button
+        mat-menu-item
+        type="button"
+        role="menuitemradio"
+        [attr.aria-checked]="language.code === 'en'"
+        [disabled]="!language.available"
+      >
+        <span>{{ language.label }}</span>
+        @if (language.available) {
+          <!-- Wrapped: a direct mat-icon child would be placed in the leading icon slot -->
+          <span class="check" aria-hidden="true"><mat-icon>check</mat-icon></span>
+        } @else {
+          <span class="item-value">Coming soon</span>
+        }
+      </button>
+    }
   </mat-menu>
 }

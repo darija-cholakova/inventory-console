@@ -1,4 +1,4 @@
-import type { AuthTokens, AuthUser, ProductDetail } from './interfaces';
+import type { AuthTokens, AuthUser, ProductDetail, ProfileFormModel } from './interfaces';
 
 // All type aliases of the app (unions and derived types). Object shapes are in ./interfaces.ts.
 
@@ -10,10 +10,16 @@ export type LoginResponse = AuthUser & AuthTokens;
 /** Why a sign-in attempt failed; the login page maps it to a message. */
 export type LoginErrorKind = 'invalid-credentials' | 'network' | 'unknown';
 
+/** Profile fields the user can change; kept locally because DummyJSON does not store them. */
+export type ProfileChanges = Partial<ProfileFormModel>;
+
 // ─── Theme ───────────────────────────────────────────────────────────────
 
 /** Theme picked explicitly by the user (no choice = follow the system setting). */
 export type ThemeMode = 'light' | 'dark';
+
+/** What the account menu offers: an explicit theme, or follow the system setting. */
+export type ThemePreference = ThemeMode | 'system';
 
 // ─── Products ────────────────────────────────────────────────────────────
 
