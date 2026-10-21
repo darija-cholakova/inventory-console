@@ -4,6 +4,7 @@ f4: Product details : 14:12 (start) -> 14:26"
 f5: Product manipulation: 14: 28(start) -> 15:09
 f6: Bookmarked: 15:11(start) -> 15;21
 Refactor: 15:26 -> 15:29
+Unit test: 20:52 ->
 
 # Inventory Console
 
