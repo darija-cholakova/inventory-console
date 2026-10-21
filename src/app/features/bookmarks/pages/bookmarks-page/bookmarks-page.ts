@@ -32,6 +32,7 @@ import { ProductsTable } from '../../../../shared/ui/products-table/products-tab
 import { Bookmarks } from '../../../../core/bookmarks/bookmarks';
 import { DEFAULT_QUERY, PAGE_SIZE_OPTIONS } from '../../../products/utils/product-query.constants';
 import { Product, ProductQuery, SortChange } from '../../../../shared/models/interfaces';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 /**
  * Bookmarked products. DummyJSON cannot fetch several ids at once, so the page loads the
@@ -41,6 +42,7 @@ import { Product, ProductQuery, SortChange } from '../../../../shared/models/int
 @Component({
   selector: 'app-bookmarks-page',
   imports: [
+    TranslocoPipe,
     RouterLink,
     ProductsTable,
     ProductCards,

@@ -1,5 +1,7 @@
 import { DecimalPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
+
+import { I18n } from '../../../../core/i18n/i18n';
 
 /** Five stars rounded to the nearest whole star; the exact value is read out and shown as text. */
 @Component({
@@ -18,11 +20,15 @@ import { ChangeDetectionStrategy, Component, computed, input } from '@angular/co
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RatingStars {
+  private readonly i18n = inject(I18n);
+
   readonly rating = input.required<number>();
 
   protected readonly stars = computed(() => {
     const full = Math.round(this.rating());
     return Array.from({ length: 5 }, (_, i) => i < full);
   });
-  protected readonly label = computed(() => `Rating ${this.rating().toFixed(1)} out of 5`);
+  protected readonly label = computed(() =>
+    this.i18n.t('products.rating.label', { value: this.rating().toFixed(1) }),
+  );
 }

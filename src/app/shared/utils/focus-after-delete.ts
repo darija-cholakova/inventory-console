@@ -8,7 +8,7 @@ export function focusRowAfterDelete(
   index: number,
   fallback?: HTMLElement,
 ): void {
-  const buttons = host.querySelectorAll<HTMLElement>('button[aria-label^="Actions for "]');
+  const buttons = host.querySelectorAll<HTMLElement>('button[data-row-actions]');
   const target = buttons.length ? buttons[Math.min(index, buttons.length - 1)] : fallback;
   target?.focus({ preventScroll: true });
 }

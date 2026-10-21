@@ -1,29 +1,31 @@
-<app-back-link [link]="['/products', id()]" label="Product" />
+<app-back-link [link]="['/products', id()]" [label]="'products.product' | transloco" />
 
 @if (product.isLoading()) {
   <div role="status">
-    <span class="visually-hidden">Loading product…</span>
+    <span class="visually-hidden">{{ 'products.loading' | transloco }}</span>
     <mat-progress-bar mode="indeterminate" aria-hidden="true" />
   </div>
 } @else if (notFound()) {
   <app-state-message
     icon="search_off"
-    title="Product not found"
-    message="This product may have been deleted, or the link is wrong."
+    [title]="'products.notFound.title' | transloco"
+    [message]="'products.notFound.message' | transloco"
   >
-    <a matButton="filled" routerLink="/products">Back to products</a>
+    <a matButton="filled" routerLink="/products">{{ 'buttons.backToProducts' | transloco }}</a>
   </app-state-message>
 } @else if (product.error()) {
   <app-state-message
     icon="error"
-    title="Couldn't load the product"
-    message="The server didn't respond."
+    [title]="'products.loadError' | transloco"
+    [message]="'states.serverNoResponse' | transloco"
   >
-    <button matButton="tonal" type="button" (click)="product.reload()">Try again</button>
+    <button matButton="tonal" type="button" (click)="product.reload()">
+      {{ 'buttons.tryAgain' | transloco }}
+    </button>
   </app-state-message>
 } @else if (view(); as p) {
   <section class="card" aria-labelledby="edit-title">
-    <h1 id="edit-title" class="page-title">Edit product</h1>
+    <h1 id="edit-title" class="page-title">{{ 'products.edit.title' | transloco }}</h1>
     <app-product-form
       [product]="p"
       [categories]="categories.value() ?? []"

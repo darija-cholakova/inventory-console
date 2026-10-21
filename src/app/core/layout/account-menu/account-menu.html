@@ -3,7 +3,7 @@
     type="button"
     class="avatar"
     [matMenuTriggerFor]="menu"
-    [attr.aria-label]="initials() + ', account menu for ' + fullName()"
+    [attr.aria-label]="'userMenu.label' | transloco: { initials: initials(), name: fullName() }"
   >
     <span aria-hidden="true">{{ initials() }}</span>
   </button>
@@ -17,23 +17,23 @@
 
     <button mat-menu-item type="button" [matMenuTriggerFor]="themeMenu">
       <mat-icon>{{ themeIcon() }}</mat-icon>
-      <span>Theme</span>
-      <span class="item-value">{{ themeLabel() }}</span>
+      <span>{{ 'userMenu.theme' | transloco }}</span>
+      <span class="item-value">{{ themeLabel() | transloco }}</span>
     </button>
     <button mat-menu-item type="button" [matMenuTriggerFor]="languageMenu">
       <mat-icon>language</mat-icon>
-      <span>Language</span>
-      <span class="item-value">English</span>
+      <span>{{ 'userMenu.language' | transloco }}</span>
+      <span class="item-value">{{ activeLanguage().label }}</span>
     </button>
     <a mat-menu-item routerLink="/profile">
       <mat-icon>account_circle</mat-icon>
-      <span>User profile</span>
+      <span>{{ 'profile.title' | transloco }}</span>
     </a>
 
     <mat-divider />
     <button mat-menu-item type="button" (click)="signOut()">
       <mat-icon>logout</mat-icon>
-      <span>Sign out</span>
+      <span>{{ 'userMenu.signOut' | transloco }}</span>
     </button>
   </mat-menu>
 
@@ -48,7 +48,7 @@
         (click)="theme.setPreference(option.value)"
       >
         <mat-icon>{{ option.icon }}</mat-icon>
-        <span>{{ option.label }}</span>
+        <span>{{ option.label | transloco }}</span>
         @if (theme.preference() === option.value) {
           <!-- Wrapped: a direct mat-icon child would be placed in the leading icon slot -->
           <span class="check" aria-hidden="true"><mat-icon>check</mat-icon></span>
@@ -63,15 +63,16 @@
         mat-menu-item
         type="button"
         role="menuitemradio"
-        [attr.aria-checked]="language.code === 'en'"
+        [attr.aria-checked]="language.code === activeLang()"
         [disabled]="!language.available"
+        (click)="setLanguage(language.code)"
       >
         <span>{{ language.label }}</span>
-        @if (language.available) {
+        @if (language.code === activeLang()) {
           <!-- Wrapped: a direct mat-icon child would be placed in the leading icon slot -->
           <span class="check" aria-hidden="true"><mat-icon>check</mat-icon></span>
-        } @else {
-          <span class="item-value">Coming soon</span>
+        } @else if (!language.available) {
+          <span class="item-value">{{ 'userMenu.comingSoon' | transloco }}</span>
         }
       </button>
     }

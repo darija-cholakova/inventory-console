@@ -10,35 +10,38 @@ const blank = (value: string) => value.trim() === '';
  * reused (e.g. by an "Add product" form) and unit tested on their own.
  * Brand stays optional: some DummyJSON products (groceries) have none.
  */
+// Messages are translation keys; the template and the error summary translate them.
 export const productFormSchema = schema<ProductFormModel>((p) => {
-  required(p.title, { message: 'Title is required.' });
+  required(p.title, { message: 'validation.error.titleRequired' });
   validate(p.title, ({ value }) =>
-    value() && blank(value()) ? { kind: 'blank', message: 'Title is required.' } : null,
+    value() && blank(value()) ? { kind: 'blank', message: 'validation.error.titleRequired' } : null,
   );
 
-  required(p.description, { message: 'Description is required.' });
+  required(p.description, { message: 'validation.error.descriptionRequired' });
   validate(p.description, ({ value }) =>
-    value() && blank(value()) ? { kind: 'blank', message: 'Description is required.' } : null,
-  );
-
-  required(p.category, { message: 'Choose a category.' });
-
-  required(p.price, { message: 'Price is required.' });
-  validate(p.price, ({ value }) =>
-    value() !== null && value()! <= 0
-      ? { kind: 'positive', message: 'Price must be greater than 0.' }
+    value() && blank(value())
+      ? { kind: 'blank', message: 'validation.error.descriptionRequired' }
       : null,
   );
 
-  required(p.discountPercentage, { message: 'Discount is required. Use 0 for no discount.' });
-  min(p.discountPercentage, 0, { message: 'Discount must be between 0 and 100.' });
-  max(p.discountPercentage, 100, { message: 'Discount must be between 0 and 100.' });
+  required(p.category, { message: 'validation.error.categoryRequired' });
 
-  required(p.stock, { message: 'Stock is required.' });
-  min(p.stock, 0, { message: 'Stock can’t be negative.' });
+  required(p.price, { message: 'validation.error.priceRequired' });
+  validate(p.price, ({ value }) =>
+    value() !== null && value()! <= 0
+      ? { kind: 'positive', message: 'validation.error.pricePositive' }
+      : null,
+  );
+
+  required(p.discountPercentage, { message: 'validation.error.discountRequired' });
+  min(p.discountPercentage, 0, { message: 'validation.error.discountRange' });
+  max(p.discountPercentage, 100, { message: 'validation.error.discountRange' });
+
+  required(p.stock, { message: 'validation.error.stockRequired' });
+  min(p.stock, 0, { message: 'validation.error.stockNegative' });
   validate(p.stock, ({ value }) =>
     value() !== null && !Number.isInteger(value())
-      ? { kind: 'integer', message: 'Stock must be a whole number.' }
+      ? { kind: 'integer', message: 'validation.error.stockInteger' }
       : null,
   );
 });

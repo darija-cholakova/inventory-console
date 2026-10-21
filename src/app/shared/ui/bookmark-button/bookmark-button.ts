@@ -5,19 +5,20 @@ import { MatTooltip } from '@angular/material/tooltip';
 
 import { Bookmarks } from '../../../core/bookmarks/bookmarks';
 import { BookmarkTarget } from '../../models/interfaces';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 /** Toggle button used in the table, the cards and the detail page. State = filled icon + aria-pressed. */
 @Component({
   selector: 'app-bookmark-button',
-  imports: [MatIconButton, MatIcon, MatTooltip],
+  imports: [TranslocoPipe, MatIconButton, MatIcon, MatTooltip],
   template: `
     <button
       matIconButton
       type="button"
       [class.active]="bookmarked()"
       [attr.aria-pressed]="bookmarked()"
-      [attr.aria-label]="label()"
-      [matTooltip]="bookmarked() ? 'Remove bookmark' : 'Bookmark'"
+      [attr.aria-label]="label() | transloco: { title: product().title }"
+      [matTooltip]="(bookmarked() ? 'buttons.removeBookmark' : 'buttons.bookmark') | transloco"
       (click)="bookmarks.toggle(product())"
     >
       <mat-icon [class.filled]="bookmarked()">bookmark</mat-icon>
@@ -42,8 +43,6 @@ export class BookmarkButton {
 
   protected readonly bookmarked = computed(() => this.bookmarks.isBookmarked(this.product().id));
   protected readonly label = computed(() =>
-    this.bookmarked()
-      ? `Remove bookmark ${this.product().title}`
-      : `Bookmark ${this.product().title}`,
+    this.bookmarked() ? 'buttons.removeBookmarkProduct' : 'buttons.bookmarkProduct',
   );
 }

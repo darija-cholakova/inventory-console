@@ -9,20 +9,28 @@ import {
 } from '@angular/material/dialog';
 
 import { ConfirmDialogData } from '../../../models/interfaces';
+import { TranslocoPipe } from '@jsverse/transloco';
 
-/** Two-choice dialog. The safe action has the initial focus (cdkFocusInitial). */
+/** Two-choice dialog; all texts are translation keys. The safe action has the initial focus (cdkFocusInitial). */
 @Component({
   selector: 'app-confirm-dialog',
-  imports: [MatButton, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose],
+  imports: [
+    TranslocoPipe,
+    MatButton,
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions,
+    MatDialogClose,
+  ],
   template: `
-    <h2 mat-dialog-title>{{ data.title }}</h2>
-    <mat-dialog-content>{{ data.message }}</mat-dialog-content>
+    <h2 mat-dialog-title>{{ data.title | transloco: data.titleParams }}</h2>
+    <mat-dialog-content>{{ data.message | transloco }}</mat-dialog-content>
     <mat-dialog-actions align="end">
       <button matButton type="button" [mat-dialog-close]="false" cdkFocusInitial>
-        {{ data.cancelLabel }}
+        {{ data.cancelLabel | transloco }}
       </button>
       <button matButton="filled" type="button" class="confirm" [mat-dialog-close]="true">
-        {{ data.confirmLabel }}
+        {{ data.confirmLabel | transloco }}
       </button>
     </mat-dialog-actions>
   `,

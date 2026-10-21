@@ -27,6 +27,7 @@ import {
 } from '../../../../shared/models/interfaces';
 import { ProfileEdits } from '../../data-access/profile-edits';
 import { profileFormSchema } from '../../utils/profile-form.schema';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 const EMPTY_FORM: ProfileFormModel = { firstName: '', lastName: '', phone: '', jobTitle: '' };
 
@@ -34,6 +35,7 @@ const EMPTY_FORM: ProfileFormModel = { firstName: '', lastName: '', phone: '', j
 @Component({
   selector: 'app-profile-form',
   imports: [
+    TranslocoPipe,
     FormRoot,
     FormField,
     MatFormField,

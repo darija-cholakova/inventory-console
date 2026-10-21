@@ -28,6 +28,7 @@ A small inventory management console built with Angular 22 on top of the public 
 - **Delete** with confirmation, an 8-second Undo and rollback if the request fails.
 - **Bookmarked:** a personal working list, with its count in the side navigation.
 - **Account menu:** theme (light / dark / system), language, user profile and sign out.
+- **Translations ready:** every UI text comes from one English file (`public/i18n/en.json`, Transloco); adding a language means adding a file.
 - **User profile:** account details with editable name, phone and job title.
 - Loading, empty and error states on every screen with data; light and dark theme; responsive from 360 px; keyboard and screen reader support.
 
@@ -52,6 +53,7 @@ npm run e2e        # end-to-end test (Playwright); first run: npx playwright ins
 | UI library | Angular Material 3 + CDK                                                                |
 | Forms      | Signal Forms (`@angular/forms/signals`), Reactive Forms on the sign-in page             |
 | State      | NgRx Signals (SignalStore) for the list, `rxResource` for single reads                  |
+| i18n       | Transloco 8 (`@jsverse/transloco`), runtime translations from JSON in `public/i18n/`    |
 | Styling    | SCSS, Material 3 system tokens (`--mat-sys-*`) and app tokens (`--app-*`), mobile first |
 | Tests      | Vitest + jsdom (unit), Playwright (E2E)                                                 |
 | Tooling    | Angular CLI, ESLint, Prettier                                                           |
@@ -67,6 +69,7 @@ src/app/
     products/        LocalChanges: the user's product edits and deletions (sessionStorage), read by every feature
     layout/          shell (top bar, side nav), account menu
     routing/         page title strategy, unsaved-changes guard
+    i18n/            Transloco setup (provideI18n), HTTP loader, I18n helper for TypeScript, translated paginator labels
     theme/           light / dark / system theme
   shared/
     models/          interfaces.ts (all interfaces) and types.ts (all type aliases)
@@ -124,6 +127,17 @@ flowchart LR
 
 ## Technical decisions
 
+### Translations (i18n)
+
+- **Library: Transloco** (`@jsverse/transloco` 8.4, latest stable; 9 is still alpha). Compared with Angular's built-in `@angular/localize`: that one translates at build time, so every language is a separate build and deployment, and switching language reloads the app. Transloco loads a JSON file at runtime, so the Language menu can switch without a reload, and one build serves all languages. Compared with ngx-translate: similar idea, but Transloco has standalone providers, `translateSignal()`, a testing module and lazy scopes per feature, and is actively maintained.
+- **One file per language:** `public/i18n/en.json` (served as `/i18n/en.json`). Keys are grouped by where they belong: `app` (shell, skip link, navigation), `userMenu` (account dropdown), `buttons` (every button and button label), `validation.success` / `validation.error` (snackbar and announcement messages, form errors, sign-in and save errors), `states`, `dialogs`, `paginator`, then one group per feature: `auth`, `products` (with `fields`, `list`, `toolbar`, `detail`, `edit`, `delete`, …), `bookmarks`, `profile`. A text used in several places has **one key** and every place reads it (for example `products.fields.category` is the toolbar label, the table header and the form label; `buttons.signIn` is the button, the heading and the tab title). A small check confirms there are no missing, unused or duplicate texts.
+- **Where texts are translated:** templates use the `transloco` pipe (also for `aria-label`, `placeholder`, `alt` and tooltips, so screen reader text is translated too). TypeScript (snackbars, live announcements, computed summaries, tab titles) uses a small `I18n` service: its `t()` reads a signal of the loaded translation, so a `computed()` text updates after a language switch. Config objects (route titles, nav items, sort options, theme options, stock status, confirm dialog data) and Signal Forms validation messages hold **keys**, translated where they are shown.
+- **No flash of keys:** an app initializer loads the English file before the first render, so `translate()` can be used synchronously and `<html lang>` follows the active language.
+- **Material texts:** `MatPaginatorIntl` is replaced with a translated version ("Items per page", "1 – 10 of 194", button labels).
+- **Plurals:** two keys (`countOne` / `countOther`) chosen in code, to avoid another plugin for now (see improvements).
+- **Language names** in the menu stay in their own language (English, Deutsch, Македонски) and are not translated, so users can always find theirs. German and Macedonian stay "Coming soon" until their files exist.
+- **Not tied to text:** the "focus the next row after a delete" helper used to find buttons by their English `aria-label`; it now uses a `data-row-actions` attribute, so it keeps working in any language.
+
 ### Design system
 
 - **Angular Material 3 instead of Spartan UI (shadcn for Angular):** mature, accessible table, sort and paginator out of the box, and a theming API based on M3 tokens. With the custom palette and Inter it does not look generic, and the saved time went into UX details.
@@ -175,7 +189,7 @@ flowchart LR
 
 ### Account menu and profile
 
-- **Account menu:** the avatar opens one menu for everything about the user: name and email, **Theme** (Light / Dark / System as radio items; System follows the OS, an explicit choice is stored in `localStorage`), **Language** (English; German and Macedonian shown as "Coming soon" to mark where translations would go), **User profile** and **Sign out**. The theme control lives only here, so there is one place for it.
+- **Account menu:** the avatar opens one menu for everything about the user: name and email, **Theme** (Light / Dark / System as radio items; System follows the OS, an explicit choice is stored in `localStorage`), **Language** (English; German and Macedonian shown as "Coming soon" until their translation files exist; see Translations), **User profile** and **Sign out**. The theme control lives only here, so there is one place for it.
 - **User profile (`/profile`):** photo with an initials fallback, name, job title and company, username and role, plus contact, work and location cards. **Edit profile** opens the shared dialog with first name, last name, phone and job title (same validation UX as the product form). `PATCH /users/{id}` is simulated, so `ProfileEdits` keeps the changes per user in `sessionStorage` and applies them optimistically on the profile page and in the account menu.
 - **Not editable on purpose:** username (used to sign in), email (would need verification), role (only an administrator may change permissions) and company. There is no password change: DummyJSON has no endpoint for it, and a form that only pretends to work would be misleading.
 
@@ -202,6 +216,7 @@ npm run e2e                 # end-to-end test (Playwright); starts `ng serve` if
   - `core/products/local-changes.spec.ts` – optimistic edit and rollback to the previous value; delete hides without calling the API; failed `DELETE` brings the product back; survives a reload; broken or old storage data (invalid JSON, `null`, wrong shape) starts empty instead of crashing.
   - `product-deletion.spec.ts` – confirm only on "Delete" (Cancel, Esc, click outside = no); Undo restores and never sends `DELETE`; timeout sends `DELETE`; failed `DELETE` restores with a message.
   - `product-query-params.spec.ts` – URL → query and back; invalid or hand-edited values fall back to defaults; search wins over category; spaces-only search; defaults are left out of the URL.
+  - `ProductDeletion` runs with the real `en.json` through `provideI18nTesting()` (Transloco testing module), so the tests also check the translated messages.
   - `ProductsApi` and Material dialogs / snackbars are fakes; the real `LocalChanges` runs on jsdom `sessionStorage`, so the store and the local layer are tested together.
 - **E2E – main flow** (`e2e/product-flow.spec.ts`): sign in → search → detail → edit in the dialog → delete with confirmation → Undo; checks that the `PATCH` was sent and the `DELETE` was not.
 - **Why mocks:** DummyJSON does not store changes and its data can change, so the E2E test answers every API call from fixed fixtures (`e2e/fixtures/`, `e2e/support/mock-api.ts`). It is fast, stable and works offline.
@@ -223,7 +238,7 @@ npm run e2e                 # end-to-end test (Playwright); starts `ng serve` if
 - Password change, password reset and sign-up (DummyJSON has no endpoints for them; `/users/add` does not persist users).
 - Product images and profile photo upload: need a backend with file storage.
 - Add product: DummyJSON has `POST /products/add` (simulated); `ProductForm` and `productFormSchema` are reusable for it.
-- Translations (EN / DE / MK) with Transloco or `@angular/localize`; the Language menu is already in place.
+- Translations: add `de.json` and `mk.json` (only the files, the setup and the Language menu are ready); ICU plurals with `@jsverse/transloco-messageformat` (Macedonian and German plural rules differ from English); `LOCALE_ID` per language for currency, number and date formats; typed keys or `transloco-keys-manager` to find missing keys in CI; lazy translation scopes per feature when the file grows.
 - Search within a category and a real stock filter need a backend that combines filters (and returns facets such as brands).
 - Specific messages for rate limiting (`429`) and timeouts.
 - A keyboard shortcut to reach Undo in the snackbar.
@@ -252,6 +267,7 @@ Start = prompt sent to Claude, end = feature committed and pushed (times from gi
 | Architecture refactor       | 22:15   | 22:23    | 8 min    |
 | Self-review fixes           | 22:32   | 22:36    | 4 min    |
 | Keep position after delete  | 22:37   | 22:39    | 2 min    |
+| i18n – Transloco, English   | 22:45   |          |          |
 
 ## Time spent
 

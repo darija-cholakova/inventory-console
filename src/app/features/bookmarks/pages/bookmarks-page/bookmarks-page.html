@@ -1,34 +1,34 @@
 <header class="header">
-  <h1 class="page-title">Bookmarked</h1>
-  <p class="page-subtitle">Products you keep an eye on. Stored in this browser.</p>
+  <h1 class="page-title">{{ 'bookmarks.title' | transloco }}</h1>
+  <p class="page-subtitle">{{ 'bookmarks.subtitle' | transloco }}</p>
 </header>
 
 @if (isEmpty()) {
   <app-state-message
     icon="bookmark"
-    title="No bookmarked products yet"
-    message="Use the bookmark icon on a product to keep it here."
+    [title]="'bookmarks.emptyTitle' | transloco"
+    [message]="'bookmarks.emptyMessage' | transloco"
   >
-    <a matButton="filled" routerLink="/products">Browse products</a>
+    <a matButton="filled" routerLink="/products">{{ 'buttons.browseProducts' | transloco }}</a>
   </app-state-message>
 } @else {
   <div class="toolbar" role="search">
     <mat-form-field appearance="outline" class="search" subscriptSizing="dynamic">
-      <mat-label>Search bookmarked</mat-label>
+      <mat-label>{{ 'bookmarks.search' | transloco }}</mat-label>
       <mat-icon matPrefix aria-hidden="true">search</mat-icon>
       <input
         matInput
         type="search"
         [value]="search()"
         (input)="onSearch($event)"
-        placeholder="Search by name, brand…"
+        [placeholder]="'products.toolbar.searchPlaceholder' | transloco"
       />
       @if (search()) {
         <button
           matIconButton
           matSuffix
           type="button"
-          aria-label="Clear search"
+          [attr.aria-label]="'buttons.clearSearch' | transloco"
           (click)="setSearch('')"
         >
           <mat-icon>close</mat-icon>
@@ -37,24 +37,28 @@
     </mat-form-field>
   </div>
 
-  <section class="results" aria-label="Bookmarked products">
+  <section class="results" [attr.aria-label]="'bookmarks.products' | transloco">
     @if (isLoading()) {
       <app-products-skeleton [count]="skeletonRows()" />
     } @else if (catalog.error()) {
       <app-state-message
         icon="error"
-        title="Couldn't load bookmarked products"
-        message="The server didn't respond."
+        [title]="'bookmarks.loadError' | transloco"
+        [message]="'states.serverNoResponse' | transloco"
       >
-        <button matButton="tonal" type="button" (click)="catalog.reload()">Try again</button>
+        <button matButton="tonal" type="button" (click)="catalog.reload()">
+          {{ 'buttons.tryAgain' | transloco }}
+        </button>
       </app-state-message>
     } @else if (!results().length) {
       <app-state-message
         icon="search_off"
-        [title]="'No bookmarked products match “' + search() + '”'"
-        message="Check the spelling or clear the search."
+        [title]="'bookmarks.noMatch' | transloco: { q: search() }"
+        [message]="'bookmarks.noMatchMessage' | transloco"
       >
-        <button matButton="tonal" type="button" (click)="setSearch('')">Clear search</button>
+        <button matButton="tonal" type="button" (click)="setSearch('')">
+          {{ 'buttons.clearSearch' | transloco }}
+        </button>
       </app-state-message>
     } @else if (showTable()) {
       <app-products-table
@@ -75,15 +79,17 @@
         [pageSize]="pageSize()"
         [pageSizeOptions]="pageSizeOptions"
         (page)="onPage($event)"
-        aria-label="Select page of bookmarked products"
+        [attr.aria-label]="'bookmarks.pagination' | transloco"
       />
     }
   </section>
 
   <p class="visually-hidden" role="status">
     @if (catalog.hasValue()) {
-      {{ results().length }}
-      {{ results().length === 1 ? 'bookmarked product' : 'bookmarked products' }}
+      {{
+        (results().length === 1 ? 'bookmarks.countOne' : 'bookmarks.countOther')
+          | transloco: { count: results().length }
+      }}
     }
   </p>
 }

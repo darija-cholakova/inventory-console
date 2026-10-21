@@ -74,12 +74,13 @@ export interface AuthSession {
 /** Entry of the Theme submenu in the account menu. */
 export interface ThemeOption {
   value: ThemePreference;
+  /** Translation key */
   label: string;
   /** Material Symbols ligature name */
   icon: string;
 }
 
-/** Entry of the Language submenu; only English exists for now (i18n is a possible improvement). */
+/** Entry of the Language submenu; `label` is the language's own name, not translated. */
 export interface LanguageOption {
   code: string;
   label: string;
@@ -87,13 +88,14 @@ export interface LanguageOption {
 }
 
 export interface NavItem {
+  /** Translation key */
   label: string;
   path: string;
   /** Material Symbols ligature name */
   icon: string;
   /** Optional count shown next to the label, e.g. bookmarked products. */
   count?: () => number;
-  /** What the count means, for screen readers ("3 products"). */
+  /** Translation key of what the count means, for screen readers ("3 products"). */
   countLabel?: string;
 }
 
@@ -190,6 +192,7 @@ export interface SortChange {
 /** One entry of the "Sort by" select on small screens. */
 export interface SortOption extends SortChange {
   value: string;
+  /** Translation key */
   label: string;
 }
 
@@ -251,8 +254,11 @@ export interface BookmarkTarget {
 
 // ─── Shared UI ───────────────────────────────────────────────────────────
 
+/** All texts are translation keys; the dialog translates them. */
 export interface ConfirmDialogData {
   title: string;
+  /** Values for placeholders in the title, e.g. { title: 'Red Lipstick' }. */
+  titleParams?: Record<string, unknown>;
   message: string;
   /** Safe choice: listed first, so it gets the initial focus. Closes with false. */
   cancelLabel: string;
@@ -263,6 +269,7 @@ export interface ConfirmDialogData {
 /** One entry of a form's error summary: link target, message and how to focus the field. */
 export interface FormErrorItem {
   id: string;
+  /** Translation key (the validation message from the form schema) */
   message: string;
   focus: () => void;
 }

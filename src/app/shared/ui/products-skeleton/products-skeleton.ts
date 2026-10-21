@@ -1,10 +1,12 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 /** Placeholder rows shaped like the list, so the layout does not jump when data arrives. */
 @Component({
   selector: 'app-products-skeleton',
+  imports: [TranslocoPipe],
   template: `
-    <span class="visually-hidden">Loading products…</span>
+    <span class="visually-hidden">{{ 'products.list.loading' | transloco }}</span>
     @for (row of rows(); track row) {
       <div class="row" aria-hidden="true">
         <span class="block thumb"></span>

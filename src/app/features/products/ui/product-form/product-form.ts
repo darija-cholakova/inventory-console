@@ -38,6 +38,7 @@ import {
   FormErrorItem,
   SummaryField,
 } from '../../../../shared/models/interfaces';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 const EMPTY_FORM: ProductFormModel = {
   title: '',
@@ -56,6 +57,7 @@ const EMPTY_FORM: ProductFormModel = {
 @Component({
   selector: 'app-product-form',
   imports: [
+    TranslocoPipe,
     FormRoot,
     FormField,
     MatFormField,

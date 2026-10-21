@@ -1,8 +1,8 @@
-<app-back-link [link]="listUrl()" label="Products" />
+<app-back-link [link]="listUrl()" [label]="'products.title' | transloco" />
 
 @if (product.isLoading()) {
   <div class="skeleton" role="status">
-    <span class="visually-hidden">Loading product…</span>
+    <span class="visually-hidden">{{ 'products.loading' | transloco }}</span>
     <span class="block title-block" aria-hidden="true"></span>
     <div class="layout" aria-hidden="true">
       <span class="block image-block"></span>
@@ -16,18 +16,20 @@
 } @else if (notFound()) {
   <app-state-message
     icon="search_off"
-    title="Product not found"
-    message="This product may have been deleted, or the link is wrong."
+    [title]="'products.notFound.title' | transloco"
+    [message]="'products.notFound.message' | transloco"
   >
-    <a matButton="filled" [routerLink]="listUrl()">Back to products</a>
+    <a matButton="filled" [routerLink]="listUrl()">{{ 'buttons.backToProducts' | transloco }}</a>
   </app-state-message>
 } @else if (product.error()) {
   <app-state-message
     icon="error"
-    title="Couldn't load the product"
-    message="The server didn't respond."
+    [title]="'products.loadError' | transloco"
+    [message]="'states.serverNoResponse' | transloco"
   >
-    <button matButton="tonal" type="button" (click)="product.reload()">Try again</button>
+    <button matButton="tonal" type="button" (click)="product.reload()">
+      {{ 'buttons.tryAgain' | transloco }}
+    </button>
   </app-state-message>
 } @else if (view(); as p) {
   <header class="header">
@@ -37,18 +39,18 @@
         @if (p.brand) {
           {{ p.brand }} ·
         }
-        SKU {{ p.sku }}
+        {{ 'products.fields.sku' | transloco: { sku: p.sku } }}
       </p>
     </div>
     <div class="actions">
       <app-bookmark-button [product]="p" />
       <button matButton="outlined" type="button" (click)="edit(p)">
         <mat-icon>edit</mat-icon>
-        Edit
+        {{ 'buttons.edit' | transloco }}
       </button>
       <button matButton="outlined" type="button" class="delete" (click)="delete(p)">
         <mat-icon>delete</mat-icon>
-        Delete
+        {{ 'buttons.delete' | transloco }}
       </button>
     </div>
   </header>
@@ -56,39 +58,50 @@
   <div class="layout">
     <app-product-gallery [images]="p.images" [title]="p.title" />
 
-    <section class="summary" aria-label="Summary">
+    <section class="summary" [attr.aria-label]="'products.detail.summary' | transloco">
       <p class="category">{{ p.category }}</p>
 
       <div class="price-row">
         <span class="price">{{ p.price | currency: 'USD' }}</span>
         @if (p.discountPercentage > 0) {
-          <span class="discount">{{ p.discountPercentage | number: '1.0-0' }}% off</span>
+          <span class="discount">{{
+            'products.detail.discountOff'
+              | transloco: { value: p.discountPercentage | number: '1.0-0' }
+          }}</span>
         }
       </div>
 
       <div class="status-row">
         <app-stock-chip [stock]="p.stock" />
         <app-rating-stars [rating]="p.rating" />
-        <span class="review-count"
-          >{{ p.reviews.length }} {{ p.reviews.length === 1 ? 'review' : 'reviews' }}</span
-        >
+        <span class="review-count">{{
+          (p.reviews.length === 1 ? 'products.detail.reviewsOne' : 'products.detail.reviewsOther')
+            | transloco: { count: p.reviews.length }
+        }}</span>
       </div>
 
       <p class="description">{{ p.description }}</p>
 
       <dl class="details">
-        <dt>Warranty</dt>
+        <dt>{{ 'products.detail.warranty' | transloco }}</dt>
         <dd>{{ p.warrantyInformation }}</dd>
-        <dt>Shipping</dt>
+        <dt>{{ 'products.detail.shipping' | transloco }}</dt>
         <dd>{{ p.shippingInformation }}</dd>
-        <dt>Return policy</dt>
+        <dt>{{ 'products.detail.returnPolicy' | transloco }}</dt>
         <dd>{{ p.returnPolicy }}</dd>
-        <dt>Minimum order</dt>
-        <dd>{{ p.minimumOrderQuantity }} {{ p.minimumOrderQuantity === 1 ? 'item' : 'items' }}</dd>
+        <dt>{{ 'products.detail.minimumOrder' | transloco }}</dt>
+        <dd>
+          {{
+            (p.minimumOrderQuantity === 1
+              ? 'products.detail.itemsOne'
+              : 'products.detail.itemsOther'
+            ) | transloco: { count: p.minimumOrderQuantity }
+          }}
+        </dd>
       </dl>
 
       @if (p.tags.length) {
-        <ul class="tags" aria-label="Tags">
+        <ul class="tags" [attr.aria-label]="'products.detail.tags' | transloco">
           @for (tag of p.tags; track tag) {
             <li class="tag">{{ tag }}</li>
           }
@@ -98,7 +111,9 @@
   </div>
 
   <section class="reviews" aria-labelledby="reviews-title">
-    <h2 id="reviews-title" class="section-title">Reviews ({{ p.reviews.length }})</h2>
+    <h2 id="reviews-title" class="section-title">
+      {{ 'products.detail.reviewsTitle' | transloco: { count: p.reviews.length } }}
+    </h2>
     @if (p.reviews.length) {
       <ul class="review-list">
         @for (review of p.reviews; track $index) {
@@ -115,7 +130,7 @@
         }
       </ul>
     } @else {
-      <p class="empty">No reviews yet.</p>
+      <p class="empty">{{ 'products.detail.noReviews' | transloco }}</p>
     }
   </section>
 }

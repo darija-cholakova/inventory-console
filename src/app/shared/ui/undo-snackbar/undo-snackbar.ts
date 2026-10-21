@@ -9,6 +9,7 @@ import {
 } from '@angular/material/snack-bar';
 
 import { UndoSnackbarData } from '../../models/interfaces';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 /**
  * Snackbar with an Undo action. MatSnackBar's own `duration` cannot pause, so the timer
@@ -17,12 +18,12 @@ import { UndoSnackbarData } from '../../models/interfaces';
  */
 @Component({
   selector: 'app-undo-snackbar',
-  imports: [MatButton, MatSnackBarLabel, MatSnackBarActions, MatSnackBarAction],
+  imports: [TranslocoPipe, MatButton, MatSnackBarLabel, MatSnackBarActions, MatSnackBarAction],
   template: `
     <div matSnackBarLabel>{{ data.message }}</div>
     <div matSnackBarActions>
       <button matButton matSnackBarAction type="button" (click)="ref.dismissWithAction()">
-        Undo
+        {{ 'buttons.undo' | transloco }}
       </button>
     </div>
   `,

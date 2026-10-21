@@ -7,8 +7,7 @@ import {
   linkedSignal,
 } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
-
-const NO_IMAGE_TEXT = 'No image to display';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 /**
  * Product image with a fallback: when the URL is missing or fails to load,
@@ -16,7 +15,7 @@ const NO_IMAGE_TEXT = 'No image to display';
  */
 @Component({
   selector: 'app-product-image',
-  imports: [NgOptimizedImage, MatIcon],
+  imports: [TranslocoPipe, NgOptimizedImage, MatIcon],
   template: `
     @if (src() && !failed()) {
       @if (fill()) {
@@ -37,10 +36,10 @@ const NO_IMAGE_TEXT = 'No image to display';
         />
       }
     } @else {
-      <div class="placeholder" role="img" [attr.aria-label]="noImageText">
+      <div class="placeholder" role="img" [attr.aria-label]="'products.image.none' | transloco">
         <mat-icon aria-hidden="true">image_not_supported</mat-icon>
         @if (showText()) {
-          <span aria-hidden="true">{{ noImageText }}</span>
+          <span aria-hidden="true">{{ 'products.image.none' | transloco }}</span>
         }
       </div>
     }
@@ -60,7 +59,6 @@ export class ProductImage {
   /** Show the "No image to display" text next to the icon (for large images). */
   readonly showText = input(false, { transform: booleanAttribute });
 
-  protected readonly noImageText = NO_IMAGE_TEXT;
   /** Resets when a new URL comes in. */
   protected readonly failed = linkedSignal({ source: this.src, computation: () => false });
 }

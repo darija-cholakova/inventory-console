@@ -1,7 +1,5 @@
 @if (saveFailed()) {
-  <app-banner kind="error"
-    >Couldn't save your profile. Check your connection and try again.</app-banner
-  >
+  <app-banner kind="error">{{ 'validation.error.saveProfile' | transloco }}</app-banner>
 }
 
 @if (attempted() && summary().length) {
@@ -10,7 +8,7 @@
 
 <form class="form" [formRoot]="profileForm" [attr.aria-busy]="profileForm().submitting()">
   <mat-form-field appearance="outline">
-    <mat-label>First name</mat-label>
+    <mat-label>{{ 'profile.fields.firstName' | transloco }}</mat-label>
     <input
       id="profile-first-name"
       matInput
@@ -18,11 +16,11 @@
       [errorStateMatcher]="matcher"
       autocomplete="given-name"
     />
-    <mat-error>{{ profileForm.firstName().errors()[0]?.message }}</mat-error>
+    <mat-error>{{ profileForm.firstName().errors()[0]?.message ?? '' | transloco }}</mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline">
-    <mat-label>Last name</mat-label>
+    <mat-label>{{ 'profile.fields.lastName' | transloco }}</mat-label>
     <input
       id="profile-last-name"
       matInput
@@ -30,11 +28,11 @@
       [errorStateMatcher]="matcher"
       autocomplete="family-name"
     />
-    <mat-error>{{ profileForm.lastName().errors()[0]?.message }}</mat-error>
+    <mat-error>{{ profileForm.lastName().errors()[0]?.message ?? '' | transloco }}</mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline">
-    <mat-label>Phone</mat-label>
+    <mat-label>{{ 'profile.fields.phone' | transloco }}</mat-label>
     <input
       id="profile-phone"
       matInput
@@ -43,11 +41,11 @@
       [errorStateMatcher]="matcher"
       autocomplete="tel"
     />
-    <mat-error>{{ profileForm.phone().errors()[0]?.message }}</mat-error>
+    <mat-error>{{ profileForm.phone().errors()[0]?.message ?? '' | transloco }}</mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline">
-    <mat-label>Job title</mat-label>
+    <mat-label>{{ 'profile.fields.jobTitle' | transloco }}</mat-label>
     <input
       id="profile-job-title"
       matInput
@@ -55,17 +53,19 @@
       [errorStateMatcher]="matcher"
       autocomplete="organization-title"
     />
-    <mat-error>{{ profileForm.jobTitle().errors()[0]?.message }}</mat-error>
+    <mat-error>{{ profileForm.jobTitle().errors()[0]?.message ?? '' | transloco }}</mat-error>
   </mat-form-field>
 
   <div class="actions">
-    <button matButton="outlined" type="button" (click)="cancelled.emit()">Cancel</button>
+    <button matButton="outlined" type="button" (click)="cancelled.emit()">
+      {{ 'buttons.cancel' | transloco }}
+    </button>
     <button matButton="filled" type="submit" [disabled]="profileForm().submitting()">
       @if (profileForm().submitting()) {
         <mat-progress-spinner mode="indeterminate" diameter="18" aria-hidden="true" />
-        Saving…
+        {{ 'buttons.saving' | transloco }}
       } @else {
-        Save changes
+        {{ 'buttons.saveChanges' | transloco }}
       }
     </button>
   </div>

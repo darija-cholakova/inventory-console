@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 
 import { FormErrorItem } from '../../models/interfaces';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 let nextId = 0;
 
@@ -11,16 +12,19 @@ let nextId = 0;
  */
 @Component({
   selector: 'app-form-error-summary',
-  imports: [MatIcon],
+  imports: [TranslocoPipe, MatIcon],
   template: `
     <h3 class="title" [id]="titleId">
       <mat-icon aria-hidden="true">error</mat-icon>
-      Fix {{ items().length }} {{ items().length === 1 ? 'error' : 'errors' }} to save
+      {{
+        (items().length === 1 ? 'validation.error.summaryOne' : 'validation.error.summaryOther')
+          | transloco: { count: items().length }
+      }}
     </h3>
     <ul>
       @for (item of items(); track item.id) {
         <li>
-          <a [href]="'#' + item.id" (click)="focus($event, item)">{{ item.message }}</a>
+          <a [href]="'#' + item.id" (click)="focus($event, item)">{{ item.message | transloco }}</a>
         </li>
       }
     </ul>

@@ -15,10 +15,12 @@ import { Router, RouterLink } from '@angular/router';
 
 import { BackLink } from '../../../../shared/ui/back-link/back-link';
 import { StateMessage } from '../../../../shared/ui/state-message/state-message';
+import { I18n } from '../../../../core/i18n/i18n';
 import { LocalChanges } from '../../../../core/products/local-changes';
 import { ProductsApi } from '../../../../core/api/products-api';
 import { ProductForm } from '../../ui/product-form/product-form';
 import { HasUnsavedChanges } from '../../../../shared/models/interfaces';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 /**
  * Edit page for a direct link (/products/:id/edit). Inside the app, Edit opens
@@ -26,7 +28,15 @@ import { HasUnsavedChanges } from '../../../../shared/models/interfaces';
  */
 @Component({
   selector: 'app-product-edit-page',
-  imports: [BackLink, RouterLink, MatButton, MatProgressBar, StateMessage, ProductForm],
+  imports: [
+    TranslocoPipe,
+    BackLink,
+    RouterLink,
+    MatButton,
+    MatProgressBar,
+    StateMessage,
+    ProductForm,
+  ],
   templateUrl: './product-edit-page.html',
   styleUrl: './product-edit-page.scss',
   // Closing or reloading the tab is outside the router: let the browser ask instead
@@ -38,6 +48,7 @@ export class ProductEditPage implements HasUnsavedChanges {
   private readonly local = inject(LocalChanges);
   private readonly router = inject(Router);
   private readonly snackBar = inject(MatSnackBar);
+  private readonly i18n = inject(I18n);
 
   /** Route param, bound through withComponentInputBinding(). */
   readonly id = input.required<string>();
@@ -71,7 +82,9 @@ export class ProductEditPage implements HasUnsavedChanges {
 
   protected async onSaved(): Promise<void> {
     await this.router.navigate(['/products', this.id()]);
-    this.snackBar.open('Changes saved', undefined, { duration: 4000 });
+    this.snackBar.open(this.i18n.t('validation.success.changesSaved'), undefined, {
+      duration: 4000,
+    });
   }
 
   protected onCancelled(): void {

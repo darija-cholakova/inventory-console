@@ -8,11 +8,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { DialogShell } from '../../../../shared/ui/dialogs/dialog-shell/dialog-shell';
 import { StateMessage } from '../../../../shared/ui/state-message/state-message';
+import { I18n } from '../../../../core/i18n/i18n';
 import { LocalChanges } from '../../../../core/products/local-changes';
 import { ProductsApi } from '../../../../core/api/products-api';
 import { ProductForm } from '../../ui/product-form/product-form';
 import { ProductEditDialogData } from '../../../../shared/models/interfaces';
 import { ProductEditDialogResult } from '../../../../shared/models/types';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 /**
  * Edit form in a dialog, opened from the list, the cards, Bookmarked and the detail page.
@@ -20,23 +22,28 @@ import { ProductEditDialogResult } from '../../../../shared/models/types';
  */
 @Component({
   selector: 'app-product-edit-dialog',
-  imports: [DialogShell, ProductForm, StateMessage, MatProgressBar, MatButton],
+  imports: [TranslocoPipe, DialogShell, ProductForm, StateMessage, MatProgressBar, MatButton],
   template: `
-    <app-dialog-shell title="Edit product" [hasUnsavedChanges]="hasUnsavedChanges">
+    <app-dialog-shell
+      [title]="'products.edit.title' | transloco"
+      [hasUnsavedChanges]="hasUnsavedChanges"
+    >
       @if (product.isLoading()) {
         <div role="status">
-          <span class="visually-hidden">Loading product…</span>
+          <span class="visually-hidden">{{ 'products.loading' | transloco }}</span>
           <mat-progress-bar mode="indeterminate" aria-hidden="true" />
         </div>
       } @else if (notFound()) {
         <app-state-message
           icon="search_off"
-          title="Product not found"
-          message="This product may have been deleted."
+          [title]="'products.notFound.title' | transloco"
+          [message]="'products.notFound.messageShort' | transloco"
         />
       } @else if (product.error()) {
-        <app-state-message icon="error" title="Couldn't load the product">
-          <button matButton="tonal" type="button" (click)="product.reload()">Try again</button>
+        <app-state-message icon="error" [title]="'products.loadError' | transloco">
+          <button matButton="tonal" type="button" (click)="product.reload()">
+            {{ 'buttons.tryAgain' | transloco }}
+          </button>
         </app-state-message>
       } @else if (view(); as p) {
         <app-product-form
@@ -54,6 +61,7 @@ export class ProductEditDialog {
   private readonly api = inject(ProductsApi);
   private readonly local = inject(LocalChanges);
   private readonly snackBar = inject(MatSnackBar);
+  private readonly i18n = inject(I18n);
   private readonly ref =
     inject<MatDialogRef<ProductEditDialog, ProductEditDialogResult>>(MatDialogRef);
   private readonly id = inject<ProductEditDialogData>(MAT_DIALOG_DATA).productId;
@@ -92,6 +100,8 @@ export class ProductEditDialog {
 
   protected onSaved(): void {
     this.ref.close(true);
-    this.snackBar.open('Changes saved', undefined, { duration: 4000 });
+    this.snackBar.open(this.i18n.t('validation.success.changesSaved'), undefined, {
+      duration: 4000,
+    });
   }
 }

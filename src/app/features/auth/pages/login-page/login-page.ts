@@ -21,16 +21,19 @@ import { Banner } from '../../../../shared/ui/banner/banner';
 import { AuthService } from '../../../../core/auth/auth.service';
 import { safeReturnUrl } from '../../../../core/auth/return-url';
 import { LoginErrorKind } from '../../../../shared/models/types';
+import { TranslocoPipe } from '@jsverse/transloco';
 
+/** Translation keys of the sign-in error banner. */
 const ERROR_MESSAGES: Record<LoginErrorKind, string> = {
-  'invalid-credentials': 'Incorrect username or password. Check both and try again.',
-  network: 'A network issue occurred. Please try again later.',
-  unknown: 'Something went wrong. Please try again.',
+  'invalid-credentials': 'validation.error.invalidCredentials',
+  network: 'validation.error.network',
+  unknown: 'validation.error.unknown',
 };
 
 @Component({
   selector: 'app-login-page',
   imports: [
+    TranslocoPipe,
     ReactiveFormsModule,
     MatFormField,
     MatLabel,

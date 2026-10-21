@@ -22,15 +22,21 @@ import {
   SortChange,
   SortOption,
 } from '../../../../shared/models/interfaces';
+import { TranslocoPipe } from '@jsverse/transloco';
 
-/** Sort choices for small screens, where the table headers are not shown. */
+/** Sort choices for small screens, where the table headers are not shown. Labels are translation keys. */
 const SORT_OPTIONS: SortOption[] = [
-  { value: 'default', label: 'Default order', sortBy: null, order: 'asc' },
-  { value: 'title-asc', label: 'Name A–Z', sortBy: 'title', order: 'asc' },
-  { value: 'price-asc', label: 'Price: low to high', sortBy: 'price', order: 'asc' },
-  { value: 'price-desc', label: 'Price: high to low', sortBy: 'price', order: 'desc' },
-  { value: 'stock-asc', label: 'Stock: low to high', sortBy: 'stock', order: 'asc' },
-  { value: 'rating-desc', label: 'Rating: high to low', sortBy: 'rating', order: 'desc' },
+  { value: 'default', label: 'products.toolbar.sort.default', sortBy: null, order: 'asc' },
+  { value: 'title-asc', label: 'products.toolbar.sort.titleAsc', sortBy: 'title', order: 'asc' },
+  { value: 'price-asc', label: 'products.toolbar.sort.priceAsc', sortBy: 'price', order: 'asc' },
+  { value: 'price-desc', label: 'products.toolbar.sort.priceDesc', sortBy: 'price', order: 'desc' },
+  { value: 'stock-asc', label: 'products.toolbar.sort.stockAsc', sortBy: 'stock', order: 'asc' },
+  {
+    value: 'rating-desc',
+    label: 'products.toolbar.sort.ratingDesc',
+    sortBy: 'rating',
+    order: 'desc',
+  },
 ];
 
 const SEARCH_DEBOUNCE_MS = 300;
@@ -38,6 +44,7 @@ const SEARCH_DEBOUNCE_MS = 300;
 @Component({
   selector: 'app-products-toolbar',
   imports: [
+    TranslocoPipe,
     ReactiveFormsModule,
     MatFormField,
     MatLabel,

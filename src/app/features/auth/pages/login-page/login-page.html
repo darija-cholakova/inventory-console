@@ -2,12 +2,12 @@
   <section class="card" aria-labelledby="login-title">
     <div class="brand">
       <span class="brand-logo" aria-hidden="true"><mat-icon>inventory_2</mat-icon></span>
-      <span class="brand-name">Inventory Console</span>
+      <span class="brand-name">{{ 'app.name' | transloco }}</span>
     </div>
 
     <header class="heading">
-      <h1 id="login-title" class="title">Sign in</h1>
-      <p class="subtitle">Manage products, stock and pricing.</p>
+      <h1 id="login-title" class="title">{{ 'buttons.signIn' | transloco }}</h1>
+      <p class="subtitle">{{ 'auth.subtitle' | transloco }}</p>
     </header>
 
     <!-- Messages slide open (the fields move down smoothly) and collapse when they go -->
@@ -16,10 +16,10 @@
         <div class="banner-clip">
           <app-banner
             kind="error"
-            dismissLabel="Dismiss error message"
+            [dismissLabel]="'buttons.dismissError' | transloco"
             (dismissed)="dismissError()"
           >
-            {{ message }}
+            {{ message | transloco }}
           </app-banner>
         </div>
       </div>
@@ -27,7 +27,7 @@
       <div class="banner-slot" animate.enter="banner-enter" animate.leave="banner-leave">
         <div class="banner-clip">
           <app-banner kind="info" icon="schedule">
-            Your session expired. Sign in again to continue.
+            {{ 'auth.sessionExpired' | transloco }}
           </app-banner>
         </div>
       </div>
@@ -41,7 +41,7 @@
       novalidate
     >
       <mat-form-field appearance="outline">
-        <mat-label>Username</mat-label>
+        <mat-label>{{ 'auth.username' | transloco }}</mat-label>
         <input
           #usernameInput
           matInput
@@ -53,12 +53,12 @@
           required
         />
         @if (form.controls.username.invalid) {
-          <mat-error>Username is required.</mat-error>
+          <mat-error>{{ 'validation.error.usernameRequired' | transloco }}</mat-error>
         }
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-        <mat-label>Password</mat-label>
+        <mat-label>{{ 'auth.password' | transloco }}</mat-label>
         <input
           #passwordInput
           matInput
@@ -72,7 +72,9 @@
           matIconButton
           matSuffix
           type="button"
-          [attr.aria-label]="passwordVisible() ? 'Hide password' : 'Show password'"
+          [attr.aria-label]="
+            (passwordVisible() ? 'buttons.hidePassword' : 'buttons.showPassword') | transloco
+          "
           [attr.aria-pressed]="passwordVisible()"
           [disabled]="submitting()"
           (click)="togglePasswordVisibility()"
@@ -80,18 +82,20 @@
           <mat-icon>{{ passwordVisible() ? 'visibility_off' : 'visibility' }}</mat-icon>
         </button>
         @if (form.controls.password.hasError('required')) {
-          <mat-error>Password is required.</mat-error>
+          <mat-error>{{ 'validation.error.passwordRequired' | transloco }}</mat-error>
         }
       </mat-form-field>
 
-      <p class="demo-note">Demo account: <strong>emilys</strong> / <strong>emilyspass</strong></p>
+      <p class="demo-note">
+        {{ 'auth.demoAccount' | transloco }} <strong>emilys</strong> / <strong>emilyspass</strong>
+      </p>
 
       <button matButton="filled" type="submit" class="submit" [disabled]="submitting()">
         @if (submitting()) {
           <mat-progress-spinner mode="indeterminate" diameter="18" aria-hidden="true" />
-          Signing in…
+          {{ 'buttons.signingIn' | transloco }}
         } @else {
-          Sign in
+          {{ 'buttons.signIn' | transloco }}
         }
       </button>
     </form>

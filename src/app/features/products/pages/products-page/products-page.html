@@ -1,5 +1,5 @@
 <header class="header">
-  <h1 #heading class="page-title" tabindex="-1">Products</h1>
+  <h1 #heading class="page-title" tabindex="-1">{{ 'products.title' | transloco }}</h1>
   @if (store.status() === 'success' || store.isRefreshing()) {
     <p class="summary">{{ summary() }}</p>
   }
@@ -14,9 +14,13 @@
   (sortChange)="onSort($event)"
 />
 
-<section class="results" aria-label="Product results">
+<section class="results" [attr.aria-label]="'products.list.results' | transloco">
   @if (store.isRefreshing()) {
-    <mat-progress-bar class="refresh-bar" mode="indeterminate" aria-label="Updating products" />
+    <mat-progress-bar
+      class="refresh-bar"
+      mode="indeterminate"
+      [attr.aria-label]="'products.list.updating' | transloco"
+    />
   }
 
   @if (store.isInitialLoading()) {
@@ -24,18 +28,22 @@
   } @else if (store.status() === 'error') {
     <app-state-message
       icon="error"
-      title="Couldn't load products"
-      message="The server didn't respond. Your filters are kept."
+      [title]="'products.list.loadError' | transloco"
+      [message]="'products.list.loadErrorMessage' | transloco"
     >
-      <button matButton="tonal" type="button" (click)="retry()">Try again</button>
+      <button matButton="tonal" type="button" (click)="retry()">
+        {{ 'buttons.tryAgain' | transloco }}
+      </button>
     </app-state-message>
   } @else if (store.isEmpty()) {
     <app-state-message
       icon="search_off"
       [title]="emptyTitle()"
-      message="Check the spelling or clear the filters."
+      [message]="'products.list.emptyMessage' | transloco"
     >
-      <button matButton="tonal" type="button" (click)="clearFilters()">Clear filters</button>
+      <button matButton="tonal" type="button" (click)="clearFilters()">
+        {{ 'buttons.clearFilters' | transloco }}
+      </button>
     </app-state-message>
   } @else {
     @if (showTable()) {
@@ -60,7 +68,7 @@
       [pageSize]="store.query().pageSize"
       [pageSizeOptions]="pageSizeOptions"
       (page)="onPage($event)"
-      aria-label="Select page of products"
+      [attr.aria-label]="'products.list.pagination' | transloco"
     />
   }
 </section>

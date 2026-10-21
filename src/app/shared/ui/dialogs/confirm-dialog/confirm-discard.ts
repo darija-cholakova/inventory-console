@@ -9,10 +9,10 @@ export function confirmDiscardChanges(dialog: MatDialog): Observable<boolean> {
   return dialog
     .open<ConfirmDialog, ConfirmDialogData, boolean>(ConfirmDialog, {
       data: {
-        title: 'Discard unsaved changes?',
-        message: 'Your changes to this product will be lost.',
-        cancelLabel: 'Keep editing',
-        confirmLabel: 'Discard',
+        title: 'dialogs.discardChanges.title',
+        message: 'dialogs.discardChanges.message',
+        cancelLabel: 'buttons.keepEditing',
+        confirmLabel: 'buttons.discard',
       },
       role: 'alertdialog',
     })

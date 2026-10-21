@@ -7,16 +7,14 @@
         @if (p.brand) {
           {{ p.brand }} ·
         }
-        SKU {{ p.sku }}
+        {{ 'products.fields.sku' | transloco: { sku: p.sku } }}
       </span>
     </div>
   </div>
 }
 
 @if (saveFailed()) {
-  <app-banner kind="error"
-    >Couldn't save the changes. Check your connection and try again.</app-banner
-  >
+  <app-banner kind="error">{{ 'validation.error.saveProduct' | transloco }}</app-banner>
 }
 
 @if (attempted() && summary().length) {
@@ -25,7 +23,7 @@
 
 <form class="form" [formRoot]="productForm" [attr.aria-busy]="productForm().submitting()">
   <mat-form-field appearance="outline" class="full">
-    <mat-label>Title</mat-label>
+    <mat-label>{{ 'products.fields.title' | transloco }}</mat-label>
     <input
       id="product-title"
       matInput
@@ -33,11 +31,11 @@
       [errorStateMatcher]="matcher"
       autocomplete="off"
     />
-    <mat-error>{{ productForm.title().errors()[0]?.message }}</mat-error>
+    <mat-error>{{ productForm.title().errors()[0]?.message ?? '' | transloco }}</mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline" class="full">
-    <mat-label>Description</mat-label>
+    <mat-label>{{ 'products.fields.description' | transloco }}</mat-label>
     <textarea
       id="product-description"
       matInput
@@ -45,11 +43,11 @@
       [formField]="productForm.description"
       [errorStateMatcher]="matcher"
     ></textarea>
-    <mat-error>{{ productForm.description().errors()[0]?.message }}</mat-error>
+    <mat-error>{{ productForm.description().errors()[0]?.message ?? '' | transloco }}</mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline">
-    <mat-label>Category</mat-label>
+    <mat-label>{{ 'products.fields.category' | transloco }}</mat-label>
     <mat-select
       id="product-category"
       [formField]="productForm.category"
@@ -59,11 +57,11 @@
         <mat-option [value]="category.slug">{{ category.name }}</mat-option>
       }
     </mat-select>
-    <mat-error>{{ productForm.category().errors()[0]?.message }}</mat-error>
+    <mat-error>{{ productForm.category().errors()[0]?.message ?? '' | transloco }}</mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline">
-    <mat-label>Brand</mat-label>
+    <mat-label>{{ 'products.fields.brand' | transloco }}</mat-label>
     <input
       id="product-brand"
       matInput
@@ -71,11 +69,11 @@
       [errorStateMatcher]="matcher"
       autocomplete="off"
     />
-    <mat-hint>Optional</mat-hint>
+    <mat-hint>{{ 'products.edit.brandHint' | transloco }}</mat-hint>
   </mat-form-field>
 
   <mat-form-field appearance="outline">
-    <mat-label>Price</mat-label>
+    <mat-label>{{ 'products.fields.price' | transloco }}</mat-label>
     <span matTextPrefix>$&nbsp;</span>
     <input
       id="product-price"
@@ -86,11 +84,11 @@
       [formField]="productForm.price"
       [errorStateMatcher]="matcher"
     />
-    <mat-error>{{ productForm.price().errors()[0]?.message }}</mat-error>
+    <mat-error>{{ productForm.price().errors()[0]?.message ?? '' | transloco }}</mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline">
-    <mat-label>Discount</mat-label>
+    <mat-label>{{ 'products.fields.discount' | transloco }}</mat-label>
     <input
       id="product-discount"
       matInput
@@ -101,11 +99,13 @@
       [errorStateMatcher]="matcher"
     />
     <span matTextSuffix>%</span>
-    <mat-error>{{ productForm.discountPercentage().errors()[0]?.message }}</mat-error>
+    <mat-error>{{
+      productForm.discountPercentage().errors()[0]?.message ?? '' | transloco
+    }}</mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline">
-    <mat-label>Stock</mat-label>
+    <mat-label>{{ 'products.fields.stock' | transloco }}</mat-label>
     <input
       id="product-stock"
       matInput
@@ -115,18 +115,20 @@
       [formField]="productForm.stock"
       [errorStateMatcher]="matcher"
     />
-    <mat-hint>Units available</mat-hint>
-    <mat-error>{{ productForm.stock().errors()[0]?.message }}</mat-error>
+    <mat-hint>{{ 'products.edit.stockHint' | transloco }}</mat-hint>
+    <mat-error>{{ productForm.stock().errors()[0]?.message ?? '' | transloco }}</mat-error>
   </mat-form-field>
 
   <div class="actions">
-    <button matButton="outlined" type="button" (click)="cancelled.emit()">Cancel</button>
+    <button matButton="outlined" type="button" (click)="cancelled.emit()">
+      {{ 'buttons.cancel' | transloco }}
+    </button>
     <button matButton="filled" type="submit" [disabled]="productForm().submitting()">
       @if (productForm().submitting()) {
         <mat-progress-spinner mode="indeterminate" diameter="18" aria-hidden="true" />
-        Saving…
+        {{ 'buttons.saving' | transloco }}
       } @else {
-        Save changes
+        {{ 'buttons.saveChanges' | transloco }}
       }
     </button>
   </div>

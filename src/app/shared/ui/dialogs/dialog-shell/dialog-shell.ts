@@ -11,6 +11,7 @@ import { MatIcon } from '@angular/material/icon';
 import { filter, merge } from 'rxjs';
 
 import { confirmDiscardChanges } from '../confirm-dialog/confirm-discard';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 /**
  * Frame for dialogs that host a form: title, close button, scrollable body, and one close
@@ -19,11 +20,16 @@ import { confirmDiscardChanges } from '../confirm-dialog/confirm-discard';
  */
 @Component({
   selector: 'app-dialog-shell',
-  imports: [MatDialogTitle, MatDialogContent, MatIconButton, MatIcon],
+  imports: [TranslocoPipe, MatDialogTitle, MatDialogContent, MatIconButton, MatIcon],
   template: `
     <header class="header">
       <h2 mat-dialog-title class="title">{{ title() }}</h2>
-      <button matIconButton type="button" aria-label="Close" (click)="requestClose()">
+      <button
+        matIconButton
+        type="button"
+        [attr.aria-label]="'buttons.close' | transloco"
+        (click)="requestClose()"
+      >
         <mat-icon>close</mat-icon>
       </button>
     </header>

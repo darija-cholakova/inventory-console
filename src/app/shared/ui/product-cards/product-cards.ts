@@ -9,6 +9,7 @@ import { BookmarkButton } from '../bookmark-button/bookmark-button';
 import { ProductImage } from '../product-image/product-image';
 import { StockChip } from '../stock-chip/stock-chip';
 import { Product } from '../../models/interfaces';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 /**
  * Small-screen list: same data as the table, laid out as cards.
@@ -18,6 +19,7 @@ import { Product } from '../../models/interfaces';
 @Component({
   selector: 'app-product-cards',
   imports: [
+    TranslocoPipe,
     RouterLink,
     ProductImage,
     CurrencyPipe,

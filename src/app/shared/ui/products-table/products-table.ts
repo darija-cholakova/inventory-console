@@ -12,11 +12,13 @@ import { ProductImage } from '../product-image/product-image';
 import { StockChip } from '../stock-chip/stock-chip';
 import { Product, ProductQuery, SortChange } from '../../models/interfaces';
 import { SortField } from '../../models/types';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 /** Desktop list: sorting happens on the server, so MatSort only reports header clicks. */
 @Component({
   selector: 'app-products-table',
   imports: [
+    TranslocoPipe,
     MatTableModule,
     MatSort,
     MatSortHeader,

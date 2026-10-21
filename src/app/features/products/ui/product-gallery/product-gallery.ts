@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 
 import { ProductImage } from '../../../../shared/ui/product-image/product-image';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 /**
  * Main image with thumbnail buttons. Thumbnails are a single tab stop:
@@ -16,7 +17,7 @@ import { ProductImage } from '../../../../shared/ui/product-image/product-image'
  */
 @Component({
   selector: 'app-product-gallery',
-  imports: [ProductImage],
+  imports: [TranslocoPipe, ProductImage],
   templateUrl: './product-gallery.html',
   styleUrl: './product-gallery.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -23,6 +23,7 @@ import { map } from 'rxjs';
 import { TABLE_VIEW_QUERY } from '../../../../shared/utils/breakpoints';
 import { focusRowAfterDelete } from '../../../../shared/utils/focus-after-delete';
 import { StateMessage } from '../../../../shared/ui/state-message/state-message';
+import { I18n } from '../../../../core/i18n/i18n';
 import { LocalChanges } from '../../../../core/products/local-changes';
 import { ProductDeletion } from '../../data-access/product-deletion';
 import { paramsFromQuery, queryFromParams } from '../../data-access/product-query-params';
@@ -35,10 +36,12 @@ import { ProductsTable } from '../../../../shared/ui/products-table/products-tab
 import { ProductsToolbar } from '../../ui/products-toolbar/products-toolbar';
 import { PAGE_SIZE_OPTIONS } from '../../utils/product-query.constants';
 import { Product, ProductQuery, SortChange } from '../../../../shared/models/interfaces';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-products-page',
   imports: [
+    TranslocoPipe,
     ProductsToolbar,
     ProductsTable,
     ProductCards,
@@ -62,6 +65,7 @@ export class ProductsPage {
   private readonly injector = inject(Injector);
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly dialog = inject(MatDialog);
+  private readonly i18n = inject(I18n);
   private readonly heading = viewChild.required<ElementRef<HTMLHeadingElement>>('heading');
 
   protected readonly pageSizeOptions = PAGE_SIZE_OPTIONS;
@@ -75,13 +79,20 @@ export class ProductsPage {
   protected readonly summary = computed(() => {
     const { q } = this.store.query();
     const total = this.store.total();
-    if (q) return `${total} ${total === 1 ? 'result' : 'results'} for “${q}”`;
-    return `${total} ${total === 1 ? 'product' : 'products'}`;
+    const one = total === 1;
+    if (q)
+      return this.i18n.t(`products.list.${one ? 'resultsOne' : 'resultsOther'}`, {
+        count: total,
+        q,
+      });
+    return this.i18n.t(`products.list.${one ? 'countOne' : 'countOther'}`, { count: total });
   });
 
   protected readonly emptyTitle = computed(() => {
     const { q } = this.store.query();
-    return q ? `No products match “${q}”` : 'No products in this category';
+    return q
+      ? this.i18n.t('products.list.emptySearch', { q })
+      : this.i18n.t('products.list.emptyCategory');
   });
 
   constructor() {
@@ -115,7 +126,7 @@ export class ProductsPage {
       if (status === 'success') {
         void this.announcer.announce(this.store.isEmpty() ? this.emptyTitle() : this.summary());
       } else if (status === 'error') {
-        void this.announcer.announce("Couldn't load products");
+        void this.announcer.announce(this.i18n.t('products.list.loadError'));
       }
     });
   }

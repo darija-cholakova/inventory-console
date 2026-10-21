@@ -5,6 +5,7 @@ import { TitleStrategy, provideRouter, withComponentInputBinding } from '@angula
 
 import { routes } from './app.routes';
 import { authInterceptor } from './core/auth/auth.interceptor';
+import { provideI18n } from './core/i18n/i18n.providers';
 import { PageTitleStrategy } from './core/routing/page-title.strategy';
 
 export const appConfig: ApplicationConfig = {
@@ -12,6 +13,7 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes, withComponentInputBinding()),
     provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
+    provideI18n(),
     { provide: TitleStrategy, useClass: PageTitleStrategy },
     // mat-icon uses the Material Symbols font loaded in index.html
     { provide: MAT_ICON_DEFAULT_OPTIONS, useValue: { fontSet: 'material-symbols-outlined' } },

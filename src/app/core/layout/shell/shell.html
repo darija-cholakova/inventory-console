@@ -1,11 +1,13 @@
-<a class="skip-link" href="#main-content" (click)="skipToMain($event)">Skip to main content</a>
+<a class="skip-link" href="#main-content" (click)="skipToMain($event)">{{
+  'app.skipToMain' | transloco
+}}</a>
 
 <mat-toolbar class="top-bar" role="banner">
   @if (!isExpanded()) {
     <button
       matIconButton
       type="button"
-      aria-label="Open navigation"
+      [attr.aria-label]="'app.openNavigation' | transloco"
       aria-controls="app-nav"
       [attr.aria-expanded]="navOpened()"
       (click)="toggleDrawer()"
@@ -14,9 +16,9 @@
     </button>
   }
 
-  <a class="brand" routerLink="/products" aria-label="Inventory Console, go to products">
+  <a class="brand" routerLink="/products" [attr.aria-label]="'app.goToProducts' | transloco">
     <span class="brand-logo" aria-hidden="true"><mat-icon>inventory_2</mat-icon></span>
-    <span class="brand-name">Inventory Console</span>
+    <span class="brand-name">{{ 'app.name' | transloco }}</span>
   </a>
 
   <span class="spacer"></span>
@@ -34,7 +36,7 @@
     (closedStart)="onDrawerClosed()"
   >
     <div class="nav-content">
-      <nav aria-label="Main">
+      <nav [attr.aria-label]="'app.mainNavigation' | transloco">
         <mat-nav-list>
           @for (item of navItems; track item.path) {
             <a
@@ -47,11 +49,12 @@
               (click)="onNavigate()"
             >
               <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
-              <span matListItemTitle>{{ item.label }}</span>
+              <span matListItemTitle>{{ item.label | transloco }}</span>
               @if (item.count?.(); as count) {
                 <span matListItemMeta class="nav-meta">
                   <span class="nav-count"
-                    >{{ count }}<span class="visually-hidden"> {{ item.countLabel }}</span></span
+                    >{{ count
+                    }}<span class="visually-hidden"> {{ item.countLabel! | transloco }}</span></span
                   >
                 </span>
               }

@@ -1,0 +1,243 @@
+{
+  "app": {
+    "name": "Inventory Console",
+    "pageTitle": "{{page}} · Inventory Console",
+    "skipToMain": "Skip to main content",
+    "openNavigation": "Open navigation",
+    "goToProducts": "Inventory Console, go to products",
+    "mainNavigation": "Main",
+    "productsCount": "products"
+  },
+  "userMenu": {
+    "label": "{{initials}}, account menu for {{name}}",
+    "theme": "Theme",
+    "language": "Language",
+    "signOut": "Sign out",
+    "comingSoon": "Coming soon",
+    "themes": {
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
+    }
+  },
+  "buttons": {
+    "signIn": "Sign in",
+    "signingIn": "Signing in…",
+    "tryAgain": "Try again",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "discard": "Discard",
+    "keepEditing": "Keep editing",
+    "saveChanges": "Save changes",
+    "saving": "Saving…",
+    "undo": "Undo",
+    "ok": "OK",
+    "close": "Close",
+    "viewDetails": "View details",
+    "clearFilters": "Clear filters",
+    "clearSearch": "Clear search",
+    "browseProducts": "Browse products",
+    "backToProducts": "Back to products",
+    "editProfile": "Edit profile",
+    "bookmark": "Bookmark",
+    "removeBookmark": "Remove bookmark",
+    "bookmarkProduct": "Bookmark {{title}}",
+    "removeBookmarkProduct": "Remove bookmark {{title}}",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "dismissError": "Dismiss error message",
+    "actionsFor": "Actions for {{title}}"
+  },
+  "validation": {
+    "success": {
+      "changesSaved": "Changes saved",
+      "profileUpdated": "Profile updated",
+      "productDeleted": "Product deleted",
+      "productRestored": "“{{title}}” restored",
+      "bookmarkAdded": "Added to bookmarked",
+      "bookmarkRemoved": "Removed from bookmarked"
+    },
+    "error": {
+      "summaryOne": "Fix {{count}} error to save",
+      "summaryOther": "Fix {{count}} errors to save",
+      "usernameRequired": "Username is required.",
+      "passwordRequired": "Password is required.",
+      "invalidCredentials": "Incorrect username or password. Check both and try again.",
+      "network": "A network issue occurred. Please try again later.",
+      "unknown": "Something went wrong. Please try again.",
+      "titleRequired": "Title is required.",
+      "descriptionRequired": "Description is required.",
+      "categoryRequired": "Choose a category.",
+      "priceRequired": "Price is required.",
+      "pricePositive": "Price must be greater than 0.",
+      "discountRequired": "Discount is required. Use 0 for no discount.",
+      "discountRange": "Discount must be between 0 and 100.",
+      "stockRequired": "Stock is required.",
+      "stockNegative": "Stock can’t be negative.",
+      "stockInteger": "Stock must be a whole number.",
+      "firstNameRequired": "First name is required.",
+      "lastNameRequired": "Last name is required.",
+      "phoneRequired": "Phone is required.",
+      "phoneFormat": "Use digits, spaces and + - ( ) only.",
+      "phoneDigits": "Enter at least 6 digits.",
+      "jobTitleRequired": "Job title is required.",
+      "saveProduct": "Couldn't save the changes. Check your connection and try again.",
+      "saveProfile": "Couldn't save your profile. Check your connection and try again.",
+      "deleteProduct": "Couldn’t delete “{{title}}”. It’s back in the list."
+    }
+  },
+  "states": {
+    "serverNoResponse": "The server didn't respond."
+  },
+  "dialogs": {
+    "discardChanges": {
+      "title": "Discard unsaved changes?",
+      "message": "Your changes to this product will be lost."
+    }
+  },
+  "paginator": {
+    "itemsPerPage": "Items per page",
+    "nextPage": "Next page",
+    "previousPage": "Previous page",
+    "firstPage": "First page",
+    "lastPage": "Last page",
+    "rangeEmpty": "0 of {{length}}",
+    "range": "{{start}} – {{end}} of {{length}}"
+  },
+  "auth": {
+    "subtitle": "Manage products, stock and pricing.",
+    "sessionExpired": "Your session expired. Sign in again to continue.",
+    "username": "Username",
+    "password": "Password",
+    "demoAccount": "Demo account:"
+  },
+  "products": {
+    "title": "Products",
+    "product": "Product",
+    "loading": "Loading product…",
+    "loadError": "Couldn't load the product",
+    "notFound": {
+      "title": "Product not found",
+      "message": "This product may have been deleted, or the link is wrong.",
+      "messageShort": "This product may have been deleted."
+    },
+    "fields": {
+      "title": "Title",
+      "description": "Description",
+      "category": "Category",
+      "brand": "Brand",
+      "price": "Price",
+      "discount": "Discount",
+      "stock": "Stock",
+      "quantity": "Quantity",
+      "rating": "Rating",
+      "image": "Image",
+      "actions": "Actions",
+      "sku": "SKU {{sku}}"
+    },
+    "rating": {
+      "label": "Rating {{value}} out of 5"
+    },
+    "stock": {
+      "inStock": "In stock",
+      "lowStock": "Low stock",
+      "outOfStock": "Out of stock"
+    },
+    "image": {
+      "none": "No image to display"
+    },
+    "list": {
+      "results": "Product results",
+      "loading": "Loading products…",
+      "updating": "Updating products",
+      "countOne": "{{count}} product",
+      "countOther": "{{count}} products",
+      "resultsOne": "{{count}} result for “{{q}}”",
+      "resultsOther": "{{count}} results for “{{q}}”",
+      "emptySearch": "No products match “{{q}}”",
+      "emptyCategory": "No products in this category",
+      "emptyMessage": "Check the spelling or clear the filters.",
+      "loadError": "Couldn't load products",
+      "loadErrorMessage": "The server didn't respond. Your filters are kept.",
+      "pagination": "Select page of products"
+    },
+    "toolbar": {
+      "search": "Search",
+      "searchPlaceholder": "Search by name, brand…",
+      "allCategories": "All categories",
+      "sortBy": "Sort by",
+      "sort": {
+        "default": "Default order",
+        "titleAsc": "Name A–Z",
+        "priceAsc": "Price: low to high",
+        "priceDesc": "Price: high to low",
+        "stockAsc": "Stock: low to high",
+        "ratingDesc": "Rating: high to low"
+      }
+    },
+    "detail": {
+      "summary": "Summary",
+      "discountOff": "{{value}}% off",
+      "reviewsOne": "{{count}} review",
+      "reviewsOther": "{{count}} reviews",
+      "reviewsTitle": "Reviews ({{count}})",
+      "noReviews": "No reviews yet.",
+      "warranty": "Warranty",
+      "shipping": "Shipping",
+      "returnPolicy": "Return policy",
+      "minimumOrder": "Minimum order",
+      "itemsOne": "{{count}} item",
+      "itemsOther": "{{count}} items",
+      "tags": "Tags"
+    },
+    "gallery": {
+      "images": "Product images",
+      "imageAlt": "{{title}}, image {{index}} of {{total}}",
+      "showImage": "Show image {{index}} of {{total}}"
+    },
+    "edit": {
+      "title": "Edit product",
+      "brandHint": "Optional",
+      "stockHint": "Units available"
+    },
+    "delete": {
+      "title": "Delete “{{title}}”?",
+      "message": "The product will be removed from the inventory."
+    }
+  },
+  "bookmarks": {
+    "title": "Bookmarked",
+    "subtitle": "Products you keep an eye on. Stored in this browser.",
+    "products": "Bookmarked products",
+    "emptyTitle": "No bookmarked products yet",
+    "emptyMessage": "Use the bookmark icon on a product to keep it here.",
+    "search": "Search bookmarked",
+    "loadError": "Couldn't load bookmarked products",
+    "noMatch": "No bookmarked products match “{{q}}”",
+    "pagination": "Select page of bookmarked products",
+    "countOne": "{{count}} bookmarked product",
+    "countOther": "{{count}} bookmarked products",
+    "noMatchMessage": "Check the spelling or clear the search."
+  },
+  "profile": {
+    "title": "User profile",
+    "subtitle": "Your account details from DummyJSON.",
+    "loading": "Loading profile…",
+    "loadError": "Couldn't load your profile",
+    "contact": "Contact",
+    "work": "Work",
+    "location": "Location",
+    "fields": {
+      "firstName": "First name",
+      "lastName": "Last name",
+      "email": "Email",
+      "phone": "Phone",
+      "jobTitle": "Job title",
+      "department": "Department",
+      "company": "Company",
+      "city": "City",
+      "country": "Country"
+    }
+  }
+}

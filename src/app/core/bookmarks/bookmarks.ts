@@ -2,6 +2,7 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { Injectable, computed, inject, signal } from '@angular/core';
 
 import { BookmarkTarget } from '../../shared/models/interfaces';
+import { I18n } from '../i18n/i18n';
 import { LocalChanges } from '../products/local-changes';
 
 const STORAGE_KEY = 'inventory-console.bookmarks';
@@ -13,6 +14,7 @@ const STORAGE_KEY = 'inventory-console.bookmarks';
 @Injectable({ providedIn: 'root' })
 export class Bookmarks {
   private readonly announcer = inject(LiveAnnouncer);
+  private readonly i18n = inject(I18n);
 
   readonly ids = signal<ReadonlySet<number>>(this.read());
   private readonly local = inject(LocalChanges);
@@ -31,7 +33,11 @@ export class Bookmarks {
 
     this.ids.set(next);
     this.save();
-    void this.announcer.announce(added ? 'Added to bookmarked' : 'Removed from bookmarked');
+    void this.announcer.announce(
+      this.i18n.t(
+        added ? 'validation.success.bookmarkAdded' : 'validation.success.bookmarkRemoved',
+      ),
+    );
   }
 
   private save(): void {

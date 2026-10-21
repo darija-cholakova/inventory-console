@@ -6,17 +6,19 @@
   [matSortActive]="activeSort()"
   [matSortDirection]="direction()"
   (matSortChange)="onSort($event)"
-  aria-label="Products"
+  [attr.aria-label]="'products.title' | transloco"
 >
   <ng-container matColumnDef="thumbnail">
-    <th mat-header-cell *matHeaderCellDef><span class="visually-hidden">Image</span></th>
+    <th mat-header-cell *matHeaderCellDef>
+      <span class="visually-hidden">{{ 'products.fields.image' | transloco }}</span>
+    </th>
     <td mat-cell *matCellDef="let product">
       <app-product-image class="thumb" [src]="product.thumbnail" [size]="40" />
     </td>
   </ng-container>
 
   <ng-container matColumnDef="title">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Product</th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'products.product' | transloco }}</th>
     <td mat-cell *matCellDef="let product">
       <a class="title" [routerLink]="['/products', product.id]">{{ product.title }}</a>
       @if (product.brand) {
@@ -26,13 +28,13 @@
   </ng-container>
 
   <ng-container matColumnDef="category">
-    <th mat-header-cell *matHeaderCellDef>Category</th>
+    <th mat-header-cell *matHeaderCellDef>{{ 'products.fields.category' | transloco }}</th>
     <td mat-cell *matCellDef="let product" class="category">{{ product.category }}</td>
   </ng-container>
 
   <ng-container matColumnDef="price">
     <th mat-header-cell *matHeaderCellDef mat-sort-header arrowPosition="before" class="numeric">
-      Price
+      {{ 'products.fields.price' | transloco }}
     </th>
     <td mat-cell *matCellDef="let product" class="numeric">
       {{ product.price | currency: 'USD' }}
@@ -41,7 +43,7 @@
 
   <!-- Status (text + icon + color) and quantity are separate, so the numbers line up and compare easily -->
   <ng-container matColumnDef="status">
-    <th mat-header-cell *matHeaderCellDef>Stock</th>
+    <th mat-header-cell *matHeaderCellDef>{{ 'products.fields.stock' | transloco }}</th>
     <td mat-cell *matCellDef="let product">
       <app-stock-chip [stock]="product.stock" [showCount]="false" />
     </td>
@@ -49,44 +51,51 @@
 
   <ng-container matColumnDef="stock">
     <th mat-header-cell *matHeaderCellDef mat-sort-header arrowPosition="before" class="numeric">
-      Quantity
+      {{ 'products.fields.quantity' | transloco }}
     </th>
     <td mat-cell *matCellDef="let product" class="numeric">{{ product.stock }}</td>
   </ng-container>
 
   <ng-container matColumnDef="rating">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Rating</th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      {{ 'products.fields.rating' | transloco }}
+    </th>
     <td mat-cell *matCellDef="let product">
       <!-- aria-label is not allowed on a plain span; screen readers get hidden text instead -->
       <span aria-hidden="true">★ {{ product.rating | number: '1.1-1' }}</span>
-      <span class="visually-hidden">Rating {{ product.rating | number: '1.1-1' }} out of 5</span>
+      <span class="visually-hidden">{{
+        'products.rating.label' | transloco: { value: product.rating | number: '1.1-1' }
+      }}</span>
     </td>
   </ng-container>
 
   <ng-container matColumnDef="actions">
-    <th mat-header-cell *matHeaderCellDef><span class="visually-hidden">Actions</span></th>
+    <th mat-header-cell *matHeaderCellDef>
+      <span class="visually-hidden">{{ 'products.fields.actions' | transloco }}</span>
+    </th>
     <td mat-cell *matCellDef="let product" class="actions">
       <app-bookmark-button [product]="product" />
       <button
         matIconButton
         type="button"
         [matMenuTriggerFor]="rowMenu"
-        [attr.aria-label]="'Actions for ' + product.title"
+        [attr.aria-label]="'buttons.actionsFor' | transloco: { title: product.title }"
+        data-row-actions
       >
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #rowMenu="matMenu" xPosition="before">
         <a mat-menu-item [routerLink]="['/products', product.id]">
           <mat-icon>visibility</mat-icon>
-          <span>View details</span>
+          <span>{{ 'buttons.viewDetails' | transloco }}</span>
         </a>
         <button mat-menu-item type="button" (click)="edit.emit(product)">
           <mat-icon>edit</mat-icon>
-          <span>Edit</span>
+          <span>{{ 'buttons.edit' | transloco }}</span>
         </button>
         <button mat-menu-item type="button" class="destructive" (click)="delete.emit(product)">
           <mat-icon>delete</mat-icon>
-          <span>Delete</span>
+          <span>{{ 'buttons.delete' | transloco }}</span>
         </button>
       </mat-menu>
     </td>

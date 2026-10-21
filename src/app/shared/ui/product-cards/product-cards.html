@@ -1,4 +1,4 @@
-<ul class="cards" aria-label="Products">
+<ul class="cards" [attr.aria-label]="'products.title' | transloco">
   @for (product of items(); track product.id) {
     <li class="card">
       <app-product-image class="thumb" [src]="product.thumbnail" [size]="64" />
@@ -8,7 +8,10 @@
           {{ product.category }}
           <span aria-hidden="true">· ★ {{ product.rating | number: '1.1-1' }}</span>
           <span class="visually-hidden"
-            >, rating {{ product.rating | number: '1.1-1' }} out of 5</span
+            >,
+            {{
+              'products.rating.label' | transloco: { value: product.rating | number: '1.1-1' }
+            }}</span
           >
         </span>
         <span class="row">
@@ -22,22 +25,23 @@
         type="button"
         class="actions"
         [matMenuTriggerFor]="cardMenu"
-        [attr.aria-label]="'Actions for ' + product.title"
+        [attr.aria-label]="'buttons.actionsFor' | transloco: { title: product.title }"
+        data-row-actions
       >
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #cardMenu="matMenu" xPosition="before">
         <a mat-menu-item [routerLink]="['/products', product.id]">
           <mat-icon>visibility</mat-icon>
-          <span>View details</span>
+          <span>{{ 'buttons.viewDetails' | transloco }}</span>
         </a>
         <button mat-menu-item type="button" (click)="edit.emit(product)">
           <mat-icon>edit</mat-icon>
-          <span>Edit</span>
+          <span>{{ 'buttons.edit' | transloco }}</span>
         </button>
         <button mat-menu-item type="button" class="destructive" (click)="delete.emit(product)">
           <mat-icon>delete</mat-icon>
-          <span>Delete</span>
+          <span>{{ 'buttons.delete' | transloco }}</span>
         </button>
       </mat-menu>
     </li>

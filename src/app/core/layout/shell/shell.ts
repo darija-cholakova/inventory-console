@@ -27,6 +27,7 @@ import { AuthService } from '../../auth/auth.service';
 import { AccountMenu } from '../account-menu/account-menu';
 import { Bookmarks } from '../../bookmarks/bookmarks';
 import { NavItem } from '../../../shared/models/interfaces';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 /** M3 "expanded" window class starts at 840px: from there the nav is always visible. */
 const EXPANDED_QUERY = '(min-width: 840px)';
@@ -34,6 +35,7 @@ const EXPANDED_QUERY = '(min-width: 840px)';
 @Component({
   selector: 'app-shell',
   imports: [
+    TranslocoPipe,
     RouterOutlet,
     RouterLink,
     RouterLinkActive,
@@ -63,13 +65,13 @@ export class Shell {
   private readonly bookmarks = inject(Bookmarks);
 
   protected readonly navItems: NavItem[] = [
-    { label: 'Products', path: '/products', icon: 'inventory_2' },
+    { label: 'products.title', path: '/products', icon: 'inventory_2' },
     {
-      label: 'Bookmarked',
+      label: 'bookmarks.title',
       path: '/bookmarked',
       icon: 'bookmark',
       count: this.bookmarks.count,
-      countLabel: 'products',
+      countLabel: 'app.productsCount',
     },
   ];
 

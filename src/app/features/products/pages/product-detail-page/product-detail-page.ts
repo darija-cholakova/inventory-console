@@ -23,6 +23,7 @@ import { BookmarkButton } from '../../../../shared/ui/bookmark-button/bookmark-b
 import { BackLink } from '../../../../shared/ui/back-link/back-link';
 import { StateMessage } from '../../../../shared/ui/state-message/state-message';
 import { StockChip } from '../../../../shared/ui/stock-chip/stock-chip';
+import { I18n } from '../../../../core/i18n/i18n';
 import { LocalChanges } from '../../../../core/products/local-changes';
 import { ProductDeletion } from '../../data-access/product-deletion';
 import { ProductsApi } from '../../../../core/api/products-api';
@@ -31,10 +32,12 @@ import { ProductEditDialog } from '../../dialogs/product-edit-dialog/product-edi
 import { ProductGallery } from '../../ui/product-gallery/product-gallery';
 import { RatingStars } from '../../ui/rating-stars/rating-stars';
 import { ProductDetail } from '../../../../shared/models/interfaces';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-product-detail-page',
   imports: [
+    TranslocoPipe,
     BackLink,
     RouterLink,
     MatIcon,
@@ -60,6 +63,7 @@ export class ProductDetailPage {
   private readonly local = inject(LocalChanges);
   private readonly deletion = inject(ProductDeletion);
   private readonly dialog = inject(MatDialog);
+  private readonly i18n = inject(I18n);
 
   /** Route param, bound through withComponentInputBinding(). */
   readonly id = input.required<string>();
@@ -95,7 +99,7 @@ export class ProductDetailPage {
     // Tab title follows the shown title, including a local edit
     effect(() => {
       const product = this.view();
-      if (product) this.title.setTitle(`${product.title} · Inventory Console`);
+      if (product) this.title.setTitle(this.i18n.t('app.pageTitle', { page: product.title }));
     });
     // Move focus to the heading when a product loads (not after an edit, when focus
     // goes back to the Edit button), so screen reader users hear which product opened

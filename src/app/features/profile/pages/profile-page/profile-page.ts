@@ -9,6 +9,7 @@ import { AuthApi } from '../../../../core/api/auth-api';
 import { StateMessage } from '../../../../shared/ui/state-message/state-message';
 import { ProfileEdits } from '../../data-access/profile-edits';
 import { ProfileEditDialog } from '../../dialogs/profile-edit-dialog/profile-edit-dialog';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 /**
  * Profile of the signed-in user (GET /auth/me) with local edits applied. Only work-related
@@ -16,7 +17,7 @@ import { ProfileEditDialog } from '../../dialogs/profile-edit-dialog/profile-edi
  */
 @Component({
   selector: 'app-profile-page',
-  imports: [MatButton, MatIcon, MatProgressBar, StateMessage],
+  imports: [TranslocoPipe, MatButton, MatIcon, MatProgressBar, StateMessage],
   templateUrl: './profile-page.html',
   styleUrl: './profile-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

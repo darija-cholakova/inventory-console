@@ -3,21 +3,22 @@ import { MatIcon } from '@angular/material/icon';
 
 import { StockStatus } from '../../models/types';
 import { getStockStatus } from '../../utils/stock-status';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 const STATUS_VIEW: Record<StockStatus, { label: string; icon: string }> = {
-  'in-stock': { label: 'In stock', icon: 'check' },
-  'low-stock': { label: 'Low stock', icon: 'warning' },
-  'out-of-stock': { label: 'Out of stock', icon: 'cancel' },
+  'in-stock': { label: 'products.stock.inStock', icon: 'check' },
+  'low-stock': { label: 'products.stock.lowStock', icon: 'warning' },
+  'out-of-stock': { label: 'products.stock.outOfStock', icon: 'cancel' },
 };
 
 /** Stock level as text + icon + color, so it never relies on color alone; optionally with the count. */
 @Component({
   selector: 'app-stock-chip',
-  imports: [MatIcon],
+  imports: [TranslocoPipe, MatIcon],
   template: `
     <mat-icon aria-hidden="true">{{ view().icon }}</mat-icon>
     <span
-      >{{ view().label }}
+      >{{ view().label | transloco }}
       @if (showCount() && stock() > 0) {
         · {{ stock() }}
       }

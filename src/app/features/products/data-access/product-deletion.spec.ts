@@ -5,6 +5,7 @@ import { MatSnackBar, MatSnackBarDismiss } from '@angular/material/snack-bar';
 import { Subject, of, throwError } from 'rxjs';
 
 import { ProductsApi } from '../../../core/api/products-api';
+import { provideI18nTesting } from '../../../core/i18n/i18n.testing';
 import { LocalChanges } from '../../../core/products/local-changes';
 import { ProductDeletion } from './product-deletion';
 
@@ -22,6 +23,7 @@ function setup({ dialogResult }: { dialogResult?: boolean } = { dialogResult: tr
 
   TestBed.configureTestingModule({
     providers: [
+      provideI18nTesting(),
       { provide: ProductsApi, useValue: api },
       { provide: MatDialog, useValue: dialog },
       { provide: MatSnackBar, useValue: snackBar },

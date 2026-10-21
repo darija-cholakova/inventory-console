@@ -7,24 +7,31 @@ const blank = (value: string) => value.trim() === '';
 /** Digits, spaces and + - ( ), at least 6 digits, e.g. "+81 965-431-3024". */
 const PHONE = /^\+?[\d\s()-]*$/;
 
+// Messages are translation keys; the template and the error summary translate them.
 export const profileFormSchema = schema<ProfileFormModel>((p) => {
-  required(p.firstName, { message: 'First name is required.' });
+  required(p.firstName, { message: 'validation.error.firstNameRequired' });
   validate(p.firstName, ({ value }) =>
-    value() && blank(value()) ? { kind: 'blank', message: 'First name is required.' } : null,
-  );
-  required(p.lastName, { message: 'Last name is required.' });
-  validate(p.lastName, ({ value }) =>
-    value() && blank(value()) ? { kind: 'blank', message: 'Last name is required.' } : null,
-  );
-  required(p.phone, { message: 'Phone is required.' });
-  pattern(p.phone, PHONE, { message: 'Use digits, spaces and + - ( ) only.' });
-  validate(p.phone, ({ value }) =>
-    value() && PHONE.test(value()) && value().replace(/\D/g, '').length < 6
-      ? { kind: 'short', message: 'Enter at least 6 digits.' }
+    value() && blank(value())
+      ? { kind: 'blank', message: 'validation.error.firstNameRequired' }
       : null,
   );
-  required(p.jobTitle, { message: 'Job title is required.' });
+  required(p.lastName, { message: 'validation.error.lastNameRequired' });
+  validate(p.lastName, ({ value }) =>
+    value() && blank(value())
+      ? { kind: 'blank', message: 'validation.error.lastNameRequired' }
+      : null,
+  );
+  required(p.phone, { message: 'validation.error.phoneRequired' });
+  pattern(p.phone, PHONE, { message: 'validation.error.phoneFormat' });
+  validate(p.phone, ({ value }) =>
+    value() && PHONE.test(value()) && value().replace(/\D/g, '').length < 6
+      ? { kind: 'short', message: 'validation.error.phoneDigits' }
+      : null,
+  );
+  required(p.jobTitle, { message: 'validation.error.jobTitleRequired' });
   validate(p.jobTitle, ({ value }) =>
-    value() && blank(value()) ? { kind: 'blank', message: 'Job title is required.' } : null,
+    value() && blank(value())
+      ? { kind: 'blank', message: 'validation.error.jobTitleRequired' }
+      : null,
   );
 });
