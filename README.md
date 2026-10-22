@@ -1,17 +1,3 @@
-// for me> f2: Sign in: 13:24(start) - almost done: 13:45 (needs few style tweaks)
-F3: Products list: 13:47(start) - almost done: 14:09
-f4: Product details : 14:12 (start) -> 14:26"
-f5: Product manipulation: 14: 28(start) -> 15:09
-f6: Bookmarked: 15:11(start) -> 15;21
-Refactor: 15:26 -> 15:29
-Unit test+e2e: 20:52 -> 21:07 (one component for now)
-restore 15-minute access token lifetime ~ <1m
-readable rating in table and label-in-name for account button & a11y labels in table and account menu, validate stored local changes: 21:13 -> 21:24
-User Profile> 21:30 -> 21:46
-Improvements: 21:50->21:58
-Readme update: 21: 59 -> 22:02
-Improvements> 14:27 -> 14:31
-
 # Corner Market Inventory
 
 A small inventory management console built with Angular 22 on top of the public [DummyJSON](https://dummyjson.com/) API. A stock or catalog manager signs in, finds products, sees at a glance what is running low, edits or deletes products and keeps a personal list of products to watch.
@@ -144,7 +130,6 @@ flowchart LR
 
 - **Angular Material 3 instead of Spartan UI (shadcn for Angular):** mature, accessible table, sort and paginator out of the box, and a theming API based on M3 tokens. With the custom palette and Inter it does not look generic, and the saved time went into UX details.
 - **Theme:** palette generated from the seed color Signal Blue `#1E63D6` with the official `theme-color` schematic; Inter font; light and dark theme from the same tokens via `light-dark()`. Blue is the calm, trusted color of admin and security tools and stays far from the green / amber / red stock statuses. Success and warning colors are app tokens (`--app-*`) because Material 3 has none. Only tokens are used in styles, no hard-coded colors, spacing or radii.
-- **Design process:** low-fidelity wireframes first, then a design system and the screens in [Figma](https://www.figma.com/design/s1SZiP9cZpyqIjp4nBXkto/Inventory-Console) (colors for both themes, type scale, components bound to the same tokens as the code).
 
 - **Motion:** Material 3 durations and easing curves as tokens (`--app-motion-*`, `--app-easing-*`). On the sign-in page the card fades in, and messages slide open and closed so the fields move smoothly instead of jumping. Built with Angular's `animate.enter` / `animate.leave` and plain CSS (no `@angular/animations`); the height animates with `grid-template-rows: 0fr → 1fr`. With "Reduce motion" turned on in the OS, animations are switched off.
 
@@ -238,7 +223,7 @@ npm run e2e                 # end-to-end test (Playwright); starts `ng serve` if
 ## Possible improvements
 
 - Store tokens in `HttpOnly` cookies set by a real backend instead of `sessionStorage` (not readable by injected scripts).
-- Password change, password reset and sign-up (DummyJSON has no endpoints for them; `/users/add` does not persist users).
+- Password change, password reset (DummyJSON has no endpoints for them; `/users/add` does not persist users).
 - Product images and profile photo upload: need a backend with file storage.
 - Add product: DummyJSON has `POST /products/add` (simulated); `ProductForm` and `productFormSchema` are reusable for it.
 - Translations: add `de.json` and `mk.json` (only the files, the setup and the Language menu are ready); ICU plurals with `@jsverse/transloco-messageformat` (Macedonian and German plural rules differ from English); `LOCALE_ID` per language for currency, number and date formats; typed keys or `transloco-keys-manager` to find missing keys in CI; lazy translation scopes per feature when the file grows.
@@ -247,9 +232,9 @@ npm run e2e                 # end-to-end test (Playwright); starts `ng serve` if
 - A keyboard shortcut to reach Undo in the snackbar.
 - More unit tests (forms, guards, interceptor) and E2E tests for Bookmarks, the profile and error states.
 
-## Time log (personal notes – remove before submission)
+## Time log
 
-Start = prompt sent to Claude, end = feature committed and pushed (times from git history, CEST).
+Start = prompt is sent to Claude, end = feature committed and pushed (times from git history, CEST).
 
 | Task                                         | Started | Finished | Duration |
 | -------------------------------------------- | ------- | -------- | -------- |
@@ -271,10 +256,4 @@ Start = prompt sent to Claude, end = feature committed and pushed (times from gi
 | Self-review fixes                            | 22:32   | 22:36    | 4 min    |
 | Keep position after delete                   | 22:37   | 22:39    | 2 min    |
 | i18n – Transloco, English                    | 22:49   | 23:02    | 13 min   |
-| Fixes – demo account, price, Bookmarks, name | 14:27   |          |          |
-
-## Time spent
-
-| Part                                        | Time |
-| ------------------------------------------- | ---- |
-| Feature 1 – Setup and shell (started 13:04) |      |
+| Fixes – demo account, price, Bookmarks, name | 14:27   | 14:31    | 4 min    |
