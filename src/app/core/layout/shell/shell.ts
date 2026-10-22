@@ -70,7 +70,7 @@ export class Shell {
   protected readonly navItems: NavItem[] = [
     { label: 'products.title', path: '/products', icon: 'inventory_2' },
     {
-      label: 'bookmarks.title',
+      label: 'bookmarked.title',
       path: '/bookmarks',
       icon: 'bookmark',
       count: this.bookmarks.count,

@@ -1,19 +1,19 @@
 <header class="header">
-  <h1 class="page-title">{{ 'bookmarks.title' | transloco }}</h1>
+  <h1 class="page-title">{{ 'bookmarked.title' | transloco }}</h1>
 </header>
 
 @if (isEmpty()) {
   <app-state-message
     icon="bookmark"
-    [title]="'bookmarks.emptyTitle' | transloco"
-    [message]="'bookmarks.emptyMessage' | transloco"
+    [title]="'bookmarked.emptyTitle' | transloco"
+    [message]="'bookmarked.emptyMessage' | transloco"
   >
     <a matButton="filled" routerLink="/products">{{ 'buttons.browseProducts' | transloco }}</a>
   </app-state-message>
 } @else {
   <div class="toolbar" role="search">
     <mat-form-field appearance="outline" class="search" subscriptSizing="dynamic">
-      <mat-label>{{ 'bookmarks.search' | transloco }}</mat-label>
+      <mat-label>{{ 'bookmarked.search' | transloco }}</mat-label>
       <mat-icon matPrefix aria-hidden="true">search</mat-icon>
       <input
         matInput
@@ -36,13 +36,13 @@
     </mat-form-field>
   </div>
 
-  <section class="results" [attr.aria-label]="'bookmarks.title' | transloco">
+  <section class="results" [attr.aria-label]="'bookmarked.title' | transloco">
     @if (isLoading()) {
       <app-products-skeleton [count]="skeletonRows()" />
     } @else if (catalog.error()) {
       <app-state-message
         icon="error"
-        [title]="'bookmarks.loadError' | transloco"
+        [title]="'bookmarked.loadError' | transloco"
         [message]="'states.serverNoResponse' | transloco"
       >
         <button matButton="tonal" type="button" (click)="catalog.reload()">
@@ -52,8 +52,8 @@
     } @else if (!results().length) {
       <app-state-message
         icon="search_off"
-        [title]="'bookmarks.noMatch' | transloco: { q: search() }"
-        [message]="'bookmarks.noMatchMessage' | transloco"
+        [title]="'bookmarked.noMatch' | transloco: { q: search() }"
+        [message]="'bookmarked.noMatchMessage' | transloco"
       >
         <button matButton="tonal" type="button" (click)="setSearch('')">
           {{ 'buttons.clearSearch' | transloco }}
@@ -78,7 +78,7 @@
         [pageSize]="pageSize()"
         [pageSizeOptions]="pageSizeOptions"
         (page)="onPage($event)"
-        [attr.aria-label]="'bookmarks.pagination' | transloco"
+        [attr.aria-label]="'bookmarked.pagination' | transloco"
       />
     }
   </section>
@@ -86,7 +86,7 @@
   <p class="visually-hidden" role="status">
     @if (catalog.hasValue()) {
       {{
-        (results().length === 1 ? 'bookmarks.countOne' : 'bookmarks.countOther')
+        (results().length === 1 ? 'bookmarked.countOne' : 'bookmarked.countOther')
           | transloco: { count: results().length }
       }}
     }

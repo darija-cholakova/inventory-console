@@ -205,8 +205,8 @@
       "message": "The product will be removed from the inventory."
     }
   },
-  "bookmarks": {
-    "title": "Bookmarks",
+  "bookmarked": {
+    "title": "Bookmarked",
     "emptyTitle": "No bookmarks yet",
     "emptyMessage": "Use the bookmark icon on a product to keep it here.",
     "search": "Search bookmarks",
