@@ -93,7 +93,7 @@ export interface NavItem {
   path: string;
   /** Material Symbols ligature name */
   icon: string;
-  /** Optional count shown next to the label, e.g. bookmarked products. */
+  /** Optional count shown next to the label, e.g. bookmarks. */
   count?: () => number;
   /** Translation key of what the count means, for screen readers ("3 products"). */
   countLabel?: string;

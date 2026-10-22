@@ -1,6 +1,5 @@
 <header class="header">
   <h1 class="page-title">{{ 'bookmarks.title' | transloco }}</h1>
-  <p class="page-subtitle">{{ 'bookmarks.subtitle' | transloco }}</p>
 </header>
 
 @if (isEmpty()) {
@@ -37,7 +36,7 @@
     </mat-form-field>
   </div>
 
-  <section class="results" [attr.aria-label]="'bookmarks.products' | transloco">
+  <section class="results" [attr.aria-label]="'bookmarks.title' | transloco">
     @if (isLoading()) {
       <app-products-skeleton [count]="skeletonRows()" />
     } @else if (catalog.error()) {

@@ -120,17 +120,9 @@
   gap: var(--app-space-4);
 }
 
-.demo-note {
-  margin-block-end: var(--app-space-16);
-  padding: var(--app-space-8) var(--app-space-12);
-  border-radius: var(--mat-sys-corner-small);
-  background: var(--mat-sys-surface-container-high);
-  font: var(--mat-sys-body-small);
-  color: var(--mat-sys-on-surface-variant);
-}
-
 .submit {
   inline-size: 100%;
+  margin-block-start: var(--app-space-12);
 
   mat-progress-spinner {
     display: inline-block;

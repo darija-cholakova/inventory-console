@@ -68,7 +68,7 @@ export class Shell {
     { label: 'products.title', path: '/products', icon: 'inventory_2' },
     {
       label: 'bookmarks.title',
-      path: '/bookmarked',
+      path: '/bookmarks',
       icon: 'bookmark',
       count: this.bookmarks.count,
       countLabel: 'app.productsCount',

@@ -10,14 +10,13 @@ readable rating in table and label-in-name for account button & a11y labels in t
 User Profile> 21:30 -> 21:46
 Improvements: 21:50->21:58
 Readme update: 21: 59 -> 22:02
+Improvements> 14:27 -> 14:31
 
-# Inventory Console
+# Corner Market Inventory
 
 A small inventory management console built with Angular 22 on top of the public [DummyJSON](https://dummyjson.com/) API. A stock or catalog manager signs in, finds products, sees at a glance what is running low, edits or deletes products and keeps a personal list of products to watch.
 
 > Technical test for the Frontend Engineer position (UX/UI department) at Hornetsecurity.
-
-**Demo account:** `emilys` / `emilyspass` (any DummyJSON user works).
 
 ## Features
 
@@ -26,7 +25,7 @@ A small inventory management console built with Angular 22 on top of the public 
 - **Product detail:** gallery, price and discount, stock, rating, description, shipping and return details, reviews.
 - **Edit** in a dialog (or as a page from a direct link) with validation, an error summary and an unsaved-changes check.
 - **Delete** with confirmation, an 8-second Undo and rollback if the request fails.
-- **Bookmarked:** a personal working list, with its count in the side navigation.
+- **Bookmarks:** a personal working list, with its count in the side navigation.
 - **Account menu:** theme (light / dark / system), language, user profile and sign out.
 - **Translations ready:** every UI text comes from one English file (`public/i18n/en.json`, Transloco); adding a language means adding a file.
 - **User profile:** account details with editable name, phone and job title.
@@ -36,9 +35,11 @@ A small inventory management console built with Angular 22 on top of the public 
 
 Requirements: Node.js `^22.22.3 || ^24.15.0 || ^26` (Angular 22).
 
+**Demo account:** username `emilys`, password `emilyspass`. Any other [DummyJSON user](https://dummyjson.com/users) works too. The sign-in page does not show these credentials, as a real product would not.
+
 ```bash
 npm install
-npm start          # http://localhost:4200, sign in with emilys / emilyspass
+npm start          # http://localhost:4200, sign in with the demo account above
 npm run build      # production build in dist/
 npm run lint       # ESLint (angular-eslint)
 npm test           # unit tests (Vitest)
@@ -65,7 +66,7 @@ src/app/
   core/            app-wide singletons and state
     api/             all HTTP clients: api.config.ts (base URL), auth-api.ts, products-api.ts, users-api.ts
     auth/            session (AuthService), interceptor, guards, safe return URL
-    bookmarks/       bookmarked ids (localStorage); used by the nav count, the button and the Bookmarked page
+    bookmarks/       bookmarked ids (localStorage); used by the nav count, the button and the Bookmarks page
     products/        LocalChanges: the user's product edits and deletions (sessionStorage), read by every feature
     layout/          shell (top bar, side nav), account menu
     routing/         page title strategy, unsaved-changes guard
@@ -78,8 +79,9 @@ src/app/
       banner/          inline error / info message, full width of its container
       form-error-summary/  error list with links to the fields
       back-link/       "‹ Products" link
-      products-table/, product-cards/, products-skeleton/  the product list views (Products and Bookmarked)
+      products-table/, product-cards/, products-skeleton/  the product list views (Products and Bookmarks)
       bookmark-button/, stock-chip/, product-image/, state-message/, undo-snackbar/
+    directives/      overflow-tooltip (full text in a tooltip only when it is cut off)
     utils/           small pure helpers (stock status, breakpoints)
     styles/          page headings, skeleton mixin
   features/        one folder per feature: auth, products, bookmarks, profile
@@ -94,7 +96,7 @@ src/app/
 ```mermaid
 flowchart LR
   subgraph UI
-    Pages[Pages<br/>products, detail, edit, bookmarked, profile]
+    Pages[Pages<br/>products, detail, edit, bookmarks, profile]
     Ui[Feature UI and dialogs<br/>forms, gallery, edit dialogs]
     Shared[Shared UI<br/>table, cards, dialog shell, banner, chips]
   end
@@ -119,11 +121,11 @@ flowchart LR
 - Every route is lazy loaded; the shell is a layout route that wraps all signed-in pages.
 - **API layer:** every HTTP call goes through a small, stateless client in `core/api/`. Services and stores above it own the state (session, local edits, current page), so the endpoints can be found, mocked or replaced in one place.
 - **Types:** all of them live in two files, `shared/models/interfaces.ts` (object shapes: API responses, state, form models, dialog data) and `shared/models/types.ts` (unions and derived types such as `LoadStatus`, `SortField`, `ProductChanges = Partial<Pick<…>>`, `LoginResponse = AuthUser & AuthTokens`), grouped by area with section comments. Components and services only import them.
-- **Where things go:** anything used by more than one feature lives in `shared/ui` (the product table, cards and skeleton are used by Products and Bookmarked; the bookmark button by the table, the cards and the detail page), so features never import from each other. App-wide state that several features or the shell need (session, theme, bookmarks, local product changes) lives in `core/`. `shared` depends only on `core` and Angular, never on a feature.
+- **Where things go:** anything used by more than one feature lives in `shared/ui` (the product table, cards and skeleton are used by Products and Bookmarks; the bookmark button by the table, the cards and the detail page), so features never import from each other. App-wide state that several features or the shell need (session, theme, bookmarks, local product changes) lives in `core/`. `shared` depends only on `core` and Angular, never on a feature.
 - **Pages, dialogs and UI:** pages are routed and talk to stores and services; `dialogs/` holds feature dialogs that load and save data (opened from several pages); shared UI components get data through `input()` and report through `output()`.
 - **One dialog frame:** `DialogShell` owns closing for every form dialog: Esc, a click outside, the X button and the form's Cancel all go through `requestClose()`, which asks "Discard unsaved changes?" when the form reports changes. Feature dialogs only pass `hasUnsavedChanges`.
 - **Shared form feedback:** `Banner` (error / info, full width, `role="alert"` or `"status"`) is used on the sign-in page and in both forms; `FormErrorSummary` lists the errors with links to the fields in both forms. Skeleton blocks use one SCSS mixin (`shared/styles/_skeleton.scss`).
-- **`ProductDeletion` is a small facade:** it sits in `data-access` but also opens the confirmation dialog and the Undo snackbar, because the delete flow (confirm → hide → Undo window → `DELETE` → rollback on error) is one piece of logic used by the list, the cards, Bookmarked and the detail page. Keeping it in one service means every place behaves the same; components only call `confirm()` and `delete()`.
+- **`ProductDeletion` is a small facade:** it sits in `data-access` but also opens the confirmation dialog and the Undo snackbar, because the delete flow (confirm → hide → Undo window → `DELETE` → rollback on error) is one piece of logic used by the list, the cards, Bookmarks and the detail page. Keeping it in one service means every place behaves the same; components only call `confirm()` and `delete()`.
 
 ## Technical decisions
 
@@ -161,6 +163,7 @@ flowchart LR
 - **URL as the source of truth:** search, category, sort, order, page and page size live in the query string (`?q=phone&sort=price&page=2`). Links are shareable, a reload restores the same view and Back / Forward work. Starting a search adds a history entry; refining it replaces that entry. "Back to products" on the detail page returns to the same search, sort and page.
 - **Search and category:** DummyJSON has separate endpoints for search and category and cannot combine them. Search therefore looks across all categories, and choosing a category clears the search (and the other way round). Paging and sorting run on the server.
 - **Stock:** the API cannot filter by stock, but it can sort by any field, so sorting by quantity (low to high) brings low and out-of-stock items to the top. In the table, stock is split into **Stock** (status chip: text, icon and color, never color alone; 0 = out of stock, 1–10 = low) and **Quantity** (right-aligned, sortable), so quantities line up and are easy to compare.
+- **Prices always readable:** the price column is wide enough for the highest DummyJSON price ($36,999.99). A larger price entered in the edit form is cut with an ellipsis and shown in full in a tooltip; the `OverflowTooltip` directive shows the tooltip only when the text is actually cut, so short prices get no extra noise.
 - **Smaller responses:** list requests use `select` to fetch only the fields the list shows.
 - **States:** skeleton on the first load, a thin progress bar while a new page loads (rows stay visible), an empty state with "Clear filters", an error state with "Try again". A live region announces the number of results.
 - **Responsive:** a table from 1200 px (eight columns next to the side nav); below that, cards with a "Sort by" select. Side nav from 840 px, a drawer below.
@@ -181,7 +184,7 @@ flowchart LR
 - **Dialog or page:** inside the app, Edit opens the form in a dialog so the user keeps their place in the list; a direct link to `/products/:id/edit` opens the same form as a page. Both reuse one `ProductForm`; the dialog frame (`DialogShell`) is shared.
 - **Unsaved changes:** leaving a changed form asks "Discard unsaved changes?" ("Keep editing" has the initial focus). On the page this is a `canDeactivate` guard plus the browser prompt on tab close; in the dialog, Esc, the backdrop and the close button go through the same check.
 
-### Bookmarked
+### Bookmarks
 
 - A personal working list. Ids live in `localStorage` (not `sessionStorage`): a bookmark should survive closing the tab.
 - DummyJSON has no favorites resource and cannot fetch several ids at once, so the page loads the catalog once with list fields only (`limit=0&select=…`, ~194 small items) and keeps the bookmarked ones: one request regardless of the number of bookmarks, always current prices and stock. A real backend would offer `?ids=` or a bookmarks endpoint.
@@ -242,32 +245,33 @@ npm run e2e                 # end-to-end test (Playwright); starts `ng serve` if
 - Search within a category and a real stock filter need a backend that combines filters (and returns facets such as brands).
 - Specific messages for rate limiting (`429`) and timeouts.
 - A keyboard shortcut to reach Undo in the snackbar.
-- More unit tests (forms, guards, interceptor) and E2E tests for Bookmarked, the profile and error states.
+- More unit tests (forms, guards, interceptor) and E2E tests for Bookmarks, the profile and error states.
 
 ## Time log (personal notes – remove before submission)
 
 Start = prompt sent to Claude, end = feature committed and pushed (times from git history, CEST).
 
-| Task                        | Started | Finished | Duration |
-| --------------------------- | ------- | -------- | -------- |
-| Feature 1 – Setup and shell | 13:04   | 13:22    | 18 min   |
-| Feature 2 – Authentication  | 13:24   | 13:45    | 21 min   |
-| Feature 3 – Products list   | 13:47   | 14:09    | 22 min   |
-| Feature 4 – Product detail  | 14:12   | 14:26    | 14 min   |
-| Feature 5 – Edit and delete | 14:29   | 15:09    | 40 min   |
-| Feature 6 – Bookmarked      | 15:11   | 15:21    | 10 min   |
-| Refactor – API layer, types | 15:21   | 15:29    | 8 min    |
-| Feature 7 – Tests           | 20:52   | 21:10    | 18 min   |
-| Feature 8 – A11y review     | 21:13   | 21:24    | 11 min   |
-| Account menu and profile    | 21:28   | 21:46    | 18 min   |
-| Stock / quantity, sign-in   | 21:50   | 21:58    | 8 min    |
-| README update               | 21:59   | 22:02    | 3 min    |
-| Sign-in animations          | 22:03   | 22:07    | 4 min    |
-| Bundle size check           | 22:08   | 22:11    | 3 min    |
-| Architecture refactor       | 22:15   | 22:23    | 8 min    |
-| Self-review fixes           | 22:32   | 22:36    | 4 min    |
-| Keep position after delete  | 22:37   | 22:39    | 2 min    |
-| i18n – Transloco, English   | 22:45   |          |          |
+| Task                                         | Started | Finished | Duration |
+| -------------------------------------------- | ------- | -------- | -------- |
+| Feature 1 – Setup and shell                  | 13:04   | 13:22    | 18 min   |
+| Feature 2 – Authentication                   | 13:24   | 13:45    | 21 min   |
+| Feature 3 – Products list                    | 13:47   | 14:09    | 22 min   |
+| Feature 4 – Product detail                   | 14:12   | 14:26    | 14 min   |
+| Feature 5 – Edit and delete                  | 14:29   | 15:09    | 40 min   |
+| Feature 6 – Bookmarked                       | 15:11   | 15:21    | 10 min   |
+| Refactor – API layer, types                  | 15:21   | 15:29    | 8 min    |
+| Feature 7 – Tests                            | 20:52   | 21:10    | 18 min   |
+| Feature 8 – A11y review                      | 21:13   | 21:24    | 11 min   |
+| Account menu and profile                     | 21:28   | 21:46    | 18 min   |
+| Stock / quantity, sign-in                    | 21:50   | 21:58    | 8 min    |
+| README update                                | 21:59   | 22:02    | 3 min    |
+| Sign-in animations                           | 22:03   | 22:07    | 4 min    |
+| Bundle size check                            | 22:08   | 22:11    | 3 min    |
+| Architecture refactor                        | 22:15   | 22:23    | 8 min    |
+| Self-review fixes                            | 22:32   | 22:36    | 4 min    |
+| Keep position after delete                   | 22:37   | 22:39    | 2 min    |
+| i18n – Transloco, English                    | 22:49   | 23:02    | 13 min   |
+| Fixes – demo account, price, Bookmarks, name | 14:27   |          |          |
 
 ## Time spent
 

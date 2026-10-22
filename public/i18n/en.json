@@ -1,10 +1,10 @@
 {
   "app": {
-    "name": "Inventory Console",
-    "pageTitle": "{{page}} · Inventory Console",
+    "name": "Corner Market Inventory",
+    "pageTitle": "{{page}} · Corner Market Inventory",
     "skipToMain": "Skip to main content",
     "openNavigation": "Open navigation",
-    "goToProducts": "Inventory Console, go to products",
+    "goToProducts": "Corner Market Inventory, go to products",
     "mainNavigation": "Main",
     "productsCount": "products"
   },
@@ -55,8 +55,8 @@
       "profileUpdated": "Profile updated",
       "productDeleted": "Product deleted",
       "productRestored": "“{{title}}” restored",
-      "bookmarkAdded": "Added to bookmarked",
-      "bookmarkRemoved": "Removed from bookmarked"
+      "bookmarkAdded": "Added to bookmarks",
+      "bookmarkRemoved": "Removed from bookmarks"
     },
     "error": {
       "summaryOne": "Fix {{count}} error to save",
@@ -109,8 +109,7 @@
     "subtitle": "Manage products, stock and pricing.",
     "sessionExpired": "Your session expired. Sign in again to continue.",
     "username": "Username",
-    "password": "Password",
-    "demoAccount": "Demo account:"
+    "password": "Password"
   },
   "products": {
     "title": "Products",
@@ -207,22 +206,19 @@
     }
   },
   "bookmarks": {
-    "title": "Bookmarked",
-    "subtitle": "Products you keep an eye on. Stored in this browser.",
-    "products": "Bookmarked products",
-    "emptyTitle": "No bookmarked products yet",
+    "title": "Bookmarks",
+    "emptyTitle": "No bookmarks yet",
     "emptyMessage": "Use the bookmark icon on a product to keep it here.",
-    "search": "Search bookmarked",
-    "loadError": "Couldn't load bookmarked products",
-    "noMatch": "No bookmarked products match “{{q}}”",
-    "pagination": "Select page of bookmarked products",
-    "countOne": "{{count}} bookmarked product",
-    "countOther": "{{count}} bookmarked products",
+    "search": "Search bookmarks",
+    "loadError": "Couldn't load bookmarks",
+    "noMatch": "No bookmarks match “{{q}}”",
+    "pagination": "Select page of bookmarks",
+    "countOne": "{{count}} bookmark",
+    "countOther": "{{count}} bookmarks",
     "noMatchMessage": "Check the spelling or clear the search."
   },
   "profile": {
     "title": "User profile",
-    "subtitle": "Your account details from DummyJSON.",
     "loading": "Loading profile…",
     "loadError": "Couldn't load your profile",
     "contact": "Contact",

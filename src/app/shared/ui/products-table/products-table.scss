@@ -5,7 +5,7 @@
   // Fixed column widths; the product column takes the remaining space
   --col-thumbnail: 64px;
   --col-category: 128px;
-  --col-price: 104px;
+  --col-price: 128px; // fits the highest DummyJSON price, $36,999.99
   --col-status: 128px;
   --col-stock: 96px; // quantity
   --col-rating: 80px;
@@ -66,6 +66,13 @@ tr.mat-mdc-row:last-child td {
 
 .mat-column-price {
   inline-size: var(--col-price);
+
+  .price {
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
 }
 
 .mat-column-status {

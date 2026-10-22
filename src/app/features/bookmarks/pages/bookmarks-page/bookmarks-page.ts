@@ -35,7 +35,7 @@ import { Product, ProductQuery, SortChange } from '../../../../shared/models/int
 import { TranslocoPipe } from '@jsverse/transloco';
 
 /**
- * Bookmarked products. DummyJSON cannot fetch several ids at once, so the page loads the
+ * Bookmarks page. DummyJSON cannot fetch several ids at once, so the page loads the
  * catalog once (list fields only) and keeps the bookmarked ones. The list is short,
  * so search, sorting and paging run in the browser.
  */

@@ -17,7 +17,7 @@ import { ProductEditDialogResult } from '../../../../shared/models/types';
 import { TranslocoPipe } from '@jsverse/transloco';
 
 /**
- * Edit form in a dialog, opened from the list, the cards, Bookmarked and the detail page.
+ * Edit form in a dialog, opened from the list, the cards, Bookmarks and the detail page.
  * Closing (and the unsaved-changes check) is handled by the shared DialogShell.
  */
 @Component({

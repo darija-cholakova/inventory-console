@@ -50,7 +50,7 @@ export const routes: Routes = [
           import('./features/profile/pages/profile-page/profile-page').then((m) => m.ProfilePage),
       },
       {
-        path: 'bookmarked',
+        path: 'bookmarks',
         title: 'bookmarks.title',
         loadComponent: () =>
           import('./features/bookmarks/pages/bookmarks-page/bookmarks-page').then(

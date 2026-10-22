@@ -5,7 +5,7 @@ import { RouterStateSnapshot, TitleStrategy } from '@angular/router';
 import { I18n } from '../i18n/i18n';
 
 /**
- * Builds the browser tab title as "<page> · Inventory Console". Each route's `title`
+ * Builds the browser tab title as "<page> · Corner Market Inventory". Each route's `title`
  * is a translation key; pages with their own title (product detail) set it themselves.
  */
 @Injectable({ providedIn: 'root' })

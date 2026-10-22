@@ -37,7 +37,10 @@
       {{ 'products.fields.price' | transloco }}
     </th>
     <td mat-cell *matCellDef="let product" class="numeric">
-      {{ product.price | currency: 'USD' }}
+      <!-- Fits every DummyJSON price; a larger edited price is cut and shown in full on hover -->
+      <span class="price" [appOverflowTooltip]="product.price | currency: 'USD'">{{
+        product.price | currency: 'USD'
+      }}</span>
     </td>
   </ng-container>
 

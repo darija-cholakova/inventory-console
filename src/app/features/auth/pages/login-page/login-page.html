@@ -86,10 +86,6 @@
         }
       </mat-form-field>
 
-      <p class="demo-note">
-        {{ 'auth.demoAccount' | transloco }} <strong>emilys</strong> / <strong>emilyspass</strong>
-      </p>
-
       <button matButton="filled" type="submit" class="submit" [disabled]="submitting()">
         @if (submitting()) {
           <mat-progress-spinner mode="indeterminate" diameter="18" aria-hidden="true" />
