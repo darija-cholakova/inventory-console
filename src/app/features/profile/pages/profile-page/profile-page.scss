@@ -2,7 +2,7 @@
 @use '../../../../../styles/breakpoints' as bp;
 
 // One profile card: full width (same page padding on both sides) below the large breakpoint,
-// at most 720px from there. The header button lines up with the card edge.
+// at most 800px from there. The header button lines up with the card edge.
 :host {
   display: flex;
   flex-direction: column;
@@ -11,7 +11,7 @@
   container: profile / inline-size;
 
   @media (min-width: bp.$table-view) {
-    max-inline-size: 720px;
+    max-inline-size: 800px;
   }
 }
 
@@ -131,7 +131,7 @@
 }
 
 // Fields one below the other; two side by side only on large screens, where the card is at
-// its full 720px. Tied to the viewport, not the card, so closing the side nav on a smaller
+// its full 800px. Tied to the viewport, not the card, so closing the side nav on a smaller
 // screen does not switch the layout.
 .rows {
   display: grid;
