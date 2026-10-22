@@ -1,11 +1,18 @@
 @use '../../../../shared/styles/page';
+@use '../../../../../styles/breakpoints' as bp;
 
-// Full content width like the product list. Mobile first: everything stacked;
-// the three groups side by side from 840px.
+// One profile card: full width (same page padding on both sides) below the large breakpoint,
+// at most 720px from there. The header button lines up with the card edge.
 :host {
   display: flex;
   flex-direction: column;
   gap: var(--app-space-24);
+  // Layout responds to the content width, not the viewport (the side nav takes part of it)
+  container: profile / inline-size;
+
+  @media (min-width: bp.$table-view) {
+    max-inline-size: 720px;
+  }
 }
 
 .header {
@@ -16,18 +23,25 @@
   gap: var(--app-space-16);
 }
 
-// Profile header: tinted panel with photo, name and role
+// Card: tinted header on top, details on the card surface below
+.profile-card {
+  overflow: hidden; // clips the header to the card's rounded top corners
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: var(--mat-sys-corner-extra-large);
+  background: var(--mat-sys-surface-container-lowest);
+}
+
+// Card header: photo, name and role. Stacked on narrow cards, photo next to the name from 480px.
 .hero {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: var(--app-space-16);
   padding: var(--app-space-24);
-  border-radius: var(--mat-sys-corner-extra-large);
   background: var(--mat-sys-primary-container);
   color: var(--mat-sys-on-primary-container);
 
-  @media (min-width: 600px) {
+  @container profile (min-width: 480px) {
     flex-direction: row;
     align-items: center;
     gap: var(--app-space-24);
@@ -94,33 +108,41 @@
   text-transform: capitalize;
 }
 
-.groups {
-  display: grid;
-  gap: var(--app-space-16);
+// Contact, Work and Location, one below the other with a divider between them
+.details {
+  padding-inline: var(--app-space-24);
 
-  @media (min-width: 840px) {
-    grid-template-columns: repeat(3, 1fr);
+  @container profile (min-width: 480px) {
+    padding-inline: var(--app-space-32);
   }
 }
 
 .group {
-  padding: var(--app-space-16) var(--app-space-24);
-  border-radius: var(--mat-sys-corner-large);
-  border: 1px solid var(--mat-sys-outline-variant);
-  background: var(--mat-sys-surface-container-lowest);
+  padding-block: var(--app-space-24);
+
+  & + & {
+    border-block-start: 1px solid var(--mat-sys-outline-variant);
+  }
 }
 
 .group-title {
-  margin: 0 0 var(--app-space-12);
+  margin: 0 0 var(--app-space-16);
   font: var(--mat-sys-title-medium);
 }
 
+// Fields one below the other; two side by side only on large screens, where the card is at
+// its full 720px. Tied to the viewport, not the card, so closing the side nav on a smaller
+// screen does not switch the layout.
 .rows {
   display: grid;
-  gap: var(--app-space-16);
+  gap: var(--app-space-16) var(--app-space-24);
   margin: 0;
   padding: 0;
   list-style: none;
+
+  @media (min-width: bp.$table-view) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 
   li {
     display: flex;
@@ -131,6 +153,17 @@
   mat-icon {
     flex-shrink: 0;
     color: var(--mat-sys-primary);
+  }
+}
+
+// Copy button right after the email, centered on the label + value block
+.copy {
+  align-self: center;
+  flex-shrink: 0;
+  color: var(--mat-sys-on-surface-variant);
+
+  mat-icon {
+    color: inherit; // neutral, not the primary color of the field icons
   }
 }
 

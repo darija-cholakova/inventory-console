@@ -40,6 +40,7 @@
     "browseProducts": "Browse products",
     "backToProducts": "Back to products",
     "editProfile": "Edit profile",
+    "copyEmail": "Copy email",
     "bookmark": "Bookmark",
     "removeBookmark": "Remove bookmark",
     "bookmarkProduct": "Bookmark {{title}}",
@@ -53,12 +54,14 @@
     "success": {
       "changesSaved": "Changes saved",
       "profileUpdated": "Profile updated",
+      "emailCopied": "Email copied",
       "productDeleted": "Product deleted",
       "productRestored": "“{{title}}” restored",
       "bookmarkAdded": "Added to bookmarks",
       "bookmarkRemoved": "Removed from bookmarks"
     },
     "error": {
+      "copyFailed": "Couldn't copy the email",
       "summaryOne": "Fix {{count}} error to save",
       "summaryOther": "Fix {{count}} errors to save",
       "usernameRequired": "Username is required.",

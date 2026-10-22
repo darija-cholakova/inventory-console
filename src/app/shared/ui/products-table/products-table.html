@@ -20,9 +20,15 @@
   <ng-container matColumnDef="title">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'products.product' | transloco }}</th>
     <td mat-cell *matCellDef="let product">
-      <a class="title" [routerLink]="['/products', product.id]">{{ product.title }}</a>
+      <!-- Long titles and brands are cut with an ellipsis; the full text shows on hover -->
+      <a
+        class="title"
+        [routerLink]="['/products', product.id]"
+        [appOverflowTooltip]="product.title"
+        >{{ product.title }}</a
+      >
       @if (product.brand) {
-        <span class="brand">{{ product.brand }}</span>
+        <span class="brand" [appOverflowTooltip]="product.brand">{{ product.brand }}</span>
       }
     </td>
   </ng-container>
