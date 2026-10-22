@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, Provider, inject } from '@angular/core';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { TranslocoService } from '@jsverse/transloco';
 
@@ -29,4 +29,12 @@ export class TranslatedPaginatorIntl extends MatPaginatorIntl {
   private t(key: string, params?: Record<string, unknown>): string {
     return this.transloco.translate(key, params);
   }
+}
+
+/**
+ * Provide in a lazy component (Shell), not in app.config: importing MatPaginatorIntl
+ * eagerly pulls the paginator, select, form field and overlay into the initial bundle.
+ */
+export function provideTranslatedPaginatorIntl(): Provider {
+  return { provide: MatPaginatorIntl, useClass: TranslatedPaginatorIntl };
 }

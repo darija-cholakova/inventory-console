@@ -24,6 +24,7 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { map } from 'rxjs';
 
 import { AuthService } from '../../auth/auth.service';
+import { provideTranslatedPaginatorIntl } from '../../i18n/paginator-intl';
 import { AccountMenu } from '../account-menu/account-menu';
 import { Bookmarks } from '../../bookmarks/bookmarks';
 import { NavItem } from '../../../shared/models/interfaces';
@@ -52,6 +53,8 @@ const EXPANDED_QUERY = '(min-width: 840px)';
     MatListItemTitle,
     AccountMenu,
   ],
+  // Routed pages render inside this component, so their paginators get the translated labels
+  providers: [provideTranslatedPaginatorIntl()],
   templateUrl: './shell.html',
   styleUrl: './shell.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
